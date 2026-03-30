@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<!-- saved from url=(0056)file:///C:/Users/USUARIO/Downloads/icfes_practica_6.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICFES Práctica</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@300;400;500&display=swap');
+:root{
+  --bg:#F4F2EE;--sur:#FFF;--sur2:#EDEAE3;--bor:#DDD9D0;
+  --txt:#18181A;--mut:#78756C;
+  --blu:#2250D9;--blu-l:#EBF0FD;--blu-d:#1840B0;
+  --grn:#0A9060;--grn-l:#E3F5EE;
+  --amb:#C96A00;--amb-l:#FEF0DC;
+  --red:#C92020;--red-l:#FDEAEA;
+  --pur:#6930C3;--pnk:#C0206A;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);min-height:100vh}
+
+/* ═══ LOGIN ═══ */
+#loginScreen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:1.5rem}
+.lbox{background:var(--sur);border:1px solid var(--bor);border-radius:22px;padding:2.25rem 2rem;width:100%;max-width:430px}
+.llogo{font-family:'Sora',sans-serif;font-size:1.55rem;font-weight:700;text-align:center;margin-bottom:.2rem}
+.lsub{color:var(--mut);font-size:.82rem;text-align:center;margin-bottom:1.75rem}
+.lsep{font-size:10.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.07em;text-align:center;position:relative;margin:1.3rem 0 1rem}
+.lsep::before,.lsep::after{content:'';position:absolute;top:50%;width:36%;height:1px;background:var(--bor)}
+.lsep::before{left:0}.lsep::after{right:0}
+.rbtn{width:100%;padding:.85rem 1.1rem;border:1.5px solid var(--bor);border-radius:12px;background:var(--sur);cursor:pointer;text-align:left;display:flex;align-items:center;gap:12px;margin-bottom:8px;transition:all .14s;font-family:'Inter',sans-serif}
+.rbtn:hover{border-color:var(--blu);background:var(--blu-l)}
+.rico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.rname{font-size:14px;font-weight:600;color:var(--txt)}
+.rdesc{font-size:11px;color:var(--mut);margin-top:1px}
+.pin-area{display:none;margin-top:.85rem;border:1.5px solid var(--bor);border-radius:12px;padding:1.1rem;background:var(--sur2)}
+.pin-area input{width:100%;border:1.5px solid var(--bor);border-radius:8px;padding:10px 13px;font-size:14px;font-family:'Inter',sans-serif;letter-spacing:.18em;text-align:center;outline:none;transition:border-color .14s;background:var(--sur);color:var(--txt);margin-bottom:8px}
+.pin-area input:focus{border-color:var(--blu)}
+.pin-err{color:var(--red);font-size:12px;margin-top:4px;display:none;text-align:center}
+.pin-hint{font-size:11px;color:var(--mut);margin-top:5px;text-align:center}
+
+/* ═══ SALA (código compartido) ═══ */
+.sala-area{display:none;margin-top:.85rem;border:1.5px solid var(--bor);border-radius:12px;padding:1.1rem;background:var(--sur2)}
+.sala-area label{font-size:11.5px;font-weight:500;color:var(--mut);display:block;margin-bottom:4px}
+.sala-area input{width:100%;border:1.5px solid var(--bor);border-radius:8px;padding:9px 12px;font-size:15px;font-family:'Sora',sans-serif;font-weight:600;letter-spacing:.12em;text-align:center;text-transform:uppercase;outline:none;background:var(--sur);color:var(--txt);margin-bottom:8px;transition:border-color .14s}
+.sala-area input:focus{border-color:var(--blu)}
+.sala-err{color:var(--red);font-size:12px;margin-top:4px;display:none;text-align:center}
+
+/* ═══ HEADER ═══ */
+.hdr{background:var(--sur);border-bottom:1px solid var(--bor);padding:0 1.5rem;display:flex;align-items:center;justify-content:space-between;height:56px;position:sticky;top:0;z-index:100;gap:10px}
+.hlogo{font-family:'Sora',sans-serif;font-weight:700;font-size:1rem;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.hbadge{background:var(--blu);color:#fff;font-size:9.5px;font-weight:600;padding:2px 6px;border-radius:4px;letter-spacing:.05em}
+.hsala{background:var(--sur2);border:1px solid var(--bor);border-radius:8px;padding:3px 10px;font-size:12px;font-family:'Sora',sans-serif;font-weight:600;letter-spacing:.1em;color:var(--mut);display:flex;align-items:center;gap:5px}
+.hsala span{color:var(--txt)}
+.upill{display:flex;align-items:center;gap:6px;padding:3px 10px;background:var(--sur2);border-radius:20px;font-size:12px;font-weight:500;white-space:nowrap}
+.udot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--grn);flex-shrink:0;transition:background .3s}
+.sync-dot.syncing{background:var(--amb);animation:pulse .8s infinite alternate}
+.sync-dot.err{background:var(--red)}
+@keyframes pulse{to{opacity:.4}}
+
+/* ═══ APP ═══ */
+#appWrap{display:none}
+#appWrap.on{display:block}
+.view{display:none;padding:1.6rem;max-width:1040px;margin:0 auto}
+.view.on{display:block}
+
+/* ═══ NAV ═══ */
+.navtabs{display:flex;gap:2px;padding:0 1.5rem;background:var(--sur);border-bottom:1px solid var(--bor);overflow-x:auto}
+.ntab{padding:12px 15px;border:none;background:transparent;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:var(--mut);cursor:pointer;border-bottom:2px solid transparent;transition:all .14s;margin-bottom:-1px;white-space:nowrap;flex-shrink:0}
+.ntab:hover{color:var(--txt)}.ntab.on{color:var(--blu);border-bottom-color:var(--blu)}
+
+/* ═══ CARD ═══ */
+.card{background:var(--sur);border:1px solid var(--bor);border-radius:15px;padding:1.4rem;margin-bottom:1.1rem}
+.ctitle{font-family:'Sora',sans-serif;font-size:.9rem;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:7px}
+.cico{width:27px;height:27px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+
+/* ═══ CÓDIGO DE SALA ═══ */
+.sala-display{background:var(--blu-l);border:1.5px solid #C0CFFA;border-radius:12px;padding:1.2rem 1.4rem;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.sala-code{font-family:'Sora',sans-serif;font-size:2rem;font-weight:700;letter-spacing:.15em;color:var(--blu)}
+.sala-instructions{font-size:12.5px;color:#1840B0;line-height:1.55}
+
+/* ═══ UPLOAD ═══ */
+.uarea{border:2px dashed var(--bor);border-radius:12px;padding:2rem 1.5rem;text-align:center;background:var(--sur2);transition:all .2s;cursor:pointer}
+.uarea:hover,.uarea.drag{border-color:var(--blu);background:var(--blu-l)}
+.uico{font-size:2rem;margin-bottom:.55rem;pointer-events:none}
+.utit{font-weight:600;font-size:.88rem;margin-bottom:.2rem;pointer-events:none}
+.usub{font-size:.78rem;color:var(--mut);pointer-events:none}
+
+/* ═══ PROGRESS ═══ */
+.prog{margin:1rem 0}
+.pout{height:6px;background:var(--sur2);border-radius:99px;overflow:hidden}
+.pin2{height:100%;border-radius:99px;background:var(--blu);width:0%;transition:width .35s}
+.plbl{font-size:11px;color:var(--mut);margin-bottom:4px;display:flex;justify-content:space-between}
+
+/* ═══ BUTTONS ═══ */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 15px;border-radius:8px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:500;cursor:pointer;border:none;transition:all .14s}
+.bp{background:var(--blu);color:#fff}.bp:hover{background:var(--blu-d)}
+.bs{background:var(--sur2);color:var(--txt);border:1px solid var(--bor)}.bs:hover{background:var(--bor)}
+.bg{background:var(--grn);color:#fff}.bg:hover{background:#077548}
+.br{background:var(--red);color:#fff}.br:hover{background:#A01818}
+.bsm{padding:5px 11px;font-size:11.5px;border-radius:6px}
+
+/* ═══ MATERIA ═══ */
+.mb{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.03em}
+.m-mat{background:#EDE9FE;color:var(--pur)}.m-lec{background:var(--grn-l);color:var(--grn)}
+.m-soc{background:var(--amb-l);color:var(--amb)}.m-cie{background:var(--blu-l);color:#1840B0}
+.m-ing{background:#FCE7F3;color:var(--pnk)}.m-otra{background:var(--sur2);color:var(--mut)}
+.mtabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1.2rem}
+.mtab{padding:5px 12px;border-radius:99px;border:1.5px solid var(--bor);background:var(--sur);font-size:11.5px;font-weight:500;cursor:pointer;transition:all .13s;color:var(--mut)}
+.mtab.on,.mtab:hover{border-color:var(--blu);color:var(--blu);background:var(--blu-l)}
+.msec{margin-bottom:1.8rem}
+.mhdr{display:flex;align-items:center;gap:8px;margin-bottom:.9rem;padding-bottom:.6rem;border-bottom:1px solid var(--bor)}
+.mcnt{font-size:12px;color:var(--mut);margin-left:auto}
+
+/* ═══ PREGUNTA ═══ */
+.pitem{background:var(--sur);border:1px solid var(--bor);border-radius:11px;padding:1rem 1.25rem;margin-bottom:.8rem}
+.phdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:.8rem;gap:8px;flex-wrap:wrap}
+.pnum{background:var(--sur2);color:var(--mut);font-size:10.5px;font-weight:600;padding:3px 8px;border-radius:5px;white-space:nowrap}
+.ptext{font-size:14px;line-height:1.7;margin-bottom:.8rem}
+.pimg{max-width:100%;border-radius:8px;border:1px solid var(--bor);margin-bottom:.8rem;display:block}
+.opts{display:flex;flex-direction:column;gap:5px}
+.olbl{display:flex;align-items:flex-start;gap:8px;padding:8px 11px;border-radius:8px;border:1.5px solid var(--bor);cursor:pointer;transition:all .13s;font-size:13px;line-height:1.5;background:var(--sur)}
+.olbl:hover{border-color:var(--blu);background:var(--blu-l)}
+.olbl input[type=radio]{display:none}
+.olbl.sel{border-color:var(--blu);background:var(--blu-l)}
+.olbl.ok{border-color:var(--grn);background:var(--grn-l)}
+.olbl.bad{border-color:var(--red);background:var(--red-l)}
+.oletra{min-width:23px;height:23px;border-radius:50%;background:var(--sur2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--mut);flex-shrink:0}
+.olbl.sel .oletra{background:var(--blu);color:#fff}
+.olbl.ok  .oletra{background:var(--grn);color:#fff}
+.olbl.bad .oletra{background:var(--red);color:#fff}
+
+/* ═══ EDITOR ═══ */
+.ped{border:1px solid var(--bor);border-radius:11px;padding:1rem;margin-bottom:.8rem;background:var(--sur)}
+.pedhdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem;gap:7px;flex-wrap:wrap}
+.oerow{display:flex;align-items:flex-start;gap:5px;margin-bottom:5px}
+.oerow input[type=text]{flex:1}
+.orlbl{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--mut);white-space:nowrap;cursor:pointer}
+.orlbl input[type=radio]{accent-color:var(--grn);width:14px;height:14px;cursor:pointer}
+.iprvwrap{position:relative;display:inline-block;margin-top:5px}
+.iprvwrap img{max-width:240px;max-height:170px;border-radius:7px;border:1px solid var(--bor);display:block}
+.irmv{position:absolute;top:-7px;right:-7px;background:var(--red);color:#fff;border:none;border-radius:50%;width:18px;height:18px;font-size:11px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+
+/* ═══ STATS ═══ */
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:1.2rem}
+.scard{background:var(--sur2);border-radius:9px;padding:.8rem;text-align:center}
+.sval{font-family:'Sora',sans-serif;font-size:1.75rem;font-weight:700}
+.slbl{font-size:10.5px;color:var(--mut);margin-top:2px}
+
+/* ═══ CHIPS ═══ */
+.chip{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:600}
+.cok{background:var(--grn-l);color:var(--grn)}.cbad{background:var(--red-l);color:var(--red)}.cpnd{background:var(--amb-l);color:var(--amb)}
+
+/* ═══ SYNC STATUS ═══ */
+.sync-bar{background:var(--sur2);border-top:1px solid var(--bor);padding:.5rem 1.5rem;font-size:11.5px;color:var(--mut);display:flex;align-items:center;gap:6px;position:fixed;bottom:0;left:0;right:0;z-index:50}
+
+/* ═══ MODAL ═══ */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.38);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem}
+.modal-bg.on{display:flex}
+.modal{background:var(--sur);border-radius:16px;padding:1.6rem;width:100%;max-width:380px}
+.modal-t{font-family:'Sora',sans-serif;font-size:.95rem;font-weight:600;margin-bottom:1rem}
+
+/* ═══ MISC ═══ */
+textarea,input[type=text],input[type=password]{width:100%;border:1.5px solid var(--bor);border-radius:8px;padding:8px 11px;font-family:'Inter',sans-serif;font-size:13px;background:var(--sur);color:var(--txt);outline:none;resize:vertical;transition:border-color .13s}
+textarea:focus,input[type=text]:focus,input[type=password]:focus{border-color:var(--blu)}
+select{border:1.5px solid var(--bor);border-radius:8px;padding:6px 11px;font-family:'Inter',sans-serif;font-size:12px;background:var(--sur);color:var(--txt);outline:none}
+.flbl{font-size:11.5px;font-weight:500;color:var(--mut);display:block;margin-bottom:3px}
+hr.dv{border:none;border-top:1px solid var(--bor);margin:1.2rem 0}
+.ibox{background:var(--blu-l);border:1px solid #C0CFFA;border-radius:8px;padding:.7rem .9rem;font-size:12px;color:#1840B0;margin-bottom:1rem;line-height:1.55}
+.wbox{background:var(--amb-l);border:1px solid #F5C47A;border-radius:8px;padding:.7rem .9rem;font-size:12px;color:#7A3D00;margin-bottom:1rem;line-height:1.55}
+.empty{text-align:center;padding:2rem 1.5rem;color:var(--mut)}
+.eico{font-size:2.3rem;margin-bottom:.7rem}.etit{font-weight:600;font-size:.9rem;color:var(--txt);margin-bottom:.35rem}.esub{font-size:.78rem}
+.flex{display:flex}.g2{gap:8px}.g3{gap:12px}
+.mb1{margin-bottom:.5rem}.mb2{margin-bottom:1rem}.mt1{margin-top:.5rem}.mt2{margin-top:1rem}
+.tmut{color:var(--mut);font-size:.82rem}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block}
+.dpnd{background:var(--amb)}.ddon{background:var(--grn)}
+.toast{position:fixed;bottom:2.5rem;right:1.2rem;background:var(--txt);color:#fff;padding:9px 15px;border-radius:9px;font-size:13px;font-weight:500;z-index:9999;opacity:0;transform:translateY(6px);transition:all .27s;pointer-events:none;max-width:300px}
+.toast.on{opacity:1;transform:translateY(0)}.toast.tg{background:var(--grn)}.toast.tr{background:var(--red)}
+@media(max-width:580px){.hdr{padding:0 .9rem}.view{padding:1rem}.sgrid{grid-template-columns:1fr 1fr}.sala-code{font-size:1.5rem}}
+</style>
+</head>
+<body>
+
+<!-- ════════════════ LOGIN ════════════════ -->
+<div id="loginScreen">
+  <div class="lbox">
+    <div class="llogo">ICFES <span style="color:var(--blu)">Práctica</span></div>
+    <div class="lsub">Simulacros Saber 11° · En tiempo real</div>
+    <div class="lsep">Selecciona tu rol</div>
+
+    <!-- ESTUDIANTE -->
+    <button class="rbtn" onclick="toggleSala(&#39;est&#39;)">
+      <div class="rico" style="background:#EDE9FE">👩‍🎓</div>
+      <div><div class="rname">Estudiante</div><div class="rdesc">Ingresa el código que te dio tu profesor</div></div>
+    </button>
+    <div class="sala-area" id="salaEst">
+      <label>Código de sala (te lo da el profesor)</label>
+      <input type="text" id="codigoEst" placeholder="Ej: ABC123" maxlength="8" oninput="this.value=this.value.toUpperCase()" onkeydown="if(event.key===&#39;Enter&#39;)entrarSalaEst()">
+      <button class="btn bp" style="width:100%;justify-content:center" onclick="entrarSalaEst()">Entrar a la prueba</button>
+      <div class="sala-err" id="errEst"></div>
+    </div>
+
+    <!-- PROFESOR -->
+    <button class="rbtn" onclick="toggleSala(&#39;prof&#39;)">
+      <div class="rico" style="background:var(--blu-l)">👩‍🏫</div>
+      <div><div class="rname">Profesor</div><div class="rdesc">Crea o abre una sala de práctica</div></div>
+    </button>
+    <div class="pin-area" id="salaProf">
+      <label class="flbl">PIN de acceso</label>
+      <input type="password" id="pinInput" placeholder="PIN" maxlength="8" onkeydown="if(event.key===&#39;Enter&#39;)checkPin()">
+      <button class="btn bp" style="width:100%;justify-content:center" onclick="checkPin()">Ingresar como Profesor</button>
+      <div class="pin-err" id="pinErr">PIN incorrecto.</div>
+      <div class="pin-hint" id="pinHint">PIN por defecto: 1234</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════ APP ════════════════ -->
+<div id="appWrap">
+  <div class="hdr">
+    <div class="hlogo"><span>ICFES</span><span class="hbadge">PRÁCTICA</span></div>
+    <div class="hsala" id="hSala" style="display:none">🏠 Sala: <span id="hSalaCode"></span></div>
+    <div class="flex g2" style="align-items:center">
+      <div style="display:flex;align-items:center;gap:5px">
+        <div class="sync-dot" id="syncDot" title="Estado de sincronización"></div>
+        <span style="font-size:11px;color:var(--mut)" id="syncLbl">—</span>
+      </div>
+      <div class="upill" id="uPill"><span class="udot" id="uDot"></span><span id="uLbl"></span></div>
+      <button class="btn bs bsm" onclick="logout()">Salir</button>
+    </div>
+  </div>
+
+  <!-- NAV profesor -->
+  <div class="navtabs" id="navTabs" style="display:none">
+    <button class="ntab on" onclick="swTab(&#39;ts&#39;)">📄 Subir PDF</button>
+    <button class="ntab" onclick="swTab(&#39;tq&#39;)">📝 Preguntas</button>
+    <button class="ntab" onclick="swTab(&#39;tr&#39;)">📊 Resultados</button>
+    <button class="ntab" onclick="swTab(&#39;tc&#39;)">⚙️ Config</button>
+  </div>
+
+  <!-- ── VISTAS PROFESOR ── -->
+  <div id="profViews" style="display:none">
+
+    <!-- Subir PDF -->
+    <div class="view on" id="ts">
+      <div class="card">
+        <div class="ctitle"><div class="cico" style="background:var(--blu-l)">📄</div>Subir cuadernillo</div>
+        <div class="sala-display" id="salaDisplay">
+          <div>
+            <div style="font-size:11px;color:#1840B0;font-weight:500;margin-bottom:3px">CÓDIGO DE SALA</div>
+            <div class="sala-code" id="salaCodeBig">—</div>
+          </div>
+          <div class="sala-instructions">
+            Envíale este código a tu estudiante.<br>
+            Ella lo ingresa en su dispositivo para<br>
+            ver la prueba y responder en tiempo real.
+          </div>
+          <button class="btn bs bsm" onclick="copiarCodigo()">📋 Copiar código</button>
+        </div>
+        <div class="ibox">💡 La IA extrae automáticamente las preguntas del PDF, las separa por materia y determina la respuesta correcta. La estudiante verá la prueba en tiempo real desde su dispositivo.</div>
+        <div class="uarea" id="uploadArea" onclick="document.getElementById(&#39;fi&#39;).click()" ondragover="event.preventDefault();this.classList.add(&#39;drag&#39;)" ondragleave="this.classList.remove(&#39;drag&#39;)" ondrop="onDrop(event)">
+          <div class="uico">📁</div>
+          <div class="utit">Haz clic aquí o arrastra los archivos</div>
+          <div class="usub">PDF escaneado · PNG · JPG · Múltiples archivos</div>
+        </div>
+        <input type="file" id="fi" accept=".pdf,image/png,image/jpeg,image/jpg,image/webp" multiple="" style="display:none" onchange="onFileSelect(event)">
+        <div id="uploadStatus" style="display:none;margin-top:1rem">
+          <div class="prog">
+            <div class="plbl"><span id="pTxt">Procesando...</span><span id="pPct">0%</span></div>
+            <div class="pout"><div class="pin2" id="pBar"></div></div>
+          </div>
+          <div style="font-size:12px;color:var(--mut);margin-top:4px" id="pDet"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preguntas -->
+    <div class="view" id="tq">
+      <div id="edHdr" style="display:none">
+        <div class="card" style="margin-bottom:1rem">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+            <div>
+              <div class="ctitle" style="margin-bottom:2px"><div class="cico" style="background:var(--grn-l)">✅</div>Preguntas</div>
+              <div class="tmut" id="pCnt"></div>
+            </div>
+            <div class="flex g2">
+              <button class="btn bs bsm" onclick="addManual()">+ Manual</button>
+              <button class="btn bg" onclick="publicar()">📤 Publicar y enviar</button>
+            </div>
+          </div>
+          <div class="mtabs mt2" id="profTabs"></div>
+        </div>
+        <div id="edList"></div>
+      </div>
+      <div class="card" id="edEmpty">
+        <div class="empty"><div class="eico">📝</div><div class="etit">Sin preguntas</div><div class="esub">Sube un PDF o agrega manualmente.</div></div>
+        <div style="text-align:center;margin-top:1rem"><button class="btn bs" onclick="addManual()">+ Agregar manual</button></div>
+      </div>
+    </div>
+
+    <!-- Resultados -->
+    <div class="view" id="tr">
+      <div id="resEmpty" class="card">
+        <div class="empty"><div class="eico">📊</div><div class="etit">Sin resultados aún</div><div class="esub">Aparecerán aquí cuando la estudiante envíe sus respuestas.</div></div>
+      </div>
+      <div id="resData" style="display:none">
+        <div class="card" style="margin-bottom:1rem">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem">
+            <div class="ctitle" style="margin-bottom:0"><div class="cico" style="background:#EDE9FE">📊</div>Resultados</div>
+            <button class="btn bs bsm" onclick="sincronizarResultados()">🔄 Actualizar</button>
+          </div>
+          <div class="tmut mb2" id="resTimestamp"></div>
+          <div class="sgrid" id="sGrid"></div>
+          <div class="mtabs" id="resTabs"></div>
+        </div>
+        <div id="resList"></div>
+      </div>
+    </div>
+
+    <!-- Configuración -->
+    <div class="view" id="tc">
+      <div class="card">
+        <div class="ctitle"><div class="cico" style="background:var(--sur2)">⚙️</div>Configuración</div>
+
+        <div style="margin-bottom:1.4rem">
+          <div style="font-family:&#39;Sora&#39;,sans-serif;font-size:.87rem;font-weight:600;margin-bottom:.85rem">🔐 Cambiar PIN</div>
+          <div style="display:grid;gap:.65rem;max-width:320px">
+            <div><label class="flbl">PIN actual</label><input type="password" id="pinActual" placeholder="PIN actual" maxlength="8"></div>
+            <div><label class="flbl">Nuevo PIN</label><input type="password" id="pinNuevo" placeholder="Mínimo 4 caracteres" maxlength="8"></div>
+            <div><label class="flbl">Confirmar</label><input type="password" id="pinConfirm" placeholder="Repetir nuevo PIN" maxlength="8"></div>
+            <div id="pinCfgErr" style="color:var(--red);font-size:12px;display:none"></div>
+            <button class="btn bp" style="width:fit-content" onclick="cambiarPin()">Guardar PIN</button>
+          </div>
+        </div>
+
+        <hr class="dv">
+
+        <div style="margin-bottom:1.4rem">
+          <div style="font-family:&#39;Sora&#39;,sans-serif;font-size:.87rem;font-weight:600;margin-bottom:.85rem">🏠 Sala actual</div>
+          <div class="ibox" id="storageInfo"></div>
+          <div class="flex g2" style="flex-wrap:wrap">
+            <button class="btn bs bsm" onclick="nuevaSala()">🔄 Nueva sala</button>
+            <button class="btn bs bsm" onclick="exportarDatos()">⬇️ Exportar</button>
+            <button class="btn br bsm" onclick="limpiarTodo()">🗑 Limpiar todo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── VISTA ESTUDIANTE ── -->
+  <div id="estView" style="display:none">
+    <div class="view on">
+      <div class="card" id="estWaiting" style="display:none">
+        <div class="empty"><div class="eico">⏳</div><div class="etit">Esperando prueba</div><div class="esub">El profesor aún no ha publicado ninguna prueba. Esta página se actualiza automáticamente.</div></div>
+      </div>
+      <div id="estPrueba" style="display:none">
+        <div class="card" style="margin-bottom:1rem">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+            <div>
+              <div class="ctitle" style="margin-bottom:2px"><div class="cico" style="background:#EDE9FE">🎓</div>Prueba ICFES — Saber 11°</div>
+              <div class="tmut" id="estCntLbl"></div>
+            </div>
+            <button class="btn bp" onclick="enviar()">Enviar respuestas 📨</button>
+          </div>
+          <hr class="dv">
+          <div class="mtabs" id="estTabs"></div>
+        </div>
+        <div id="estList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <div class="modal-t" id="modalT"></div>
+    <div style="font-size:13px;color:var(--mut);margin-bottom:1.2rem;line-height:1.6" id="modalB"></div>
+    <div class="flex g2" style="justify-content:flex-end">
+      <button class="btn bs" onclick="closeModal()">Cancelar</button>
+      <button class="btn br" id="modalOk">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Barra de estado sync -->
+<div class="sync-bar" id="syncBar" style="display:none">
+  <div class="sync-dot" id="syncDot2"></div>
+  <span id="syncMsg">Sincronizando...</span>
+</div>
+
+<div class="toast" id="toast"></div>
+<input type="file" id="imgEditorInput" accept="image/*" style="display:none" onchange="onImgEditor(event)">
+
+<script>
+// ══════════════════════════════════════════════════════════════
+//  JSONBIN — backend gratuito en la nube
+//  Cada "sala" es un bin en JSONBin con ID = código de sala
+//  Usamos la API pública (sin auth) con un master key demo
+//  Los datos se comparten mediante el código de sala
+// ══════════════════════════════════════════════════════════════
+
+// ─── JSONBIN CONFIG ───
+// Usamos JSONBin.io con API key gratuita
+// El bin almacena: { preguntas, publicada, respuestas, ts_respuestas }
+const JBIN_API  = 'https://api.jsonbin.io/v3';
+const JBIN_KEY  = '$2a$10$9HGbeMZJ4IHj7u8jGkCvZOjcOgbEGJKEJ8CIlSGxJxHHHoRQIVk2G'; // clave demo pública
+
+// ─── ESTADO LOCAL ───
+const LS_KEY = 'icfes_v5';
+
+const S = {          // Estado global
+  pin:       '1234',
+  rol:       null,   // 'profesor' | 'estudiante'
+  salaId:    null,   // ID del bin en JSONBin
+  salaCodigo:null,   // Código legible (6 chars)
+  preguntas: [],
+  publicada: false,
+  respuestas:{},     // {preguntaId: letra}
+  resultadosEnviados: false,
+  tsRespuestas: null,
+  matProf:'todas', matEst:'todas', matRes:'todas',
+  editImgId: null,
+  syncInterval: null
+};
+
+// ─── PERSISTENCIA LOCAL ───
+function guardar() {
+  try {
+    localStorage.setItem(LS_KEY, JSON.stringify({
+      pin:        S.pin,
+      salaId:     S.salaId,
+      salaCodigo: S.salaCodigo,
+      preguntas:  S.preguntas,
+      publicada:  S.publicada,
+      respuestas: S.respuestas,
+      resultadosEnviados: S.resultadosEnviados
+    }));
+  } catch(e) { console.warn('localStorage:', e); }
+}
+
+function cargar() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (!raw) return;
+    const d = JSON.parse(raw);
+    if (d.pin)        S.pin        = d.pin;
+    if (d.salaId)     S.salaId     = d.salaId;
+    if (d.salaCodigo) S.salaCodigo = d.salaCodigo;
+    if (d.preguntas)  S.preguntas  = d.preguntas;
+    if (d.publicada)  S.publicada  = d.publicada;
+    if (d.respuestas) S.respuestas = d.respuestas;
+    if (d.resultadosEnviados) S.resultadosEnviados = d.resultadosEnviados;
+  } catch(e) {}
+}
+
+cargar();
+updatePinHint();
+
+// ══════════════════════════════════════════════════════════════
+//  JSONBIN API HELPERS
+// ══════════════════════════════════════════════════════════════
+
+async function binCreate(data) {
+  const r = await fetch(`${JBIN_API}/b`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Master-Key': JBIN_KEY,
+      'X-Bin-Private': 'false'
+    },
+    body: JSON.stringify(data)
+  });
+  if (!r.ok) throw new Error('Error creando sala: ' + r.status);
+  const j = await r.json();
+  return j.metadata.id;  // bin ID
+}
+
+async function binRead(binId) {
+  const r = await fetch(`${JBIN_API}/b/${binId}/latest`, {
+    headers: { 'X-Master-Key': JBIN_KEY }
+  });
+  if (!r.ok) throw new Error('Sala no encontrada (' + r.status + ')');
+  const j = await r.json();
+  return j.record;
+}
+
+async function binUpdate(binId, data) {
+  const r = await fetch(`${JBIN_API}/b/${binId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Master-Key': JBIN_KEY
+    },
+    body: JSON.stringify(data)
+  });
+  if (!r.ok) throw new Error('Error guardando en la nube: ' + r.status);
+  return true;
+}
+
+// Buscar bin por código de sala (buscamos en el record)
+async function binByCodigo(codigo) {
+  // Usamos el campo 'codigo' dentro del record para identificar la sala
+  // Hacemos GET a un bin especial "índice" donde guardamos codigo→binId
+  // Por simplicidad: el binId ES el código (lo almacenamos directo)
+  // En realidad usamos el binId guardado localmente o buscamos por código
+  // El estudiante recibe el binId codificado como código legible
+  return decodeCodigo(codigo);
+}
+
+// Convertir binId (24 hex chars) ↔ código legible (6 chars base36)
+function encodeCodigo(binId) {
+  // Tomar los últimos 6 chars del binId y pasarlos a mayúsculas
+  return binId.slice(-6).toUpperCase();
+}
+function decodeCodigo(codigo) {
+  // El código se guarda junto al binId en el propio record
+  // No podemos revertir, así que el bin guarda su propio código
+  // La estudiante usa el código para buscar (guardamos en localStorage del prof y en el record)
+  return null; // se resuelve leyendo el record con búsqueda
+}
+
+// ─── Buscar sala por código en JSONBin ───
+// Guardamos el binId en el record para poder buscarlo por código
+// Usamos un "índice" bin fijo para mapear codigo→binId
+const INDEX_BIN = '6762c7ade41b4d34e447e4e8'; // bin índice compartido (precreado)
+
+async function getIndexBin() {
+  try {
+    const r = await fetch(`${JBIN_API}/b/${INDEX_BIN}/latest`, {
+      headers: { 'X-Master-Key': JBIN_KEY }
+    });
+    if (!r.ok) return {};
+    const j = await r.json();
+    return j.record || {};
+  } catch(e) { return {}; }
+}
+
+async function setIndexBin(data) {
+  try {
+    await fetch(`${JBIN_API}/b/${INDEX_BIN}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'X-Master-Key': JBIN_KEY },
+      body: JSON.stringify(data)
+    });
+  } catch(e) {}
+}
+
+// ══════════════════════════════════════════════════════════════
+//  SALA — Crear y unirse
+// ══════════════════════════════════════════════════════════════
+
+function genCodigo() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let c = '';
+  for (let i = 0; i < 6; i++) c += chars[Math.floor(Math.random() * chars.length)];
+  return c;
+}
+
+async function crearSala() {
+  setSyncState('syncing', 'Creando sala...');
+  try {
+    const codigo = genCodigo();
+    const record = {
+      codigo,
+      preguntas:  [],
+      publicada:  false,
+      respuestas: {},
+      resultadosEnviados: false,
+      tsRespuestas: null,
+      tsPublicada: null
+    };
+    const binId = await binCreate(record);
+    S.salaId     = binId;
+    S.salaCodigo = codigo;
+
+    // Registrar en índice
+    const idx = await getIndexBin();
+    idx[codigo] = binId;
+    await setIndexBin(idx);
+
+    guardar();
+    updateSalaUI();
+    setSyncState('ok', 'Sala creada');
+    return true;
+  } catch(e) {
+    setSyncState('err', 'Error: ' + e.message);
+    toast('Error creando sala: ' + e.message, 'r');
+    return false;
+  }
+}
+
+async function buscarSalaPorCodigo(codigo) {
+  setSyncState('syncing', 'Buscando sala...');
+  try {
+    const idx = await getIndexBin();
+    const binId = idx[codigo.toUpperCase()];
+    if (!binId) {
+      setSyncState('err', 'Sala no encontrada');
+      return null;
+    }
+    const record = await binRead(binId);
+    if (!record) { setSyncState('err', 'Sala vacía'); return null; }
+    setSyncState('ok', 'Conectado');
+    return { binId, record };
+  } catch(e) {
+    setSyncState('err', e.message);
+    return null;
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+//  LOGIN
+// ══════════════════════════════════════════════════════════════
+
+function updatePinHint() {
+  const h = document.getElementById('pinHint');
+  if (h) h.textContent = S.pin === '1234' ? 'PIN por defecto: 1234' : 'PIN personalizado activo';
+}
+
+function toggleSala(rol) {
+  document.getElementById('salaEst').style.display  = 'none';
+  document.getElementById('salaProf').style.display = 'none';
+  if (rol === 'est')  document.getElementById('salaEst').style.display  = 'block';
+  if (rol === 'prof') document.getElementById('salaProf').style.display = 'block';
+}
+
+function checkPin() {
+  const val = document.getElementById('pinInput').value.trim();
+  if (val === S.pin) {
+    document.getElementById('pinInput').value = '';
+    entrarProfesor();
+  } else {
+    document.getElementById('pinErr').style.display = 'block';
+    document.getElementById('pinInput').value = '';
+    setTimeout(() => document.getElementById('pinErr').style.display = 'none', 2500);
+  }
+}
+
+async function entrarProfesor() {
+  // Mostrar la app de inmediato — sala se gestiona en segundo plano
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('appWrap').style.display = 'block';
+  S.rol = 'profesor';
+
+  document.getElementById('uDot').style.background = '#2250D9';
+  document.getElementById('uLbl').textContent = '👩‍🏫 Profesor';
+  document.getElementById('navTabs').style.display = 'flex';
+  document.getElementById('profViews').style.display = 'block';
+  document.getElementById('estView').style.display = 'none';
+  document.getElementById('syncBar').style.display = 'flex';
+
+  renderEditor();
+  updateStorageInfo();
+  iniciarSync('profesor');
+
+  // Crear/reconectar sala en segundo plano sin bloquear la UI
+  (async () => {
+    try {
+      if (!S.salaId) {
+        await crearSala();
+      } else {
+        try {
+          setSyncState('syncing', 'Reconectando sala...');
+          await binRead(S.salaId);
+          setSyncState('ok', 'Reconectado');
+        } catch(e) {
+          S.salaId = null; S.salaCodigo = null;
+          await crearSala();
+        }
+        updateSalaUI();
+      }
+      updateStorageInfo();
+    } catch(e) {
+      setSyncState('err', 'Sin conexión');
+    }
+  })();
+}
+
+async function entrarSalaEst() {
+  const codigo = document.getElementById('codigoEst').value.trim().toUpperCase();
+  const errEl  = document.getElementById('errEst');
+  errEl.style.display = 'none';
+
+  if (codigo.length < 4) {
+    errEl.textContent = 'Ingresa el código completo.';
+    errEl.style.display = 'block'; return;
+  }
+
+  errEl.textContent = 'Buscando sala...'; errEl.style.display = 'block';
+  errEl.style.color = 'var(--mut)';
+
+  const result = await buscarSalaPorCodigo(codigo);
+  if (!result) {
+    errEl.textContent = 'Código incorrecto o sala expirada. Pídele el código actualizado a tu profesor.';
+    errEl.style.color = 'var(--red)'; errEl.style.display = 'block'; return;
+  }
+
+  S.salaId     = result.binId;
+  S.salaCodigo = codigo;
+  S.preguntas  = result.record.preguntas  || [];
+  S.publicada  = result.record.publicada  || false;
+  S.respuestas = result.record.respuestas || {};
+  S.resultadosEnviados = result.record.resultadosEnviados || false;
+  S.rol = 'estudiante';
+
+  guardar();
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('appWrap').style.display = 'block';
+
+  document.getElementById('uDot').style.background = '#6930C3';
+  document.getElementById('uLbl').textContent = '👩‍🎓 Estudiante';
+  document.getElementById('navTabs').style.display = 'none';
+  document.getElementById('profViews').style.display = 'none';
+  document.getElementById('estView').style.display = 'block';
+  document.getElementById('syncBar').style.display = 'flex';
+  updateSalaUI();
+
+  renderEstudiante();
+  iniciarSync('estudiante');
+}
+
+function updateSalaUI() {
+  if (!S.salaCodigo) return;
+  document.getElementById('hSala').style.display = 'flex';
+  document.getElementById('hSalaCode').textContent = S.salaCodigo;
+  const big = document.getElementById('salaCodeBig');
+  if (big) big.textContent = S.salaCodigo;
+}
+
+function logout() {
+  if (S.syncInterval) clearInterval(S.syncInterval);
+  S.rol = null;
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('appWrap').style.display = 'none';
+  document.getElementById('pinInput').value = '';
+  document.getElementById('codigoEst').value = '';
+  document.getElementById('salaEst').style.display  = 'none';
+  document.getElementById('salaProf').style.display = 'none';
+  document.getElementById('syncBar').style.display = 'none';
+}
+
+function copiarCodigo() {
+  if (!S.salaCodigo) return;
+  navigator.clipboard.writeText(S.salaCodigo).then(() => {
+    toast('Código copiado: ' + S.salaCodigo, 'g');
+  }).catch(() => {
+    toast('Código: ' + S.salaCodigo + ' (cópialo manualmente)', '');
+  });
+}
+
+// ══════════════════════════════════════════════════════════════
+//  SINCRONIZACIÓN EN TIEMPO REAL
+// ══════════════════════════════════════════════════════════════
+
+function iniciarSync(rol) {
+  if (S.syncInterval) clearInterval(S.syncInterval);
+  const intervalo = rol === 'estudiante' ? 8000 : 12000; // ms
+  S.syncInterval = setInterval(() => sincronizar(rol), intervalo);
+}
+
+async function sincronizar(rol) {
+  if (!S.salaId) return;
+  setSyncState('syncing', 'Actualizando...');
+  try {
+    const record = await binRead(S.salaId);
+    if (rol === 'estudiante') {
+      // El estudiante recibe las preguntas actualizadas
+      const antes = S.publicada;
+      S.preguntas = record.preguntas || [];
+      S.publicada = record.publicada || false;
+      // No sobrescribir sus respuestas locales con las del servidor
+      // a menos que el servidor tenga una versión más reciente
+      if (!antes && S.publicada) {
+        toast('¡La prueba está disponible!', 'g');
+      }
+      guardar();
+      renderEstudiante();
+    } else {
+      // El profesor recibe las respuestas actualizadas
+      const hayNuevas = JSON.stringify(record.respuestas) !== JSON.stringify(S.respuestas) && record.resultadosEnviados;
+      if (hayNuevas) {
+        S.respuestas = record.respuestas || {};
+        S.resultadosEnviados = record.resultadosEnviados || false;
+        S.tsRespuestas = record.tsRespuestas;
+        guardar();
+        toast('📩 Nuevas respuestas recibidas de la estudiante', 'g');
+        if (document.getElementById('tr').classList.contains('on')) renderResultados();
+      }
+    }
+    setSyncState('ok', 'Actualizado ' + horaActual());
+  } catch(e) {
+    setSyncState('err', 'Sin conexión');
+  }
+}
+
+async function sincronizarResultados() {
+  if (!S.salaId) return;
+  setSyncState('syncing', 'Obteniendo resultados...');
+  try {
+    const record = await binRead(S.salaId);
+    S.respuestas = record.respuestas || {};
+    S.resultadosEnviados = record.resultadosEnviados || false;
+    S.tsRespuestas = record.tsRespuestas;
+    guardar();
+    renderResultados();
+    setSyncState('ok', 'Actualizado ' + horaActual());
+    toast('Resultados actualizados', 'g');
+  } catch(e) {
+    setSyncState('err', e.message);
+    toast('Error al actualizar: ' + e.message, 'r');
+  }
+}
+
+async function subirNube(datos) {
+  if (!S.salaId) return;
+  setSyncState('syncing', 'Guardando en la nube...');
+  try {
+    await binUpdate(S.salaId, datos);
+    setSyncState('ok', 'Guardado ' + horaActual());
+  } catch(e) {
+    setSyncState('err', 'Error al guardar: ' + e.message);
+    toast('Error al guardar en la nube: ' + e.message, 'r');
+  }
+}
+
+function setSyncState(state, msg) {
+  ['syncDot','syncDot2'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.className = 'sync-dot' + (state === 'syncing' ? ' syncing' : state === 'err' ? ' err' : '');
+  });
+  const lbl = document.getElementById('syncLbl');
+  const msg2 = document.getElementById('syncMsg');
+  if (lbl) lbl.textContent = msg;
+  if (msg2) msg2.textContent = msg;
+}
+
+function horaActual() {
+  return new Date().toLocaleTimeString('es-CO', {hour:'2-digit', minute:'2-digit'});
+}
+
+function estadoNube() {
+  return {
+    codigo:     S.salaCodigo,
+    preguntas:  S.preguntas,
+    publicada:  S.publicada,
+    respuestas: S.respuestas,
+    resultadosEnviados: S.resultadosEnviados,
+    tsRespuestas: S.tsRespuestas,
+    tsPublicada: S.publicada ? new Date().toISOString() : null
+  };
+}
+
+// ══════════════════════════════════════════════════════════════
+//  NAV
+// ══════════════════════════════════════════════════════════════
+function swTab(id) {
+  document.querySelectorAll('#profViews .view').forEach(v => v.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  document.querySelectorAll('.ntab').forEach((t,i) => t.classList.toggle('on', ['ts','tq','tr','tc'][i]===id));
+  if (id==='tr') renderResultados();
+  if (id==='tc') updateStorageInfo();
+}
+
+// ══════════════════════════════════════════════════════════════
+//  PDF.js
+// ══════════════════════════════════════════════════════════════
+let _pdf = null;
+function getPdfJs() {
+  return new Promise((res,rej) => {
+    if (_pdf) { res(_pdf); return; }
+    const s = document.createElement('script');
+    s.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+    s.onload = () => {
+      _pdf = window['pdfjs-dist/build/pdf'];
+      if (!_pdf) { rej(new Error('PDF.js no disponible')); return; }
+      _pdf.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      res(_pdf);
+    };
+    s.onerror = () => rej(new Error('No se pudo cargar PDF.js'));
+    document.head.appendChild(s);
+  });
+}
+
+// ══════════════════════════════════════════════════════════════
+//  FILE HANDLING
+// ══════════════════════════════════════════════════════════════
+function onDrop(e) {
+  e.preventDefault();
+  document.getElementById('uploadArea').classList.remove('drag');
+  processFiles(Array.from(e.dataTransfer.files));
+}
+function onFileSelect(e) {
+  const files = Array.from(e.target.files);
+  e.target.value = '';
+  processFiles(files);
+}
+
+async function processFiles(files) {
+  if (!files || !files.length) return;
+  showProg('Leyendo archivos...', 5);
+  const images = [];
+
+  for (const f of files) {
+    const ext   = f.name.toLowerCase().split('.').pop();
+    const isPdf = f.type === 'application/pdf' || ext === 'pdf';
+    const isImg = f.type.startsWith('image/') || ['png','jpg','jpeg','webp'].includes(ext);
+
+    if (isPdf) {
+      setProg(8, `Convirtiendo: ${f.name}`); setDet('Cargando motor PDF...');
+      try {
+        const pages = await pdfToImages(f);
+        images.push(...pages);
+        setDet(`✓ ${pages.length} página(s) de "${f.name}"`);
+      } catch(err) { toast('Error PDF: ' + err.message, 'r'); console.error(err); }
+    } else if (isImg) {
+      try {
+        const b64 = await toBase64(f);
+        if (b64 && b64.length > 100) { images.push(b64); setDet(`✓ ${f.name}`); }
+      } catch(err) { toast('Error imagen: ' + err.message, 'r'); }
+    } else {
+      toast('Formato no soportado: ' + f.name, 'r');
+    }
+  }
+
+  if (!images.length) { hideProg(); toast('No se pudieron leer los archivos.','r'); return; }
+  await extractIA(images);
+}
+
+function toBase64(file) {
+  return new Promise((res,rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result);
+    r.onerror = () => rej(new Error('No se pudo leer: ' + file.name));
+    r.readAsDataURL(file);
+  });
+}
+
+async function pdfToImages(file) {
+  const lib = await getPdfJs();
+  const buf = await file.arrayBuffer();
+  let pdf;
+  try { pdf = await lib.getDocument({data:buf}).promise; }
+  catch(e) { throw new Error('PDF inválido: ' + e.message); }
+  const out = [];
+  for (let i=1; i<=pdf.numPages; i++) {
+    setProg(8+Math.round((i/pdf.numPages)*22), `Página ${i}/${pdf.numPages}...`);
+    try {
+      const page=await pdf.getPage(i), vp=page.getViewport({scale:2.2});
+      const cv=document.createElement('canvas');
+      cv.width=vp.width; cv.height=vp.height;
+      await page.render({canvasContext:cv.getContext('2d'),viewport:vp}).promise;
+      const img=cv.toDataURL('image/jpeg',0.9);
+      if(img && img.length>1000) out.push(img);
+    } catch(e) { console.warn(`Pág ${i}:`,e); }
+  }
+  if (!out.length) throw new Error('Ninguna página renderizada');
+  return out;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  EXTRACCIÓN IA
+// ══════════════════════════════════════════════════════════════
+const PROMPT_IA = `Eres un experto académico colombiano en Pruebas ICFES Saber 11°.
+
+TAREA: Analiza las imágenes y extrae TODAS las preguntas de selección múltiple.
+
+REGLAS:
+1. Extrae el enunciado COMPLETO de cada pregunta.
+2. Extrae el texto COMPLETO de cada opción (A, B, C, D).
+3. Clasifica la materia con EXACTAMENTE uno de: "matematicas", "lectura", "sociales", "ciencias", "ingles"
+4. Determina la RESPUESTA CORRECTA usando tu conocimiento académico.
+5. Si la pregunta depende de un gráfico, tabla o imagen, descríbelo brevemente en imagen_desc.
+
+FORMATO DE SALIDA: SOLO el array JSON. Sin texto, sin markdown, sin bloques de código.
+
+[{"numero":1,"materia":"matematicas","enunciado":"texto completo","opciones":[{"letra":"A","texto":"opción A"},{"letra":"B","texto":"opción B"},{"letra":"C","texto":"opción C"},{"letra":"D","texto":"opción D"}],"correcta":"C","imagen_desc":""}]`;
+
+async function extractIA(images) {
+  const BATCH = 3;
+  const nb = Math.ceil(images.length / BATCH);
+  let nuevas = [];
+
+  for (let b=0; b<nb; b++) {
+    const lote = images.slice(b*BATCH,(b+1)*BATCH);
+    const pct  = 30 + Math.round((b/nb)*62);
+    setProg(pct, `Analizando lote ${b+1}/${nb}...`);
+    setDet(`${lote.length} página(s) — extrayendo preguntas`);
+
+    const content = [{type:'text',text:PROMPT_IA}];
+    for (const img of lote) {
+      const mime = img.startsWith('data:image/png') ? 'image/png' : 'image/jpeg';
+      const data = img.includes(',') ? img.split(',')[1] : img;
+      if (!data || data.length < 200) continue;
+      content.push({type:'image',source:{type:'base64',media_type:mime,data}});
+    }
+
+    try {
+      const resp = await fetch('https://api.anthropic.com/v1/messages', {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:16000,messages:[{role:'user',content}]})
+      });
+      if (!resp.ok) {
+        const d=await resp.json().catch(()=>({}));
+        throw new Error(`API ${resp.status}: ${d.error?.message||resp.statusText}`);
+      }
+      const json = await resp.json();
+      let raw = (json.content||[]).map(c=>c.text||'').join('').trim();
+      raw = raw.replace(/^```json\s*/im,'').replace(/^```\s*/im,'').replace(/\s*```\s*$/m,'').trim();
+
+      const parsed = parseJSON(raw);
+      if (!parsed || !Array.isArray(parsed) || !parsed.length) {
+        setDet(`Lote ${b+1}: sin preguntas`); continue;
+      }
+
+      const limpias = parsed.map((p,i)=>({
+        id:          Date.now()+b*2000+i,
+        materia:     validarMat(p.materia),
+        enunciado:   (p.enunciado||'').trim(),
+        opciones:    (p.opciones||[]).filter(o=>o&&o.letra&&(o.texto||'').trim()),
+        correcta:    (p.correcta||'A').toString().trim().toUpperCase(),
+        imagen_b64:  null,
+        imagen_desc: (p.imagen_desc||'').trim()
+      })).filter(p=>p.enunciado.length>5&&p.opciones.length>=2);
+
+      nuevas = [...nuevas, ...limpias];
+      setDet(`Lote ${b+1}: ${limpias.length} preguntas`);
+    } catch(err) {
+      console.error(`Lote ${b+1}:`,err);
+      toast(`Error lote ${b+1}: ${err.message}`,'r');
+    }
+    if (b<nb-1) await new Promise(r=>setTimeout(r,600));
+  }
+
+  if (nuevas.length > 0) {
+    S.preguntas = [...S.preguntas, ...nuevas];
+    guardar();
+    setProg(100,`✅ ${nuevas.length} preguntas extraídas`); setDet('');
+    setTimeout(async ()=>{
+      hideProg(); renderEditor(); swTab('tq');
+      toast(`${nuevas.length} preguntas extraídas`,'g');
+    }, 900);
+  } else {
+    hideProg();
+    toast('No se detectaron preguntas. Intenta con imágenes de mayor resolución.','r');
+  }
+}
+
+function validarMat(m) {
+  const v=['matematicas','lectura','sociales','ciencias','ingles'];
+  const n=(m||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  for(const k of v) if(n.includes(k.substring(0,5))) return k;
+  return 'otra';
+}
+
+function parseJSON(text) {
+  if(!text) return null;
+  try { const p=JSON.parse(text); return Array.isArray(p)?p:(p.preguntas||null); } catch(_) {}
+  const am=text.match(/\[[\s\S]*\]/);
+  if(am) { try{return JSON.parse(am[0]);}catch(_){const r=repArr(am[0]);if(r)return r;} }
+  const om=text.match(/\{[\s\S]*\}/);
+  if(om) { try{const o=JSON.parse(om[0]);return Array.isArray(o.preguntas)?o.preguntas:null;}catch(_){
+    const m2=om[0].match(/"preguntas"\s*:\s*(\[[\s\S]*)/);
+    if(m2){const r=repArr(m2[1]);if(r)return r;}
+  }}
+  return null;
+}
+function repArr(t) {
+  try {
+    let d=0,inS=false,esc=false,last=-1;
+    for(let i=0;i<t.length;i++){
+      const c=t[i];
+      if(esc){esc=false;continue}if(c==='\\'&&inS){esc=true;continue}
+      if(c==='"'){inS=!inS;continue}if(inS)continue;
+      if(c==='{')d++;if(c==='}'){d--;if(d===0)last=i;}
+    }
+    if(last>0) return JSON.parse(t.substring(0,last+1)+']');
+  } catch(_) {}
+  return null;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  EDITOR PROFESOR
+// ══════════════════════════════════════════════════════════════
+function renderEditor() {
+  const hdr=document.getElementById('edHdr'),em=document.getElementById('edEmpty');
+  if(!S.preguntas.length){hdr.style.display='none';em.style.display='block';return;}
+  hdr.style.display='block';em.style.display='none';
+  document.getElementById('pCnt').textContent=S.preguntas.length+' preguntas en total';
+  renderProfTabs();
+  const filt=S.matProf==='todas'?S.preguntas:S.preguntas.filter(p=>p.materia===S.matProf);
+  const el=document.getElementById('edList'); el.innerHTML='';
+  if(S.matProf==='todas'){
+    Object.entries(agrupar(filt)).forEach(([m,ps])=>{
+      const info=MAT[m]||MAT.otra;
+      el.innerHTML+=`<div class="msec"><div class="mhdr"><span class="mb ${info.c}">${info.i} ${info.l}</span><span class="mcnt">${ps.length} preg.</span></div>${ps.map(p=>editHtml(p)).join('')}</div>`;
+    });
+  } else { filt.forEach(p=>{el.innerHTML+=editHtml(p);}); }
+}
+function renderProfTabs(){
+  const mats=getMatList();
+  const t=document.getElementById('profTabs');
+  t.innerHTML=`<button class="mtab ${S.matProf==='todas'?'on':''}" onclick="setMat('todas','p')">Todas (${S.preguntas.length})</button>`;
+  mats.forEach(m=>{
+    const c=S.preguntas.filter(p=>p.materia===m).length;
+    const info=MAT[m]||MAT.otra;
+    t.innerHTML+=`<button class="mtab ${S.matProf===m?'on':''}" onclick="setMat('${m}','p')">${info.i} ${info.l} (${c})</button>`;
+  });
+}
+function editHtml(p){
+  const info=MAT[p.materia]||MAT.otra;
+  const imgH=p.imagen_b64?`<div class="iprvwrap"><img src="${p.imagen_b64}"><button class="irmv" onclick="rmImg(${p.id})">✕</button></div>`:'';
+  const descH=p.imagen_desc&&!p.imagen_b64?`<div class="tmut mb1" style="font-size:11px">📷 ${p.imagen_desc}</div>`:'';
+  return `<div class="ped" id="ped-${p.id}">
+    <div class="pedhdr">
+      <span class="mb ${info.c}">${info.i} ${info.l}</span>
+      <div class="flex g2" style="align-items:center">
+        <select onchange="chgMat(${p.id},this.value)" style="font-size:11px;padding:4px 7px">
+          ${Object.entries(MAT).map(([k,v])=>`<option value="${k}" ${p.materia===k?'selected':''}>${v.l}</option>`).join('')}
+        </select>
+        <button class="btn bs bsm" onclick="delP(${p.id})">🗑</button>
+      </div>
+    </div>
+    <label class="flbl">Enunciado</label>
+    <textarea rows="3" oninput="updF(${p.id},'enunciado',this.value)">${esc(p.enunciado)}</textarea>
+    <div class="flex g2 mt1 mb2" style="align-items:center;flex-wrap:wrap">
+      <button class="btn bs bsm" onclick="trigImg(${p.id})">🖼 Imagen</button>${descH}
+    </div>${imgH}
+    <div style="margin-top:.7rem">
+      <label class="flbl">Opciones — marca la correcta ✓</label>
+      ${p.opciones.map((o,i)=>`
+        <div class="oerow">
+          <span class="oletra" style="flex-shrink:0">${o.letra}</span>
+          <input type="text" value="${esc(o.texto)}" oninput="updO(${p.id},${i},this.value)" placeholder="Opción ${o.letra}">
+          <label class="orlbl">
+            <input type="radio" name="cor-${p.id}" value="${o.letra}" ${p.correcta===o.letra?'checked':''} onchange="updF(${p.id},'correcta','${o.letra}')">Correcta
+          </label>
+        </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+function updF(id,f,v){ const p=fp(id);if(p){p[f]=v;guardar();} }
+function updO(id,i,v){ const p=fp(id);if(p&&p.opciones[i]){p.opciones[i].texto=v;guardar();} }
+function chgMat(id,m){ const p=fp(id);if(p){p.materia=m;guardar();renderEditor();} }
+function delP(id){ showModal('Eliminar','¿Eliminar esta pregunta?',()=>{S.preguntas=S.preguntas.filter(p=>p.id!==id);guardar();renderEditor();},'br'); }
+function rmImg(id){ const p=fp(id);if(p){p.imagen_b64=null;guardar();renderEditor();} }
+function trigImg(id){ S.editImgId=id; document.getElementById('imgEditorInput').click(); }
+function onImgEditor(e){
+  const f=e.target.files[0];e.target.value='';if(!f)return;
+  const r=new FileReader();r.onload=ev=>{const p=fp(S.editImgId);if(p){p.imagen_b64=ev.target.result;guardar();renderEditor();}};
+  r.readAsDataURL(f);
+}
+function addManual(){
+  const p={id:Date.now(),materia:'otra',enunciado:'',
+    opciones:[{letra:'A',texto:''},{letra:'B',texto:''},{letra:'C',texto:''},{letra:'D',texto:''}],
+    correcta:'A',imagen_b64:null,imagen_desc:''};
+  S.preguntas.push(p);guardar();renderEditor();
+  setTimeout(()=>{const el=document.getElementById('ped-'+p.id);if(el)el.scrollIntoView({behavior:'smooth',block:'center'});},120);
+}
+async function publicar(){
+  if(!S.preguntas.length){toast('No hay preguntas','r');return;}
+  S.publicada=true;S.respuestas={};S.resultadosEnviados=false;
+  guardar();
+  await subirNube(estadoNube());
+  toast('✅ Prueba publicada y enviada a la estudiante','g');
+}
+function setMat(m,ctx){
+  if(ctx==='p'){S.matProf=m;renderEditor();}
+  else if(ctx==='e'){S.matEst=m;renderEstudiante();}
+  else if(ctx==='r'){S.matRes=m;renderResultados();}
+}
+
+// ══════════════════════════════════════════════════════════════
+//  ESTUDIANTE
+// ══════════════════════════════════════════════════════════════
+function renderEstudiante(){
+  const wt=document.getElementById('estWaiting'),pr=document.getElementById('estPrueba');
+  if(!S.publicada||!S.preguntas.length){wt.style.display='block';pr.style.display='none';return;}
+  wt.style.display='none';pr.style.display='block';
+  document.getElementById('estCntLbl').textContent=Object.keys(S.respuestas).length+'/'+S.preguntas.length+' respondidas';
+  const mats=getMatList();
+  const tabs=document.getElementById('estTabs');
+  tabs.innerHTML=`<button class="mtab ${S.matEst==='todas'?'on':''}" onclick="setMat('todas','e')">Todas (${S.preguntas.length})</button>`;
+  mats.forEach(m=>{
+    const info=MAT[m]||MAT.otra;
+    tabs.innerHTML+=`<button class="mtab ${S.matEst===m?'on':''}" onclick="setMat('${m}','e')">${info.i} ${info.l} (${S.preguntas.filter(p=>p.materia===m).length})</button>`;
+  });
+  const filt=S.matEst==='todas'?S.preguntas:S.preguntas.filter(p=>p.materia===S.matEst);
+  const el=document.getElementById('estList');el.innerHTML='';
+  if(S.matEst==='todas'){
+    Object.entries(agrupar(filt)).forEach(([m,ps])=>{
+      const info=MAT[m]||MAT.otra;
+      el.innerHTML+=`<div class="msec"><div class="mhdr"><span class="mb ${info.c}">${info.i} ${info.l}</span><span class="mcnt">${ps.length} preg.</span></div>${ps.map((p,i)=>estHtml(p,i+1)).join('')}</div>`;
+    });
+  } else { filt.forEach((p,i)=>{el.innerHTML+=estHtml(p,i+1);}); }
+}
+function estHtml(p,n){
+  const sel=S.respuestas[p.id];
+  return `<div class="pitem">
+    <div class="phdr"><span class="pnum">Pregunta ${n}</span><span class="dot ${sel?'ddon':'dpnd'}"></span></div>
+    ${p.imagen_b64?`<img src="${p.imagen_b64}" class="pimg">`:''}
+    ${p.imagen_desc&&!p.imagen_b64?`<div class="tmut mb1" style="font-size:12px;font-style:italic">📷 ${p.imagen_desc}</div>`:''}
+    <div class="ptext">${p.enunciado||'<em style="color:var(--mut)">Sin enunciado</em>'}</div>
+    <div class="opts">${p.opciones.map(o=>`
+      <label class="olbl ${sel===o.letra?'sel':''}" onclick="selR(${p.id},'${o.letra}')">
+        <input type="radio" name="p${p.id}" value="${o.letra}" ${sel===o.letra?'checked':''}>
+        <span class="oletra">${o.letra}</span><span>${esc(o.texto)}</span>
+      </label>`).join('')}
+    </div>
+  </div>`;
+}
+async function selR(id,l){
+  S.respuestas[id]=l;
+  guardar();
+  renderEstudiante();
+  // Subir respuestas en tiempo real (debounce)
+  clearTimeout(selR._t);
+  selR._t = setTimeout(()=>subirNube(estadoNube()), 1500);
+}
+
+async function enviar(){
+  const t=S.preguntas.length,r=Object.keys(S.respuestas).length;
+  const doEnviar=async()=>{
+    S.resultadosEnviados=true;
+    S.tsRespuestas=new Date().toISOString();
+    guardar();
+    await subirNube(estadoNube());
+    toast('✅ Respuestas enviadas al profesor','g');
+  };
+  if(r<t){showModal('Enviar respuestas',`Faltan ${t-r} preguntas. ¿Enviar de todos modos?`,doEnviar,'bg');}
+  else { await doEnviar(); }
+}
+
+// ══════════════════════════════════════════════════════════════
+//  RESULTADOS
+// ══════════════════════════════════════════════════════════════
+function renderResultados(){
+  const em=document.getElementById('resEmpty'),da=document.getElementById('resData');
+  if(!S.resultadosEnviados||!S.preguntas.length){em.style.display='block';da.style.display='none';return;}
+  em.style.display='none';da.style.display='block';
+  if(S.tsRespuestas){
+    const d=new Date(S.tsRespuestas);
+    document.getElementById('resTimestamp').textContent='Enviado: '+d.toLocaleDateString('es-CO')+' '+d.toLocaleTimeString('es-CO',{hour:'2-digit',minute:'2-digit'});
+  }
+  const tot=S.preguntas.length,resp=Object.keys(S.respuestas).length;
+  const ok=S.preguntas.filter(p=>S.respuestas[p.id]===p.correcta).length;
+  const pct=tot>0?Math.round((ok/tot)*100):0;
+  document.getElementById('sGrid').innerHTML=`
+    <div class="scard"><div class="sval" style="color:var(--grn)">${ok}</div><div class="slbl">Correctas</div></div>
+    <div class="scard"><div class="sval" style="color:var(--red)">${resp-ok}</div><div class="slbl">Incorrectas</div></div>
+    <div class="scard"><div class="sval">${pct}%</div><div class="slbl">Puntaje</div></div>`;
+  const mats=getMatList();
+  const rt=document.getElementById('resTabs');
+  rt.innerHTML=`<button class="mtab ${S.matRes==='todas'?'on':''}" onclick="setMat('todas','r')">Todas</button>`;
+  mats.forEach(m=>{
+    const info=MAT[m]||MAT.otra;
+    const mok=S.preguntas.filter(p=>p.materia===m&&S.respuestas[p.id]===p.correcta).length;
+    const mt=S.preguntas.filter(p=>p.materia===m).length;
+    rt.innerHTML+=`<button class="mtab ${S.matRes===m?'on':''}" onclick="setMat('${m}','r')">${info.i} ${info.l} ${mok}/${mt}</button>`;
+  });
+  const filt=S.matRes==='todas'?S.preguntas:S.preguntas.filter(p=>p.materia===S.matRes);
+  const el=document.getElementById('resList');el.innerHTML='';
+  if(S.matRes==='todas'){
+    Object.entries(agrupar(filt)).forEach(([m,ps])=>{
+      const info=MAT[m]||MAT.otra;
+      const mok=ps.filter(p=>S.respuestas[p.id]===p.correcta).length;
+      el.innerHTML+=`<div class="msec"><div class="mhdr"><span class="mb ${info.c}">${info.i} ${info.l}</span><span class="mcnt">${mok}/${ps.length} correctas</span></div>${ps.map((p,i)=>resHtml(p,i+1)).join('')}</div>`;
+    });
+  } else { filt.forEach((p,i)=>{el.innerHTML+=resHtml(p,i+1);}); }
+}
+function resHtml(p,n){
+  const sel=S.respuestas[p.id],isOk=sel===p.correcta,noR=!sel;
+  const chip=noR?`<span class="chip cpnd">⚠ Sin responder</span>`:isOk?`<span class="chip cok">✅ Correcta</span>`:`<span class="chip cbad">❌ Incorrecta — correcta: ${p.correcta}</span>`;
+  return `<div class="pitem">
+    <div class="phdr"><span class="pnum">Pregunta ${n}</span>${chip}</div>
+    ${p.imagen_b64?`<img src="${p.imagen_b64}" class="pimg">`:''}
+    ${p.imagen_desc&&!p.imagen_b64?`<div class="tmut mb1" style="font-size:11.5px;font-style:italic">📷 ${p.imagen_desc}</div>`:''}
+    <div class="ptext">${p.enunciado}</div>
+    <div class="opts">${p.opciones.map(o=>{
+      const cls=o.letra===p.correcta?'ok':(o.letra===sel&&!isOk?'bad':'');
+      return `<label class="olbl ${cls}" style="cursor:default">
+        <span class="oletra">${o.letra}</span><span style="flex:1">${esc(o.texto)}</span>
+        ${o.letra===p.correcta?`<span style="font-size:11px;color:var(--grn);font-weight:600;margin-left:auto">✓ Correcta</span>`:''}
+        ${o.letra===sel&&!isOk?`<span style="font-size:11px;color:var(--red);font-weight:600;margin-left:auto">← Tuya</span>`:''}
+      </label>`;
+    }).join('')}</div>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  CONFIGURACIÓN
+// ══════════════════════════════════════════════════════════════
+function cambiarPin(){
+  const a=document.getElementById('pinActual').value.trim();
+  const n=document.getElementById('pinNuevo').value.trim();
+  const c=document.getElementById('pinConfirm').value.trim();
+  const e=document.getElementById('pinCfgErr');
+  e.style.display='none';
+  if(a!==S.pin){e.textContent='PIN actual incorrecto.';e.style.display='block';return;}
+  if(n.length<4){e.textContent='Mínimo 4 caracteres.';e.style.display='block';return;}
+  if(n!==c){e.textContent='Los PINs no coinciden.';e.style.display='block';return;}
+  S.pin=n;guardar();updatePinHint();
+  document.getElementById('pinActual').value='';
+  document.getElementById('pinNuevo').value='';
+  document.getElementById('pinConfirm').value='';
+  toast('✅ PIN actualizado','g');
+}
+
+async function nuevaSala(){
+  showModal('Nueva sala','Se creará una nueva sala con nuevo código. La estudiante deberá volver a ingresar. ¿Continuar?',async()=>{
+    S.preguntas=[]; S.publicada=false; S.respuestas={}; S.resultadosEnviados=false;
+    S.salaId=null; S.salaCodigo=null;
+    guardar();
+    await crearSala();
+    renderEditor();
+    swTab('ts');
+    toast('Nueva sala creada','g');
+  },'br');
+}
+
+function updateStorageInfo(){
+  const el=document.getElementById('storageInfo');
+  if(!el)return;
+  try{
+    const raw=localStorage.getItem(LS_KEY)||'{}';
+    const kb=(new Blob([raw]).size/1024).toFixed(1);
+    el.innerHTML=`💾 <strong>${S.preguntas.length} preguntas</strong> · Sala: <strong>${S.salaCodigo||'—'}</strong> · ${kb} KB en localStorage`;
+  }catch(e){}
+}
+
+function exportarDatos(){
+  try{
+    const raw=localStorage.getItem(LS_KEY)||'{}';
+    const blob=new Blob([raw],{type:'application/json'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url;a.download='icfes_backup_'+Date.now()+'.json';
+    document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+    toast('✅ Exportado','g');
+  }catch(e){toast('Error: '+e.message,'r');}
+}
+
+function limpiarTodo(){
+  showModal('Limpiar todo','Borrará todas las preguntas y datos guardados. No se puede deshacer.',()=>{
+    localStorage.removeItem(LS_KEY);
+    Object.assign(S,{pin:'1234',salaId:null,salaCodigo:null,preguntas:[],publicada:false,respuestas:{},resultadosEnviados:false,matProf:'todas',matEst:'todas',matRes:'todas'});
+    renderEditor();updateStorageInfo();updatePinHint();
+    toast('Datos eliminados','g');
+  },'br');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  MODAL
+// ══════════════════════════════════════════════════════════════
+function showModal(t,b,fn,btnClass='br'){
+  document.getElementById('modalT').textContent=t;
+  document.getElementById('modalB').textContent=b;
+  const ok=document.getElementById('modalOk');
+  ok.className='btn '+btnClass;
+  ok.onclick=()=>{closeModal();fn();};
+  document.getElementById('modalBg').classList.add('on');
+}
+function closeModal(){document.getElementById('modalBg').classList.remove('on');}
+document.getElementById('modalBg').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
+
+// ══════════════════════════════════════════════════════════════
+//  PROGRESS / TOAST / UTILS
+// ══════════════════════════════════════════════════════════════
+function showProg(msg,pct){document.getElementById('uploadStatus').style.display='block';setProg(pct,msg);}
+function setProg(pct,msg){
+  document.getElementById('pBar').style.width=pct+'%';
+  document.getElementById('pPct').textContent=pct+'%';
+  if(msg)document.getElementById('pTxt').textContent=msg;
+}
+function setDet(m){document.getElementById('pDet').textContent=m;}
+function hideProg(){document.getElementById('uploadStatus').style.display='none';document.getElementById('pBar').style.width='0%';}
+
+function toast(msg,type=''){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.className='toast'+(type?' t'+type:'');
+  requestAnimationFrame(()=>{t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3800);});
+}
+
+function fp(id){return S.preguntas.find(p=>p.id===id);}
+function esc(s){if(!s)return'';return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function getMatList(){return[...new Set(S.preguntas.map(p=>p.materia))];}
+function agrupar(list){const g={};list.forEach(p=>{if(!g[p.materia])g[p.materia]=[];g[p.materia].push(p);});return g;}
+
+const MAT={
+  matematicas:{l:'Matemáticas',c:'m-mat',i:'🔢'},
+  lectura:{l:'Lectura Crítica',c:'m-lec',i:'📖'},
+  sociales:{l:'Sociales',c:'m-soc',i:'🌎'},
+  ciencias:{l:'Ciencias',c:'m-cie',i:'🔬'},
+  ingles:{l:'Inglés',c:'m-ing',i:'🇬🇧'},
+  otra:{l:'Otra',c:'m-otra',i:'📝'}
+};
+</script>
+
+
+</body></html>
