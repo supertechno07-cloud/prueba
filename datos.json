@@ -475,7 +475,535 @@
     },
     "_ts": 1775352644087
   },
-  "duo": null,
+  "duo": {
+    "resumen": "Este plan de entrenamiento está diseñado para Abelardo y Mariana, dos principiantes con el objetivo de bajar de peso. Abelardo entrenará 6 días a la semana con un enfoque en Push/Pull/Legs (PPL) para maximizar la frecuencia y quema calórica. Mariana entrenará 3 días a la semana con rutinas de cuerpo completo para asegurar un desarrollo equilibrado. Ambos se enfocarán en la técnica correcta, el control del movimiento y la progresión gradual. Los ejercicios de máquina se adaptan individualmente en carga y repeticiones, mientras que los ejercicios libres son compartidos para fomentar el trabajo en equipo y la motivación mutua. Recuerden siempre realizar un calentamiento de 5-10 minutos antes de cada sesión y estiramientos suaves al finalizar.",
+    "dias": [
+      {
+        "dia": "Lunes",
+        "enfoque": "Tren Superior (Empuje) para Abelardo / Cuerpo Completo para Mariana",
+        "ejercicios": [
+          {
+            "nombre": "Press de Pecho en Máquina",
+            "tipo": "maquina",
+            "p1": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "peso": "5-10kg",
+              "descanso": "60s",
+              "nota": "Concéntrate en sentir el pecho y la extensión completa. Peso muy ligero para dominar la forma y evitar lesiones."
+            },
+            "p2": {
+              "series": 3,
+              "repeticiones": "12-15",
+              "peso": "10-15kg",
+              "descanso": "75s",
+              "nota": "Mantén los codos ligeramente flexionados al extender, contrae el pecho en la parte superior del movimiento."
+            }
+          },
+          {
+            "nombre": "Press de Hombros en Máquina",
+            "tipo": "maquina",
+            "p1": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "peso": "5-10kg",
+              "descanso": "60s",
+              "nota": "Movimiento controlado hacia arriba y abajo, sin impulsos. Ajusta el asiento para una buena postura y evitar forzar la espalda."
+            },
+            "p2": {
+              "series": 3,
+              "repeticiones": "12-15",
+              "peso": "10-15kg",
+              "descanso": "75s",
+              "nota": "Evita arquear demasiado la espalda, mantén el core activo y el control en todo el recorrido."
+            }
+          },
+          {
+            "nombre": "Sentadilla con Peso Corporal",
+            "tipo": "libre",
+            "compartido": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "descanso": "60s",
+              "nota": "Baja como si te sentaras en una silla, pecho erguido, rodillas alineadas con los pies. La profundidad es clave, sin levantar los talones."
+            }
+          },
+          {
+            "nombre": "Remo en Máquina (Sentado)",
+            "tipo": "maquina",
+            "p1": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "peso": "5-10kg",
+              "descanso": "60s",
+              "nota": "Tira hacia ti contrayendo la espalda, no solo los brazos. Mantén la espalda recta y los hombros hacia atrás."
+            },
+            "p2": {
+              "series": 3,
+              "repeticiones": "12-15",
+              "peso": "10-15kg",
+              "descanso": "75s",
+              "nota": "Concéntrate en la retracción escapular, tira con la espalda y controla el retorno del peso."
+            }
+          },
+          {
+            "nombre": "Plancha Abdominal",
+            "tipo": "libre",
+            "compartido": {
+              "series": 3,
+              "repeticiones": "30-45seg",
+              "descanso": "45s",
+              "nota": "Mantén el cuerpo recto como una tabla, abdomen contraído, glúteos apretados. Evita que la cadera caiga o se eleve demasiado."
+            }
+          },
+          {
+            "nombre": "Zancadas",
+            "tipo": "libre",
+            "compartido": {
+              "series": 3,
+              "repeticiones": "10-12 por pierna",
+              "descanso": "60s",
+              "nota": "Da un paso largo, baja la rodilla trasera casi al suelo. Rodilla delantera no debe pasar la punta del pie. Mantén el equilibrio."
+            }
+          }
+        ]
+      },
+      {
+        "dia": "Martes",
+        "enfoque": "Tren Superior (Jalón) para Abelardo",
+        "ejercicios": [
+          {
+            "nombre": "Jalón al Pecho en Máquina",
+            "tipo": "maquina",
+            "p1": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "peso": "5-10kg",
+              "descanso": "60s",
+              "nota": "Tira la barra hacia la parte superior del pecho, sintiendo el trabajo en la espalda. Codos hacia abajo y atrás."
+            },
+            "p2": {
+              "series": 0,
+              "repeticiones": "N/A",
+              "peso": "N/A",
+              "descanso": "N/A",
+              "nota": "Día de descanso activo o recuperación para Mariana. ¡Aprovecha para estirar o dar un paseo!"
+            }
+          },
+          {
+            "nombre": "Remo en Máquina con Pecho Apoyado",
+            "tipo": "maquina",
+            "p1": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "peso": "5-10kg",
+              "descanso": "60s",
+              "nota": "Concéntrate en el movimiento de la espalda, no solo los brazos. Aprieta los omóplatos al final del recorrido."
+            },
+            "p2": {
+              "series": 0,
+              "repeticiones": "N/A",
+              "peso": "N/A",
+              "descanso": "N/A",
+              "nota": "Día de descanso activo o recuperación para Mariana. ¡Aprovecha para estirar o dar un paseo!"
+            }
+          },
+          {
+            "nombre": "Curl de Bíceps con Mancuernas",
+            "tipo": "libre",
+            "compartido": {
+              "series": 3,
+              "repeticiones": "12-15",
+              "descanso": "60s",
+              "nota": "Movimiento controlado, evita balancear el cuerpo. Siente la contracción en el bíceps y controla el descenso de la mancuerna."
+            }
+          },
+          {
+            "nombre": "Elevaciones Laterales con Mancuernas",
+            "tipo": "libre",
+            "compartido": {
+              "series": 3,
+              "repeticiones": "12-15",
+              "descanso": "60s",
+              "nota": "Sube los brazos lateralmente hasta la altura de los hombros, con un ligero ángulo en los codos. Usa un peso muy ligero para aislar el hombro."
+            }
+          },
+          {
+            "nombre": "Crunch Abdominal",
+            "tipo": "libre",
+            "compartido": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "descanso": "45s",
+              "nota": "Sube el tronco contrayendo el abdomen, sin tirar del cuello. Mantén la parte baja de la espalda pegada al suelo."
+            }
+          },
+          {
+            "nombre": "Superman",
+            "tipo": "libre",
+            "compartido": {
+              "series": 3,
+              "repeticiones": "12-15",
+              "descanso": "60s",
+              "nota": "Levanta brazos y piernas del suelo simultáneamente, sintiendo el trabajo en la espalda baja y glúteos. Movimiento lento y controlado."
+            }
+          }
+        ]
+      },
+      {
+        "dia": "Miércoles",
+        "enfoque": "Tren Inferior y Core para Abelardo / Cuerpo Completo para Mariana",
+        "ejercicios": [
+          {
+            "nombre": "Prensa de Piernas",
+            "tipo": "maquina",
+            "p1": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "peso": "10-20kg",
+              "descanso": "60s",
+              "nota": "Baja controladamente hasta que las rodillas estén cerca del pecho, sin levantar la cadera del asiento. Empuja con los talones."
+            },
+            "p2": {
+              "series": 3,
+              "repeticiones": "12-15",
+              "peso": "20-30kg",
+              "descanso": "75s",
+              "nota": "Mantén la espalda bien apoyada, empuja explosivamente pero con control. Asegúrate de un rango de movimiento completo."
+            }
+          },
+          {
+            "nombre": "Extensión de Cuádriceps en Máquina",
+            "tipo": "maquina",
+            "p1": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "peso": "5-10kg",
+              "descanso": "60s",
+              "nota": "Extiende las piernas completamente, aprieta los cuádriceps en la parte superior. Movimiento lento y controlado."
+            },
+            "p2": {
+              "series": 3,
+              "repeticiones": "12-15",
+              "peso": "10-15kg",
+              "descanso": "75s",
+              "nota": "Enfócate en la contracción del cuádriceps, sin usar el impulso. Controla la bajada del peso."
+            }
+          },
+          {
+            "nombre": "Flexiones (con rodillas o asistidas)",
+            "tipo": "libre",
+            "compartido": {
+              "series": 3,
+              "repeticiones": "8-12",
+              "descanso": "60s",
+              "nota": "Mantén el cuerpo recto, baja el pecho casi hasta el suelo. Si es muy difícil, hazlas apoyando las rodillas o en una superficie elevada."
+            }
+          },
+          {
+            "nombre": "Remo en Máquina (Sentado)",
+            "tipo": "maquina",
+            "p1": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "peso": "5-10kg",
+              "descanso": "60s",
+              "nota": "Concéntrate en sentir el trabajo en la espalda, evita el tirón de brazos puro. Mantén el abdomen contraído."
+            },
+            "p2": {
+              "series": 3,
+              "repeticiones": "12-15",
+              "peso": "10-15kg",
+              "descanso": "75s",
+              "nota": "Aprieta los omóplatos al final del movimiento, controla la fase excéntrica (cuando el peso regresa)."
+            }
+          },
+          {
+            "nombre": "Abdominales Bicicleta",
+            "tipo": "libre",
+            "compartido": {
+              "series": 3,
+              "repeticiones": "15-20 por lado",
+              "descanso": "45s",
+              "nota": "Lleva el codo a la rodilla opuesta, rotando el torso. Movimiento lento y controlado, sin tirones del cuello."
+            }
+          },
+          {
+            "nombre": "Puente de Glúteos",
+            "tipo": "libre",
+            "compartido": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "descanso": "60s",
+              "nota": "Levanta la cadera del suelo apretando los glúteos, forma una línea recta desde hombros a rodillas. Siente la contracción en la parte superior."
+            }
+          }
+        ]
+      },
+      {
+        "dia": "Jueves",
+        "enfoque": "Tren Superior (Empuje) para Abelardo",
+        "ejercicios": [
+          {
+            "nombre": "Press de Pecho Inclinado en Máquina",
+            "tipo": "maquina",
+            "p1": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "peso": "5-10kg",
+              "descanso": "60s",
+              "nota": "Enfócate en la parte superior del pecho. Controla el movimiento en todo el rango y evita el rebote."
+            },
+            "p2": {
+              "series": 0,
+              "repeticiones": "N/A",
+              "peso": "N/A",
+              "descanso": "N/A",
+              "nota": "Día de descanso activo o recuperación para Mariana. ¡Aprovecha para estirar o dar un paseo!"
+            }
+          },
+          {
+            "nombre": "Elevaciones Laterales en Máquina",
+            "tipo": "maquina",
+            "p1": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "peso": "2.5-5kg",
+              "descanso": "60s",
+              "nota": "Sube los brazos hasta la altura de los hombros, sin usar el impulso. Controla el descenso para maximizar el trabajo muscular."
+            },
+            "p2": {
+              "series": 0,
+              "repeticiones": "N/A",
+              "peso": "N/A",
+              "descanso": "N/A",
+              "nota": "Día de descanso activo o recuperación para Mariana. ¡Aprovecha para estirar o dar un paseo!"
+            }
+          },
+          {
+            "nombre": "Fondos en Banco para Tríceps",
+            "tipo": "libre",
+            "compartido": {
+              "series": 3,
+              "repeticiones": "10-15",
+              "descanso": "60s",
+              "nota": "Baja la cadera cerca del banco, codos hacia atrás. Si es muy fácil, estira las piernas; si es difícil, flexiona más las rodillas."
+            }
+          },
+          {
+            "nombre": "Mountain Climbers",
+            "tipo": "libre",
+            "compartido": {
+              "series": 3,
+              "repeticiones": "30-45seg",
+              "descanso": "45s",
+              "nota": "En posición de plancha, lleva alternadamente las rodillas al pecho. Mantén el core estable y la espalda recta."
+            }
+          },
+          {
+            "nombre": "Press de Tríceps en Máquina (Polea Alta)",
+            "tipo": "maquina",
+            "p1": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "peso": "5-10kg",
+              "descanso": "60s",
+              "nota": "Mantén los codos pegados al cuerpo, extiende el antebrazo hacia abajo. Siente el tríceps trabajar en cada repetición."
+            },
+            "p2": {
+              "series": 0,
+              "repeticiones": "N/A",
+              "peso": "N/A",
+              "descanso": "N/A",
+              "nota": "Día de descanso activo o recuperación para Mariana. ¡Aprovecha para estirar o dar un paseo!"
+            }
+          },
+          {
+            "nombre": "Flexiones de Rodillas",
+            "tipo": "libre",
+            "compartido": {
+              "series": 3,
+              "repeticiones": "10-15",
+              "descanso": "60s",
+              "nota": "Mantén el cuerpo recto desde las rodillas hasta los hombros. Baja el pecho controladamente, activando el core."
+            }
+          }
+        ]
+      },
+      {
+        "dia": "Viernes",
+        "enfoque": "Tren Superior (Jalón) para Abelardo / Cuerpo Completo para Mariana",
+        "ejercicios": [
+          {
+            "nombre": "Jalón al Pecho en Máquina (Agarre Estrecho)",
+            "tipo": "maquina",
+            "p1": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "peso": "5-10kg",
+              "descanso": "60s",
+              "nota": "Enfócate en la parte central de la espalda. Tira con los codos hacia abajo y atrás, sintiendo la contracción."
+            },
+            "p2": {
+              "series": 3,
+              "repeticiones": "12-15",
+              "peso": "10-15kg",
+              "descanso": "75s",
+              "nota": "Siente la contracción en la espalda, controla el ascenso de la barra. Evita usar el impulso del cuerpo."
+            }
+          },
+          {
+            "nombre": "Press de Hombros en Máquina",
+            "tipo": "maquina",
+            "p1": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "peso": "5-10kg",
+              "descanso": "60s",
+              "nota": "Repetimos este ejercicio para mayor frecuencia de entrenamiento de hombros. Concéntrate en la forma y el control."
+            },
+            "p2": {
+              "series": 3,
+              "repeticiones": "12-15",
+              "peso": "10-15kg",
+              "descanso": "75s",
+              "nota": "Mantén la postura, controla el movimiento en ambas fases. La constancia es clave para los hombros."
+            }
+          },
+          {
+            "nombre": "Curl Femoral en Máquina (Tumbado o Sentado)",
+            "tipo": "maquina",
+            "p1": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "peso": "5-10kg",
+              "descanso": "60s",
+              "nota": "Concéntrate en la contracción de los isquiotibiales. Movimiento lento y controlado, sintiendo el estiramiento y la contracción."
+            },
+            "p2": {
+              "series": 3,
+              "repeticiones": "12-15",
+              "peso": "10-15kg",
+              "descanso": "75s",
+              "nota": "Aprieta los isquiotibiales al máximo, evita levantar la cadera del asiento. Mantén la cadera pegada al banco."
+            }
+          },
+          {
+            "nombre": "Sentadilla con Peso Corporal",
+            "tipo": "libre",
+            "compartido": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "descanso": "60s",
+              "nota": "Repetimos para reforzar el patrón de movimiento y trabajar las piernas. Intenta bajar un poco más si la forma es buena."
+            }
+          },
+          {
+            "nombre": "Plancha Lateral",
+            "tipo": "libre",
+            "compartido": {
+              "series": 3,
+              "repeticiones": "20-30seg por lado",
+              "descanso": "45s",
+              "nota": "Mantén el cuerpo recto, abdomen contraído, apoyado en un antebrazo y lateral del pie. Evita que la cadera caiga."
+            }
+          },
+          {
+            "nombre": "Remo Invertido (en Smith o Barra Fija Baja)",
+            "tipo": "libre",
+            "compartido": {
+              "series": 3,
+              "repeticiones": "8-12",
+              "descanso": "60s",
+              "nota": "Cuanto más horizontal el cuerpo, más difícil. Tira el pecho hacia la barra, aprieta la espalda y contrae los omóplatos."
+            }
+          }
+        ]
+      },
+      {
+        "dia": "Sábado",
+        "enfoque": "Tren Inferior y Core para Abelardo",
+        "ejercicios": [
+          {
+            "nombre": "Prensa de Piernas",
+            "tipo": "maquina",
+            "p1": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "peso": "10-20kg",
+              "descanso": "60s",
+              "nota": "Repetimos para dar más volumen a las piernas. Sigue concentrándote en la técnica y el control del movimiento."
+            },
+            "p2": {
+              "series": 0,
+              "repeticiones": "N/A",
+              "peso": "N/A",
+              "descanso": "N/A",
+              "nota": "Día de descanso activo o recuperación para Mariana. ¡Aprovecha para estirar o dar un paseo!"
+            }
+          },
+          {
+            "nombre": "Elevación de Gemelos en Máquina",
+            "tipo": "maquina",
+            "p1": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "peso": "5-10kg",
+              "descanso": "60s",
+              "nota": "Sube lo más alto posible sobre las puntas de los pies, baja controladamente estirando el gemelo para un rango completo de movimiento."
+            },
+            "p2": {
+              "series": 0,
+              "repeticiones": "N/A",
+              "peso": "N/A",
+              "descanso": "N/A",
+              "nota": "Día de descanso activo o recuperación para Mariana. ¡Aprovecha para estirar o dar un paseo!"
+            }
+          },
+          {
+            "nombre": "Zancadas Laterales (con peso corporal)",
+            "tipo": "libre",
+            "compartido": {
+              "series": 3,
+              "repeticiones": "10-12 por pierna",
+              "descanso": "60s",
+              "nota": "Paso lateral, baja la cadera hacia el lado del paso, manteniendo la otra pierna estirada. Mantén el pecho erguido."
+            }
+          },
+          {
+            "nombre": "Patada de Glúteo en el Suelo (Donkey Kicks)",
+            "tipo": "libre",
+            "compartido": {
+              "series": 3,
+              "repeticiones": "15-20 por pierna",
+              "descanso": "45s",
+              "nota": "En cuadrupedia, eleva una pierna flexionada hacia el techo, apretando el glúteo en la parte superior. Evita arquear la espalda."
+            }
+          },
+          {
+            "nombre": "Hip Thrust con Peso Corporal",
+            "tipo": "libre",
+            "compartido": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "descanso": "60s",
+              "nota": "Apoya la espalda en un banco, pies en el suelo. Sube la cadera apretando los glúteos al máximo. Siente la contracción en la cima."
+            }
+          },
+          {
+            "nombre": "Crunch Inverso",
+            "tipo": "libre",
+            "compartido": {
+              "series": 3,
+              "repeticiones": "15-20",
+              "descanso": "45s",
+              "nota": "Acostado, piernas flexionadas, eleva la cadera del suelo llevando las rodillas al pecho. Controla el descenso para un mayor trabajo abdominal."
+            }
+          }
+        ]
+      }
+    ]
+  },
   "nutri": {
     "p1": {
       "resumen": "Plan de alimentación semanal diseñado para Abelardo, un principiante de 18 años con un peso bajo para su estatura (BMI 17.09). El objetivo principal es optimizar la composición corporal y promover hábitos alimenticios saludables, en lugar de una restricción calórica para una pérdida de peso que no sería apropiada en su situación actual. El plan se enfoca en proporcionar nutrientes esenciales para el crecimiento, desarrollo y energía, con un aporte calórico aproximado de 1900-2000 calorías diarias. Se prioriza la ingesta de proteínas de alta calidad, carbohidratos complejos y grasas saludables para apoyar la recuperación muscular y el bienestar general.",
@@ -1003,5 +1531,5 @@
       ]
     }
   },
-  "_ts": 1775357057240
+  "_ts": 1775362152145
 }
