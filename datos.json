@@ -1,0 +1,1007 @@
+{
+  "p1": {
+    "nombre": "Abelardo",
+    "avatar": "",
+    "objetivo": "bajar_peso",
+    "nivel": "principiante",
+    "dias": "6",
+    "peso": "40",
+    "estatura": "153",
+    "edad": "18",
+    "medidas": {
+      "cuello": [
+        {
+          "val": 20,
+          "fecha": "2026-04-04T18:45:35.481Z"
+        }
+      ],
+      "hombros": [
+        {
+          "val": 25,
+          "fecha": "2026-04-04T18:45:40.315Z"
+        }
+      ],
+      "pecho": [
+        {
+          "val": 40,
+          "fecha": "2026-04-04T18:45:44.877Z"
+        }
+      ],
+      "cintura": [
+        {
+          "val": 55,
+          "fecha": "2026-04-04T18:45:50.346Z"
+        }
+      ],
+      "cadera": [
+        {
+          "val": 55,
+          "fecha": "2026-04-04T18:46:19.048Z"
+        }
+      ],
+      "abdomen": [
+        {
+          "val": 50,
+          "fecha": "2026-04-04T18:46:22.752Z"
+        }
+      ],
+      "bicep_izq": [
+        {
+          "val": 20,
+          "fecha": "2026-04-04T18:46:26.517Z"
+        }
+      ],
+      "bicep_der": [
+        {
+          "val": 20,
+          "fecha": "2026-04-04T18:46:29.840Z"
+        }
+      ],
+      "muslo_izq": [
+        {
+          "val": 30,
+          "fecha": "2026-04-04T18:46:33.930Z"
+        }
+      ],
+      "muslo_der": [
+        {
+          "val": 30,
+          "fecha": "2026-04-04T18:46:38.279Z"
+        }
+      ],
+      "pantorrilla_izq": [
+        {
+          "val": 15,
+          "fecha": "2026-04-04T18:46:59.968Z"
+        }
+      ],
+      "pantorrilla_der": [
+        {
+          "val": 15,
+          "fecha": "2026-04-04T18:47:03.313Z"
+        }
+      ]
+    },
+    "rutina": {
+      "resumen": "Rutina de hipertrofia mecánica progresiva para principiantes, enfocada en la ganancia de masa muscular y fuerza. Se prioriza la tensión y la carga con un tempo de 3 segundos en la fase excéntrica. Dado que el objetivo principal es la hipertrofia y el superávit calórico, esta rutina está diseñada para construir músculo, no para la pérdida de peso.",
+      "dias": [
+        {
+          "dia": "Lunes",
+          "enfoque": "Empuje (Pecho, Hombros, Tríceps)",
+          "ejercicios": [
+            {
+              "nombre": "Press Banca con Mancuernas",
+              "series": 3,
+              "repeticiones": "8-12",
+              "descanso": "60s",
+              "nota": "Controla la bajada en 3 segundos. Busca un peso que rete en el rango de repeticiones."
+            },
+            {
+              "nombre": "Press Militar con Mancuernas (Sentado)",
+              "series": 3,
+              "repeticiones": "8-12",
+              "descanso": "60s",
+              "nota": "Movimiento controlado, evita balanceos. Prioriza hombros."
+            },
+            {
+              "nombre": "Aperturas con Mancuernas (Plano)",
+              "series": 3,
+              "repeticiones": "10-12",
+              "descanso": "60s",
+              "nota": "Enfócate en el estiramiento y contracción del pecho. Bajada lenta."
+            },
+            {
+              "nombre": "Elevaciones Laterales con Mancuernas",
+              "series": 3,
+              "repeticiones": "10-12",
+              "descanso": "60s",
+              "nota": "Mantén los codos ligeramente flexionados, sube hasta la altura de los hombros."
+            },
+            {
+              "nombre": "Extensiones de Tríceps con Mancuerna (a dos manos por detrás de la cabeza)",
+              "series": 3,
+              "repeticiones": "10-12",
+              "descanso": "60s",
+              "nota": "Mantén los codos pegados a la cabeza, estira completamente el tríceps."
+            }
+          ]
+        },
+        {
+          "dia": "Martes",
+          "enfoque": "Tracción (Espalda, Bíceps, Trapecios)",
+          "ejercicios": [
+            {
+              "nombre": "Remo con Mancuerna (Unilateral)",
+              "series": 3,
+              "repeticiones": "8-12 por brazo",
+              "descanso": "60s",
+              "nota": "Controla el movimiento, tira con la espalda, no solo con el bíceps."
+            },
+            {
+              "nombre": "Jalón al Pecho (Máquina)",
+              "series": 3,
+              "repeticiones": "8-12",
+              "descanso": "60s",
+              "nota": "Siente el estiramiento de los dorsales arriba y la contracción al bajar. Bajada en 3s."
+            },
+            {
+              "nombre": "Remo Sentado en Máquina (Agarre Cerrado)",
+              "series": 3,
+              "repeticiones": "8-12",
+              "descanso": "60s",
+              "nota": "Aprieta las escápulas al final del movimiento. Evita tirones."
+            },
+            {
+              "nombre": "Curl de Bíceps con Mancuernas (Alterno)",
+              "series": 3,
+              "repeticiones": "10-12 por brazo",
+              "descanso": "60s",
+              "nota": "Concéntrate en la contracción del bíceps, evita balancear el cuerpo."
+            },
+            {
+              "nombre": "Encogimientos de Hombros con Mancuernas",
+              "series": 3,
+              "repeticiones": "10-15",
+              "descanso": "60s",
+              "nota": "Sube los hombros hacia las orejas, aprieta arriba. No uses peso excesivo."
+            }
+          ]
+        },
+        {
+          "dia": "Miércoles",
+          "enfoque": "Piernas y Glúteos",
+          "ejercicios": [
+            {
+              "nombre": "Sentadilla Goblet",
+              "series": 3,
+              "repeticiones": "8-12",
+              "descanso": "60s",
+              "nota": "Mantén la espalda recta y el pecho erguido. Baja hasta que los muslos estén paralelos al suelo o más."
+            },
+            {
+              "nombre": "Peso Muerto Rumano con Mancuernas",
+              "series": 3,
+              "repeticiones": "8-12",
+              "descanso": "60s",
+              "nota": "Siente el estiramiento en los isquiotibiales. Mantén las piernas casi rectas, solo una ligera flexión de rodillas."
+            },
+            {
+              "nombre": "Prensa de Piernas (Máquina)",
+              "series": 3,
+              "repeticiones": "8-12",
+              "descanso": "60s",
+              "nota": "Controla la bajada y la subida. Evita bloquear las rodillas completamente arriba."
+            },
+            {
+              "nombre": "Extensiones de Cuádriceps (Máquina)",
+              "series": 3,
+              "repeticiones": "10-15",
+              "descanso": "60s",
+              "nota": "Contrae fuertemente los cuádriceps arriba, baja lentamente."
+            },
+            {
+              "nombre": "Elevaciones de Gemelos (De pie con mancuernas)",
+              "series": 3,
+              "repeticiones": "15-20",
+              "descanso": "60s",
+              "nota": "Rango completo de movimiento, sube lo más alto posible y baja estirando el gemelo."
+            }
+          ]
+        },
+        {
+          "dia": "Jueves",
+          "enfoque": "Empuje (Pecho, Hombros, Tríceps)",
+          "ejercicios": [
+            {
+              "nombre": "Press Inclinado con Mancuernas",
+              "series": 3,
+              "repeticiones": "8-12",
+              "descanso": "60s",
+              "nota": "Enfocado en la parte superior del pecho. Controla la bajada en 3 segundos."
+            },
+            {
+              "nombre": "Press de Hombros con Mancuernas (De pie)",
+              "series": 3,
+              "repeticiones": "8-12",
+              "descanso": "60s",
+              "nota": "Activa el core para estabilidad. Prioriza hombros, sin impulso excesivo."
+            },
+            {
+              "nombre": "Cruces en Polea Alta (Cables)",
+              "series": 3,
+              "repeticiones": "10-12",
+              "descanso": "60s",
+              "nota": "Aprieta el pecho en el centro del movimiento, siente la contracción."
+            },
+            {
+              "nombre": "Face Pulls (Polea)",
+              "series": 3,
+              "repeticiones": "12-15",
+              "descanso": "60s",
+              "nota": "Excelente para la salud del hombro y deltoides posteriores. Tira hacia tu cara."
+            },
+            {
+              "nombre": "Fondos en Paralelas (Asistido o máquina)",
+              "series": 3,
+              "repeticiones": "8-12",
+              "descanso": "60s",
+              "nota": "Inclínate ligeramente hacia adelante para mayor énfasis en el pecho, o más recto para tríceps."
+            }
+          ]
+        },
+        {
+          "dia": "Viernes",
+          "enfoque": "Tracción (Espalda, Bíceps, Trapecios)",
+          "ejercicios": [
+            {
+              "nombre": "Dominadas (Asistido o Lat Pulldown)",
+              "series": 3,
+              "repeticiones": "8-12",
+              "descanso": "60s",
+              "nota": "Si no puedes hacer dominadas, usa la máquina de jalón al pecho o una máquina asistida."
+            },
+            {
+              "nombre": "Remo con Barra (Pendlay o convencional)",
+              "series": 3,
+              "repeticiones": "8-12",
+              "descanso": "60s",
+              "nota": "Mantén la espalda recta y el torso casi paralelo al suelo. Bajada controlada."
+            },
+            {
+              "nombre": "Remo en T (Máquina o con barra y apoyo)",
+              "series": 3,
+              "repeticiones": "8-12",
+              "descanso": "60s",
+              "nota": "Enfócate en la contracción de la espalda media. No uses impulso."
+            },
+            {
+              "nombre": "Curl Martillo con Mancuernas",
+              "series": 3,
+              "repeticiones": "10-12",
+              "descanso": "60s",
+              "nota": "Agarre neutro, trabaja bíceps y braquial. Controla la fase excéntrica."
+            },
+            {
+              "nombre": "Remo al Mentón con Mancuernas",
+              "series": 3,
+              "repeticiones": "10-12",
+              "descanso": "60s",
+              "nota": "Sube los codos más que la mancuerna. Cuidado con la articulación del hombro."
+            }
+          ]
+        },
+        {
+          "dia": "Sábado",
+          "enfoque": "Piernas y Glúteos",
+          "ejercicios": [
+            {
+              "nombre": "Sentadilla Búlgara con Mancuernas",
+              "series": 3,
+              "repeticiones": "8-12 por pierna",
+              "descanso": "60s",
+              "nota": "Gran ejercicio unilateral. Mantén el equilibrio y enfócate en el glúteo y cuádriceps de la pierna delantera."
+            },
+            {
+              "nombre": "Hip Thrust con Mancuernas",
+              "series": 3,
+              "repeticiones": "10-15",
+              "descanso": "60s",
+              "nota": "Aprieta los glúteos fuertemente en la parte superior del movimiento. Bajada lenta y controlada."
+            },
+            {
+              "nombre": "Zancadas con Mancuernas",
+              "series": 3,
+              "repeticiones": "8-12 por pierna",
+              "descanso": "60s",
+              "nota": "Da un paso largo, baja la rodilla trasera casi hasta el suelo. Mantén el torso erguido."
+            },
+            {
+              "nombre": "Curl Femoral Tumbado (Máquina)",
+              "series": 3,
+              "repeticiones": "10-15",
+              "descanso": "60s",
+              "nota": "Enfócate en la contracción de los isquiotibiales. Baja lentamente en 3 segundos."
+            },
+            {
+              "nombre": "Abducciones de Cadera (Máquina o Banda)",
+              "series": 3,
+              "repeticiones": "15-20",
+              "descanso": "60s",
+              "nota": "Para glúteo medio. Controla el movimiento en ambas fases."
+            }
+          ]
+        }
+      ]
+    },
+    "_ts": 1775329411552
+  },
+  "p2": {
+    "nombre": "Mariana",
+    "avatar": "",
+    "objetivo": "bajar_peso",
+    "nivel": "principiante",
+    "dias": "3",
+    "peso": "55",
+    "estatura": "148",
+    "edad": "20",
+    "medidas": {},
+    "rutina": {
+      "resumen": "Rutina de definición para principiantes, 3 días a la semana, enfocada en glúteos, piernas, y tonificación de brazos y cintura. Combina ejercicios compuestos y de aislamiento para maximizar resultados.",
+      "dias": [
+        {
+          "dia": "Lunes",
+          "enfoque": "Pierna y Glúteo (Fuerza y Volumen)",
+          "ejercicios": [
+            {
+              "nombre": "Sentadilla (Goblet Squat)",
+              "series": 3,
+              "repeticiones": "10-12",
+              "descanso": "60s",
+              "nota": "Usa una mancuerna o kettlebell. Mantén la espalda recta."
+            },
+            {
+              "nombre": "Peso Muerto Rumano con Mancuernas",
+              "series": 3,
+              "repeticiones": "10-12",
+              "descanso": "60s",
+              "nota": "Siente el estiramiento en los isquiotibiales y glúteos."
+            },
+            {
+              "nombre": "Prensa de Piernas",
+              "series": 3,
+              "repeticiones": "10-12",
+              "descanso": "60s",
+              "nota": "Asegura que tus rodillas sigan la línea de tus pies."
+            },
+            {
+              "nombre": "Hip Thrust (Puente de Glúteo)",
+              "series": 3,
+              "repeticiones": "12-15",
+              "descanso": "60s",
+              "nota": "Contrae los glúteos fuertemente en la parte superior."
+            },
+            {
+              "nombre": "Plancha",
+              "series": 3,
+              "repeticiones": "30-45s",
+              "descanso": "60s",
+              "nota": "Mantén el cuerpo recto y el abdomen contraído."
+            }
+          ]
+        },
+        {
+          "dia": "Miércoles",
+          "enfoque": "Cuerpo Completo (Énfasis Superior y Core)",
+          "ejercicios": [
+            {
+              "nombre": "Press de Banca con Mancuernas",
+              "series": 3,
+              "repeticiones": "10-12",
+              "descanso": "60s",
+              "nota": "Controla el movimiento, evita que los codos bajen más que el torso."
+            },
+            {
+              "nombre": "Remo con Mancuerna (a una mano)",
+              "series": 3,
+              "repeticiones": "10-12 por brazo",
+              "descanso": "60s",
+              "nota": "Concéntrate en jalar con la espalda, no solo con el brazo."
+            },
+            {
+              "nombre": "Press de Hombros con Mancuernas (Sentado)",
+              "series": 3,
+              "repeticiones": "10-12",
+              "descanso": "60s",
+              "nota": "Empuja las mancuernas hacia arriba sin arquear demasiado la espalda."
+            },
+            {
+              "nombre": "Curl de Bíceps con Mancuernas",
+              "series": 3,
+              "repeticiones": "10-12",
+              "descanso": "60s",
+              "nota": "Mantén los codos pegados al cuerpo, evita balancear."
+            },
+            {
+              "nombre": "Extensiones de Tríceps (Copa con Mancuerna)",
+              "series": 3,
+              "repeticiones": "10-12",
+              "descanso": "60s",
+              "nota": "Estira completamente los brazos hacia arriba, controla la bajada."
+            }
+          ]
+        },
+        {
+          "dia": "Viernes",
+          "enfoque": "Pierna y Glúteo (Aislamiento y Forma)",
+          "ejercicios": [
+            {
+              "nombre": "Zancadas con Mancuernas",
+              "series": 3,
+              "repeticiones": "10-12 por pierna",
+              "descanso": "60s",
+              "nota": "Da un paso largo y baja la rodilla trasera casi hasta el suelo."
+            },
+            {
+              "nombre": "Extensiones de Cuádriceps en Máquina",
+              "series": 3,
+              "repeticiones": "12-15",
+              "descanso": "60s",
+              "nota": "Controla el movimiento, no dejes caer el peso bruscamente."
+            },
+            {
+              "nombre": "Curl Femoral en Máquina",
+              "series": 3,
+              "repeticiones": "12-15",
+              "descanso": "60s",
+              "nota": "Concéntrate en contraer los isquiotibiales al jalar."
+            },
+            {
+              "nombre": "Patada de Glúteo en Máquina/Cable",
+              "series": 3,
+              "repeticiones": "12-15 por pierna",
+              "descanso": "60s",
+              "nota": "Extiende la pierna hacia atrás contrayendo el glúteo."
+            },
+            {
+              "nombre": "Abducción de Cadera en Máquina",
+              "series": 3,
+              "repeticiones": "15-20",
+              "descanso": "60s",
+              "nota": "Abre las piernas lentamente, siente la contracción en los glúteos laterales."
+            }
+          ]
+        }
+      ]
+    },
+    "_ts": 1775352644087
+  },
+  "duo": null,
+  "nutri": {
+    "p1": {
+      "resumen": "Plan de alimentación semanal diseñado para Abelardo, un principiante de 18 años con un peso bajo para su estatura (BMI 17.09). El objetivo principal es optimizar la composición corporal y promover hábitos alimenticios saludables, en lugar de una restricción calórica para una pérdida de peso que no sería apropiada en su situación actual. El plan se enfoca en proporcionar nutrientes esenciales para el crecimiento, desarrollo y energía, con un aporte calórico aproximado de 1900-2000 calorías diarias. Se prioriza la ingesta de proteínas de alta calidad, carbohidratos complejos y grasas saludables para apoyar la recuperación muscular y el bienestar general.",
+      "dias": [
+        {
+          "dia": "Lunes",
+          "comidas": [
+            {
+              "nombre": "Desayuno",
+              "alimentos": [
+                "3 huevos revueltos con 1 cucharadita de aceite de oliva, tomate y cebolla",
+                "1 arepa mediana (aprox. 80g masa) con 30g de queso fresco bajo en grasa",
+                "1 taza (200ml) de leche descremada",
+                "1 porción de fruta (ej. 1 taza de papaya picada)"
+              ],
+              "calorias_aprox": 600,
+              "proteina_g": 35
+            },
+            {
+              "nombre": "Almuerzo",
+              "alimentos": [
+                "120g de pechuga de pollo a la plancha",
+                "1 taza de arroz integral cocido (unos 60g crudo)",
+                "1/2 taza de lentejas guisadas",
+                "Ensalada variada (lechuga, tomate, pepino) con 1 cucharadita de aceite de oliva y vinagre",
+                "1/4 de aguacate mediano"
+              ],
+              "calorias_aprox": 700,
+              "proteina_g": 40
+            },
+            {
+              "nombre": "Cena",
+              "alimentos": [
+                "100g de pescado blanco (tilapia o basa) al horno o a la plancha",
+                "1 plátano maduro al horno o cocido (mediano, aprox. 150g)",
+                "1 taza de brócoli al vapor"
+              ],
+              "calorias_aprox": 650,
+              "proteina_g": 30
+            }
+          ]
+        },
+        {
+          "dia": "Martes",
+          "comidas": [
+            {
+              "nombre": "Desayuno",
+              "alimentos": [
+                "1 taza de avena en hojuelas cocida con 200ml de leche descremada",
+                "1 cucharada de semillas de chía",
+                "1/2 taza de frutos rojos (fresas, moras)",
+                "1 cucharadita de miel"
+              ],
+              "calorias_aprox": 580,
+              "proteina_g": 20
+            },
+            {
+              "nombre": "Almuerzo",
+              "alimentos": [
+                "120g de carne de res magra (posta o lomo) a la plancha",
+                "1 taza de arroz blanco cocido",
+                "1/2 taza de frijoles rojos guisados",
+                "Ensalada de repollo y zanahoria rallada con limón",
+                "1/4 de aguacate mediano"
+              ],
+              "calorias_aprox": 720,
+              "proteina_g": 40
+            },
+            {
+              "nombre": "Cena",
+              "alimentos": [
+                "100g de atún en agua (escurrido)",
+                "2 papas pequeñas cocidas (aprox. 200g)",
+                "Ensalada mixta (tomate, cebolla, cilantro) con 1 cucharada de aceite de oliva"
+              ],
+              "calorias_aprox": 650,
+              "proteina_g": 35
+            }
+          ]
+        },
+        {
+          "dia": "Miércoles",
+          "comidas": [
+            {
+              "nombre": "Desayuno",
+              "alimentos": [
+                "2 rebanadas de pan integral tostado",
+                "2 huevos cocidos o escalfados",
+                "1/2 aguacate mediano",
+                "1 taza (200ml) de jugo natural de naranja (sin azúcar añadido)"
+              ],
+              "calorias_aprox": 600,
+              "proteina_g": 25
+            },
+            {
+              "nombre": "Almuerzo",
+              "alimentos": [
+                "120g de muslo de pollo sin piel al horno",
+                "1 taza de yuca cocida (aprox. 150g)",
+                "1/2 taza de garbanzos guisados",
+                "Ensalada de espinacas y champiñones"
+              ],
+              "calorias_aprox": 700,
+              "proteina_g": 40
+            },
+            {
+              "nombre": "Cena",
+              "alimentos": [
+                "120g de carne de cerdo magra (lomo) a la plancha",
+                "1 taza de arroz integral cocido",
+                "1/2 taza de arvejas frescas"
+              ],
+              "calorias_aprox": 650,
+              "proteina_g": 35
+            }
+          ]
+        },
+        {
+          "dia": "Jueves",
+          "comidas": [
+            {
+              "nombre": "Desayuno",
+              "alimentos": [
+                "Batido: 1 banano, 1 taza (200ml) de leche descremada, 2 cucharadas de avena, 1 cucharada de mantequilla de maní sin azúcar"
+              ],
+              "calorias_aprox": 600,
+              "proteina_g": 20
+            },
+            {
+              "nombre": "Almuerzo",
+              "alimentos": [
+                "120g de pechuga de pollo desmechada en salsa criolla (tomate, cebolla, pimentón)",
+                "1 taza de arroz blanco cocido",
+                "1/2 taza de ensalada de papa (papa cocida, cilantro, cebolla, 1 cdta de aceite de oliva)",
+                "Ensalada de remolacha y zanahoria cocidas"
+              ],
+              "calorias_aprox": 700,
+              "proteina_g": 40
+            },
+            {
+              "nombre": "Cena",
+              "alimentos": [
+                "100g de huevos pericos (3 huevos revueltos con tomate y cebolla)",
+                "2 tostadas de pan integral",
+                "1/2 taza de frijoles refritos"
+              ],
+              "calorias_aprox": 650,
+              "proteina_g": 30
+            }
+          ]
+        },
+        {
+          "dia": "Viernes",
+          "comidas": [
+            {
+              "nombre": "Desayuno",
+              "alimentos": [
+                "2 arepas medianas (aprox. 100g masa total)",
+                "2 huevos fritos en 1 cucharadita de aceite de oliva",
+                "1 taza (200ml) de café con leche descremada",
+                "1 porción de fruta (ej. 1 rodaja de piña)"
+              ],
+              "calorias_aprox": 600,
+              "proteina_g": 25
+            },
+            {
+              "nombre": "Almuerzo",
+              "alimentos": [
+                "150g de mojarra frita (en aceite saludable, escurrida) o a la plancha",
+                "1 taza de arroz con coco (moderado en grasa)",
+                "Ensalada de aguacate, tomate y cebolla",
+                "1/2 taza de patacones (2-3 unidades pequeñas)"
+              ],
+              "calorias_aprox": 750,
+              "proteina_g": 45
+            },
+            {
+              "nombre": "Cena",
+              "alimentos": [
+                "120g de carne molida magra guisada con verduras (zanahoria, arveja)",
+                "1 papa mediana cocida",
+                "Ensalada verde"
+              ],
+              "calorias_aprox": 600,
+              "proteina_g": 35
+            }
+          ]
+        },
+        {
+          "dia": "Sábado",
+          "comidas": [
+            {
+              "nombre": "Desayuno",
+              "alimentos": [
+                "1 taza de avena cocida con agua o leche descremada",
+                "1/2 taza de mezcla de frutos secos (maní, nueces, almendras - aprox. 30g)",
+                "1/2 manzana picada",
+                "1 taza de yogur griego natural sin azúcar"
+              ],
+              "calorias_aprox": 650,
+              "proteina_g": 30
+            },
+            {
+              "nombre": "Almuerzo",
+              "alimentos": [
+                "120g de pollo asado (muslo o contramuslo sin piel)",
+                "1 taza de arroz integral",
+                "1/2 taza de ensalada de frijol cabecita negra (con tomate, cebolla, cilantro)",
+                "Plátano verde cocido (1 mediano, aprox. 150g)"
+              ],
+              "calorias_aprox": 700,
+              "proteina_g": 40
+            },
+            {
+              "nombre": "Cena",
+              "alimentos": [
+                "Sopa de verduras con trozos de pollo (1 taza de caldo, 100g pollo, zanahoria, papa, apio)",
+                "2 rebanadas de pan integral"
+              ],
+              "calorias_aprox": 600,
+              "proteina_g": 30
+            }
+          ]
+        },
+        {
+          "dia": "Domingo",
+          "comidas": [
+            {
+              "nombre": "Desayuno",
+              "alimentos": [
+                "Caldo de costilla (1 taza de caldo con 80g de carne magra de costilla)",
+                "1 papa mediana cocida",
+                "1 arepa mediana",
+                "1 taza de café con leche descremada"
+              ],
+              "calorias_aprox": 650,
+              "proteina_g": 30
+            },
+            {
+              "nombre": "Almuerzo",
+              "alimentos": [
+                "150g de carne asada (punta de anca o lomo, magra)",
+                "1 taza de arroz blanco",
+                "1/2 taza de maduro cocido o asado",
+                "Ensalada grande de lechuga, tomate, pepino y aguacate"
+              ],
+              "calorias_aprox": 750,
+              "proteina_g": 45
+            },
+            {
+              "nombre": "Cena",
+              "alimentos": [
+                "Ensalada grande con 100g de atún en agua, garbanzos (1/2 taza), lechuga, tomate, cebolla, pimentón, 1 cucharada de aceite de oliva",
+                "2 galletas integrales"
+              ],
+              "calorias_aprox": 550,
+              "proteina_g": 35
+            }
+          ]
+        }
+      ],
+      "consejos": [
+        "Prioriza la Hidratación: Bebe al menos 2-3 litros de agua al día. Es fundamental para el metabolismo, la saciedad y el rendimiento general. Evita bebidas azucaradas y jugos procesados.",
+        "Actividad Física Gradual: Como principiante, incorpora actividad física de forma gradual. Caminatas diarias de 30-45 minutos, o iniciar con una rutina de fuerza ligera 2-3 veces por semana, serán beneficiosas para tu composición corporal y salud general.",
+        "Escucha a tu Cuerpo y Sé Paciente: Este plan busca nutrirte adecuadamente y sentar las bases para una salud duradera. Tu cuerpo es único; observa cómo te sientes, ajusta las porciones si es necesario (sin salirte drásticamente del rango calórico) y recuerda que los cambios saludables toman tiempo y constancia."
+      ]
+    },
+    "p2": {
+      "resumen": "Plan de alimentación semanal para Mariana, enfocado en un déficit calórico de aproximadamente 1350-1400 kcal diarias para pérdida de peso. Se busca una ingesta alta de proteína (~110g) para favorecer la saciedad y el mantenimiento muscular, con un balance de carbohidratos complejos y grasas saludables.",
+      "dias": [
+        {
+          "dia": "Lunes",
+          "comidas": [
+            {
+              "nombre": "Desayuno",
+              "alimentos": [
+                "1 arepa de maíz pequeña (70g)",
+                "2 huevos revueltos (120g) con tomate y cebolla",
+                "1 tajada de aguacate (30g)",
+                "1 taza de café negro sin azúcar"
+              ],
+              "calorias_aprox": 430,
+              "proteina_g": 26
+            },
+            {
+              "nombre": "Almuerzo",
+              "alimentos": [
+                "150g de pechuga de pollo a la plancha",
+                "1/2 taza de arroz integral cocido (80g)",
+                "1 taza de ensalada mixta (lechuga, tomate, pepino) con 1 cucharadita de aceite de oliva y vinagre"
+              ],
+              "calorias_aprox": 470,
+              "proteina_g": 42
+            },
+            {
+              "nombre": "Cena",
+              "alimentos": [
+                "150g de tilapia al horno con hierbas",
+                "1 taza de vegetales al vapor (brócoli, zanahoria)",
+                "1/2 plátano maduro al horno (70g)"
+              ],
+              "calorias_aprox": 420,
+              "proteina_g": 38
+            }
+          ]
+        },
+        {
+          "dia": "Martes",
+          "comidas": [
+            {
+              "nombre": "Desayuno",
+              "alimentos": [
+                "1 taza de avena en hojuelas (40g) cocida en agua con 1/2 taza de leche descremada",
+                "1/2 banano (50g)",
+                "1 cucharada de semillas de chía"
+              ],
+              "calorias_aprox": 440,
+              "proteina_g": 22
+            },
+            {
+              "nombre": "Almuerzo",
+              "alimentos": [
+                "150g de carne de res magra (posta) a la plancha",
+                "1/2 taza de frijoles rojos cocidos (100g)",
+                "1 papa pequeña (100g) cocida",
+                "1 taza de ensalada de repollo y zanahoria"
+              ],
+              "calorias_aprox": 480,
+              "proteina_g": 40
+            },
+            {
+              "nombre": "Cena",
+              "alimentos": [
+                "1.5 tazas de sopa de lentejas casera (sin papa) con 100g de pollo desmenuzado",
+                "1 arepa pequeña (50g)"
+              ],
+              "calorias_aprox": 420,
+              "proteina_g": 35
+            }
+          ]
+        },
+        {
+          "dia": "Miércoles",
+          "comidas": [
+            {
+              "nombre": "Desayuno",
+              "alimentos": [
+                "Batido de proteína: 1 scoop de proteína de suero (25g proteína), 1/2 taza de leche descremada, 1/2 taza de frutos rojos congelados",
+                "1 tostada integral (30g) con 1 cucharadita de mantequilla de maní natural"
+              ],
+              "calorias_aprox": 450,
+              "proteina_g": 30
+            },
+            {
+              "nombre": "Almuerzo",
+              "alimentos": [
+                "150g de pechuga de pollo desmenuzada con hogao (sin aceite excesivo)",
+                "2 yucas cocidas pequeñas (120g)",
+                "1 taza de ensalada de aguacate (50g) y tomate"
+              ],
+              "calorias_aprox": 470,
+              "proteina_g": 40
+            },
+            {
+              "nombre": "Cena",
+              "alimentos": [
+                "Omelette de 3 claras de huevo y 1 yema con espinacas y champiñones",
+                "1 tajada de pan integral (30g)",
+                "1 fruta pequeña (pera o manzana, 100g)"
+              ],
+              "calorias_aprox": 410,
+              "proteina_g": 32
+            }
+          ]
+        },
+        {
+          "dia": "Jueves",
+          "comidas": [
+            {
+              "nombre": "Desayuno",
+              "alimentos": [
+                "2 huevos cocidos",
+                "1 tajada de pan integral (30g) con 1/4 de aguacate (40g)",
+                "1 taza de papaya picada (150g)",
+                "1 taza de té verde"
+              ],
+              "calorias_aprox": 420,
+              "proteina_g": 24
+            },
+            {
+              "nombre": "Almuerzo",
+              "alimentos": [
+                "150g de pescado blanco (corvina o mojarra) al vapor o a la plancha",
+                "1/2 taza de arroz blanco cocido (80g)",
+                "1 taza de ensalada de remolacha y zanahoria rallada"
+              ],
+              "calorias_aprox": 460,
+              "proteina_g": 38
+            },
+            {
+              "nombre": "Cena",
+              "alimentos": [
+                "Ensalada grande con 120g de atún en agua (escurrido)",
+                "Lechuga, tomate, cebolla",
+                "1/2 taza de garbanzos cocidos",
+                "Aderezo ligero (limón y hierbas)"
+              ],
+              "calorias_aprox": 430,
+              "proteina_g": 36
+            }
+          ]
+        },
+        {
+          "dia": "Viernes",
+          "comidas": [
+            {
+              "nombre": "Desayuno",
+              "alimentos": [
+                "1 arepa de maíz pequeña (70g)",
+                "2 huevos pericos (revueltos con tomate y cebolla)",
+                "1 tajada de queso fresco bajo en grasa (30g)",
+                "1 vaso de jugo de naranja natural sin azúcar (150ml)"
+              ],
+              "calorias_aprox": 440,
+              "proteina_g": 28
+            },
+            {
+              "nombre": "Almuerzo",
+              "alimentos": [
+                "150g de carne molida magra guisada",
+                "1/2 taza de lentejas cocidas (100g)",
+                "1 plátano verde cocido (100g)",
+                "1 taza de ensalada verde"
+              ],
+              "calorias_aprox": 490,
+              "proteina_g": 40
+            },
+            {
+              "nombre": "Cena",
+              "alimentos": [
+                "1.5 tazas de crema de auyama casera (sin crema de leche) con 100g de pollo desmenuzado",
+                "2 tostadas integrales"
+              ],
+              "calorias_aprox": 410,
+              "proteina_g": 34
+            }
+          ]
+        },
+        {
+          "dia": "Sábado",
+          "comidas": [
+            {
+              "nombre": "Desayuno",
+              "alimentos": [
+                "2 pancakes de avena (hechos con 1/2 taza de avena, 2 claras de huevo, un poco de leche descremada)",
+                "1/2 taza de frutos rojos",
+                "1 cucharadita de miel (5g, opcional)"
+              ],
+              "calorias_aprox": 430,
+              "proteina_g": 25
+            },
+            {
+              "nombre": "Almuerzo",
+              "alimentos": [
+                "150g de pollo al horno con vegetales (pimentón, cebolla, calabacín)",
+                "1/2 taza de arroz integral cocido (80g)"
+              ],
+              "calorias_aprox": 470,
+              "proteina_g": 40
+            },
+            {
+              "nombre": "Cena",
+              "alimentos": [
+                "150g de yogur griego natural sin azúcar",
+                "1/4 taza de granola baja en azúcar",
+                "1/2 taza de mango picado"
+              ],
+              "calorias_aprox": 400,
+              "proteina_g": 30
+            }
+          ]
+        },
+        {
+          "dia": "Domingo",
+          "comidas": [
+            {
+              "nombre": "Desayuno",
+              "alimentos": [
+                "Muesli: 1/2 taza de avena, 1/2 taza de leche descremada, 1 cucharada de semillas de chía, 1/2 taza de melón picado",
+                "2 huevos duros"
+              ],
+              "calorias_aprox": 450,
+              "proteina_g": 28
+            },
+            {
+              "nombre": "Almuerzo",
+              "alimentos": [
+                "150g de carne de cerdo magra (lomo) asada",
+                "1 yuca cocida (100g)",
+                "1 taza de ensalada de aguacate (30g) y tomate"
+              ],
+              "calorias_aprox": 480,
+              "proteina_g": 40
+            },
+            {
+              "nombre": "Cena",
+              "alimentos": [
+                "1.5 tazas de sopa de pollo con vegetales (sin papa ni pasta)",
+                "1 huevo cocido",
+                "1 tostada integral"
+              ],
+              "calorias_aprox": 400,
+              "proteina_g": 32
+            }
+          ]
+        }
+      ],
+      "consejos": [
+        "**Hidratación:** Bebe al menos 8 vasos de agua al día. Es fundamental para el metabolismo y la saciedad.",
+        "**Actividad Física:** Incorpora caminatas diarias de 30-45 minutos. Como principiante, es un excelente punto de partida para aumentar tu gasto calórico y mejorar tu bienestar.",
+        "**Escucha a tu cuerpo:** Presta atención a las señales de hambre y saciedad. Evita comer por aburrimiento o estrés.",
+        "**Planifica tus comidas:** Prepara tus alimentos con antelación para evitar opciones menos saludables por falta de tiempo.",
+        "**Descanso:** Asegura 7-9 horas de sueño de calidad cada noche. El descanso adecuado es crucial para la regulación hormonal y la pérdida de peso.",
+        "**Paciencia y Consistencia:** La pérdida de peso saludable es un proceso gradual. Sé constante con tu alimentación y actividad física, y celebra los pequeños progresos."
+      ]
+    }
+  },
+  "_ts": 1775357019699
+}
