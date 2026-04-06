@@ -1,0 +1,2511 @@
+<!DOCTYPE html>
+<!-- saved from url=(0053)file:///C:/Users/USUARIO/Downloads/GymTrack_sync.html -->
+<html lang="es"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GymTrack — Control Total</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./GymTrack — Control Total 6_files/css2" rel="stylesheet">
+<style>
+:root {
+  --bg: #0C0C0F;
+  --sur: #141417;
+  --sur2: #1C1C21;
+  --sur3: #242429;
+  --bor: #2A2A32;
+  --bor2: #363640;
+  --txt: #F0EEF8;
+  --mut: #7A7A8C;
+  --mut2: #55555F;
+  --p1: #C8F563;
+  --p1d: #9DC940;
+  --p1bg: rgba(200,245,99,0.08);
+  --p1bor: rgba(200,245,99,0.2);
+  --p2: #63C8F5;
+  --p2d: #40A0C9;
+  --p2bg: rgba(99,200,245,0.08);
+  --p2bor: rgba(99,200,245,0.2);
+  --ok: #4ADE80;
+  --warn: #FBBF24;
+  --err: #F87171;
+  --okbg: rgba(74,222,128,0.1);
+  --errbg: rgba(248,113,113,0.1);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--txt); min-height:100vh; overflow-x:hidden; }
+body::before {
+  content:''; position:fixed; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:9999; opacity:.4;
+}
+
+/* LOGIN */
+#loginScreen { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:2rem; background:radial-gradient(ellipse 70% 60% at 50% 0%,rgba(200,245,99,0.06) 0%,transparent 70%); }
+.login-box { width:100%; max-width:440px; }
+.login-logo { font-family:'Bebas Neue',sans-serif; font-size:3.5rem; letter-spacing:.08em; line-height:1; margin-bottom:.2rem; background:linear-gradient(135deg,var(--p1) 0%,#fff 60%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.login-sub { color:var(--mut); font-size:.8rem; letter-spacing:.12em; text-transform:uppercase; margin-bottom:2.5rem; }
+.login-sep { font-size:.7rem; color:var(--mut2); letter-spacing:.12em; text-transform:uppercase; text-align:center; position:relative; margin:1.5rem 0 1.2rem; }
+.login-sep::before,.login-sep::after { content:''; position:absolute; top:50%; width:38%; height:1px; background:var(--bor); }
+.login-sep::before { left:0; } .login-sep::after { right:0; }
+.pcard { border:1.5px solid var(--bor); border-radius:16px; padding:1.2rem 1.4rem; margin-bottom:.8rem; cursor:pointer; display:flex; align-items:center; gap:14px; background:var(--sur); transition:all .15s; font-family:'DM Sans',sans-serif; width:100%; text-align:left; }
+.pcard:hover { border-color:var(--bor2); background:var(--sur2); transform:translateY(-1px); }
+.pcard.p1:hover { border-color:var(--p1bor); background:var(--p1bg); }
+.pcard.p2:hover { border-color:var(--p2bor); background:var(--p2bg); }
+.pcard.duo:hover { border-color:rgba(200,245,99,0.3); background:linear-gradient(135deg,var(--p1bg),var(--p2bg)); }
+.pcard-avatar { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; flex-shrink:0; }
+.pcard-name { font-size:.95rem; font-weight:600; color:var(--txt); }
+.pcard-desc { font-size:.75rem; color:var(--mut); margin-top:2px; }
+.pcard-arrow { margin-left:auto; color:var(--mut2); font-size:1rem; }
+
+/* HEADER */
+#appWrap { display:none; }
+#appWrap.on { display:block; }
+.hdr { background:var(--sur); border-bottom:1px solid var(--bor); padding:0 1.4rem; display:flex; align-items:center; justify-content:space-between; height:52px; position:sticky; top:0; z-index:100; gap:8px; }
+.hlogo { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:.1em; display:flex; align-items:center; gap:8px; }
+.hbadge { font-family:'DM Mono',monospace; font-size:.6rem; font-weight:500; letter-spacing:.1em; padding:2px 8px; border-radius:4px; border:1px solid; }
+.hbadge.p1 { color:var(--p1); border-color:var(--p1bor); background:var(--p1bg); }
+.hbadge.p2 { color:var(--p2); border-color:var(--p2bor); background:var(--p2bg); }
+.hbadge.duo { color:#fff; border-color:rgba(255,255,255,.2); background:linear-gradient(90deg,var(--p1bg),var(--p2bg)); }
+.hsave { font-size:.7rem; color:var(--ok); opacity:0; transition:opacity .4s; display:flex; align-items:center; gap:4px; }
+.hsave.show { opacity:1; }
+.upill { display:flex; align-items:center; gap:6px; padding:4px 12px; border-radius:99px; font-size:.75rem; font-weight:500; border:1px solid var(--bor); background:var(--sur2); }
+.udot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+
+/* NAV TABS */
+.navtabs { display:flex; gap:0; padding:0 1.4rem; background:var(--sur); border-bottom:1px solid var(--bor); overflow-x:auto; }
+.ntab { padding:12px 16px; border:none; background:transparent; font-family:'DM Sans',sans-serif; font-size:.75rem; font-weight:500; color:var(--mut); cursor:pointer; border-bottom:2px solid transparent; transition:all .13s; margin-bottom:-1px; white-space:nowrap; flex-shrink:0; letter-spacing:.03em; }
+.ntab:hover { color:var(--txt); }
+.ntab.on.p1 { color:var(--p1); border-bottom-color:var(--p1); }
+.ntab.on.p2 { color:var(--p2); border-bottom-color:var(--p2); }
+.ntab.on.duo { color:#fff; border-bottom-color:#fff; }
+
+/* VIEWS */
+.view { display:none; padding:1.5rem; max-width:1100px; margin:0 auto; }
+.view.on { display:block; }
+
+/* CARDS */
+.card { background:var(--sur); border:1px solid var(--bor); border-radius:16px; padding:1.4rem; margin-bottom:1rem; }
+.ctitle { font-family:'Bebas Neue',sans-serif; font-size:1rem; letter-spacing:.08em; margin-bottom:1rem; display:flex; align-items:center; gap:8px; color:var(--mut); }
+.ctitle span { color:var(--txt); font-size:1.1rem; }
+
+/* STAT GRID */
+.sgrid { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:1rem; }
+@media(min-width:560px) { .sgrid { grid-template-columns:repeat(4,1fr); } }
+.scard { background:var(--sur2); border-radius:10px; padding:.85rem .6rem; text-align:center; border:1px solid var(--bor); }
+.sval { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; letter-spacing:.04em; line-height:1.1; }
+.slbl { font-size:.65rem; color:var(--mut); margin-top:3px; letter-spacing:.08em; text-transform:uppercase; }
+
+/* BUTTONS */
+.btn { display:inline-flex; align-items:center; gap:5px; padding:8px 16px; border-radius:8px; font-family:'DM Sans',sans-serif; font-size:.78rem; font-weight:500; cursor:pointer; border:none; transition:all .13s; letter-spacing:.02em; }
+.btn:disabled { opacity:.35; cursor:not-allowed; }
+.bs { background:var(--sur2); color:var(--txt); border:1px solid var(--bor); }
+.bs:hover:not(:disabled) { background:var(--sur3); }
+.bp1 { background:var(--p1); color:#0C0C0F; font-weight:600; }
+.bp1:hover:not(:disabled) { background:var(--p1d); }
+.bp2 { background:var(--p2); color:#0C0C0F; font-weight:600; }
+.bp2:hover:not(:disabled) { background:var(--p2d); }
+.bpduo { background:linear-gradient(90deg,var(--p1),var(--p2)); color:#0C0C0F; font-weight:600; }
+.bpduo:hover:not(:disabled) { filter:brightness(1.08); }
+.bsm { padding:5px 10px; font-size:.7rem; border-radius:6px; }
+.br { background:var(--errbg); color:var(--err); border:1px solid rgba(248,113,113,0.3); }
+.br:hover:not(:disabled) { background:var(--err); color:#fff; }
+
+/* INPUTS */
+input[type=text],input[type=number],input[type=password],textarea,select { width:100%; background:var(--sur2); border:1.5px solid var(--bor); border-radius:8px; padding:8px 12px; font-family:'DM Sans',sans-serif; font-size:.82rem; color:var(--txt); outline:none; transition:border-color .12s; }
+input:focus,textarea:focus,select:focus { border-color:var(--bor2); }
+select { background:var(--sur2); }
+.flbl { font-size:.7rem; font-weight:500; color:var(--mut); display:block; margin-bottom:4px; letter-spacing:.04em; text-transform:uppercase; }
+
+/* BODYMAP */
+.bodymap-wrap { display:flex; gap:1.5rem; align-items:flex-start; flex-wrap:wrap; }
+.bodymap-svg-wrap { flex-shrink:0; position:relative; width:200px; }
+.bodymap-svg-wrap svg { width:100%; height:auto; }
+.bpoint { cursor:pointer; transition:all .15s; }
+.bpoint circle { transition:all .2s; animation:pulse-point 2.5s ease-in-out infinite; }
+@keyframes pulse-point { 0%,100% { r:6; opacity:.9; } 50% { r:8; opacity:1; } }
+.bpoint:hover circle { r:10 !important; animation:none; }
+.bpoint.has-data circle { animation:pulse-has 2s ease-in-out infinite; }
+@keyframes pulse-has { 0%,100% { r:6; } 50% { r:9; } }
+.bodymap-measures { flex:1; min-width:220px; }
+.mzone { background:var(--sur2); border:1px solid var(--bor); border-radius:10px; padding:.75rem 1rem; margin-bottom:.5rem; display:flex; align-items:center; gap:10px; cursor:pointer; transition:all .13s; }
+.mzone:hover { border-color:var(--bor2); background:var(--sur3); }
+.mzone.active { border-color:var(--p1bor); background:var(--p1bg); }
+.mzone.active.p2 { border-color:var(--p2bor); background:var(--p2bg); }
+.mzone-ico { font-size:1rem; flex-shrink:0; }
+.mzone-name { font-size:.8rem; font-weight:500; flex:1; }
+.mzone-val { font-family:'DM Mono',monospace; font-size:.8rem; font-weight:500; }
+.mzone-diff { font-size:.65rem; padding:2px 6px; border-radius:4px; font-weight:600; }
+.diff-up { background:var(--okbg); color:var(--ok); }
+.diff-down { background:var(--errbg); color:var(--err); }
+.measure-editor { background:var(--sur3); border:1px solid var(--bor2); border-radius:12px; padding:1rem 1.2rem; margin-bottom:.8rem; display:none; }
+.measure-editor.show { display:block; }
+.med-row { display:flex; gap:8px; align-items:flex-end; margin-bottom:.5rem; }
+.med-row .fg { flex:1; }
+.med-history { margin-top:.6rem; }
+.med-hist-item { display:flex; justify-content:space-between; font-size:.72rem; padding:4px 0; border-bottom:1px solid var(--bor); color:var(--mut); }
+.med-hist-item:last-child { border-bottom:none; }
+
+/* RUTINA */
+.rutina-day { background:var(--sur2); border:1px solid var(--bor); border-radius:12px; padding:.9rem 1.1rem; margin-bottom:.6rem; }
+.rutina-day-title { font-family:'Bebas Neue',sans-serif; font-size:.95rem; letter-spacing:.08em; margin-bottom:.6rem; display:flex; align-items:center; gap:8px; }
+.rutina-day-title .dday { font-size:.65rem; font-family:'DM Sans',sans-serif; font-weight:600; padding:2px 8px; border-radius:99px; letter-spacing:.06em; text-transform:uppercase; }
+.ejercicio { display:flex; align-items:center; gap:10px; padding:6px 0; border-bottom:1px solid var(--bor); font-size:.8rem; }
+.ejercicio:last-child { border-bottom:none; }
+.ej-num { width:22px; height:22px; border-radius:50%; background:var(--sur3); display:flex; align-items:center; justify-content:center; font-size:.65rem; font-weight:600; color:var(--mut); flex-shrink:0; }
+.ej-name { flex:1; font-weight:500; }
+.ej-series { font-family:'DM Mono',monospace; font-size:.72rem; color:var(--mut); white-space:nowrap; }
+
+/* SALA DUO */
+.duo-split { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:1rem; }
+@media(max-width:640px) { .duo-split { grid-template-columns:1fr; } }
+.duo-col { border-radius:12px; border:1px solid var(--bor); overflow:hidden; }
+.duo-col-hdr { padding:.6rem 1rem; font-family:'Bebas Neue',sans-serif; font-size:.9rem; letter-spacing:.08em; display:flex; align-items:center; gap:8px; }
+.duo-col-body { padding:.6rem 1rem .8rem; }
+.maquina-card { background:var(--sur3); border-radius:10px; margin-bottom:.6rem; overflow:hidden; border:1px solid var(--bor); }
+.maquina-hdr { display:flex; align-items:center; gap:8px; padding:.55rem .8rem; font-weight:600; font-size:.82rem; border-bottom:1px solid var(--bor); }
+.maquina-ico { font-size:1rem; }
+.maquina-rows { padding:.4rem .8rem .6rem; }
+.maquina-row { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:.35rem; }
+.maquina-tag { font-family:'DM Mono',monospace; font-size:.68rem; padding:2px 7px; border-radius:5px; background:var(--sur2); border:1px solid var(--bor); color:var(--mut); white-space:nowrap; }
+.maquina-tag.accent { color:inherit; background:inherit; }
+.libre-card { display:flex; align-items:center; gap:10px; padding:.55rem .8rem; background:var(--sur2); border-radius:8px; margin-bottom:.4rem; font-size:.8rem; border:1px solid var(--bor); }
+.libre-ico { font-size:.9rem; }
+.libre-name { flex:1; font-weight:500; }
+.libre-detail { font-family:'DM Mono',monospace; font-size:.7rem; color:var(--mut); }
+
+/* INFO BOXES */
+.cfg-section { margin-bottom:1.2rem; }
+.cfg-section-title { font-size:.7rem; font-weight:600; color:var(--mut); letter-spacing:.1em; text-transform:uppercase; margin-bottom:.7rem; padding-bottom:.4rem; border-bottom:1px solid var(--bor); }
+.ibox { background:rgba(99,200,245,0.08); border:1px solid rgba(99,200,245,0.2); border-radius:8px; padding:.7rem .9rem; font-size:.78rem; color:#91d8f7; margin-bottom:.8rem; line-height:1.6; }
+.wbox { background:rgba(251,191,36,0.08); border:1px solid rgba(251,191,36,0.2); border-radius:8px; padding:.7rem .9rem; font-size:.78rem; color:#fcd34d; margin-bottom:.8rem; line-height:1.6; }
+.okbox { background:var(--okbg); border:1px solid rgba(74,222,128,0.2); border-radius:8px; padding:.7rem .9rem; font-size:.78rem; color:#86efac; margin-bottom:.8rem; line-height:1.6; }
+
+/* TOAST */
+.toast { position:fixed; bottom:1.2rem; right:1.2rem; background:var(--sur3); border:1px solid var(--bor2); color:var(--txt); padding:10px 16px; border-radius:10px; font-size:.78rem; font-weight:500; z-index:9999; opacity:0; transform:translateY(6px); transition:all .25s; pointer-events:none; max-width:300px; line-height:1.4; }
+.toast.on { opacity:1; transform:translateY(0); }
+.toast.tg { background:var(--okbg); border-color:rgba(74,222,128,0.3); color:var(--ok); }
+.toast.tr { background:var(--errbg); border-color:rgba(248,113,113,0.3); color:var(--err); }
+
+/* MODAL */
+.modal-bg { position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:200; display:none; align-items:center; justify-content:center; padding:1rem; }
+.modal-bg.on { display:flex; }
+.modal { background:var(--sur); border:1px solid var(--bor2); border-radius:16px; padding:1.6rem; width:100%; max-width:400px; }
+.modal-t { font-family:'Bebas Neue',sans-serif; font-size:1.2rem; letter-spacing:.06em; margin-bottom:.8rem; }
+.modal-b { font-size:.82rem; color:var(--mut); margin-bottom:1.2rem; line-height:1.6; }
+
+/* AI LOADING */
+.ai-loading { display:none; text-align:center; padding:2rem; }
+.ai-loading.show { display:block; }
+.ai-spinner { width:36px; height:36px; border:3px solid var(--bor); border-top-color:var(--p1); border-radius:50%; animation:spin .8s linear infinite; margin:0 auto 1rem; }
+.ai-spinner.p2 { border-top-color:var(--p2); }
+.ai-spinner.duo { border-top-color:var(--p1); border-right-color:var(--p2); }
+@keyframes spin { to { transform:rotate(360deg); } }
+
+/* PERFIL */
+.perfil-hdr { display:flex; align-items:center; gap:1rem; margin-bottom:1.2rem; flex-wrap:wrap; }
+.perfil-avatar { width:60px; height:60px; border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:2rem; flex-shrink:0; border:2px solid; }
+.perfil-avatar.p1 { border-color:var(--p1bor); background:var(--p1bg); }
+.perfil-avatar.p2 { border-color:var(--p2bor); background:var(--p2bg); }
+.perfil-nombre { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; letter-spacing:.06em; line-height:1; }
+.perfil-meta { font-size:.75rem; color:var(--mut); margin-top:2px; }
+.perfil-edit-btn { margin-left:auto; background:var(--sur2); border:1px solid var(--bor); border-radius:8px; padding:5px 12px; font-family:'DM Sans',sans-serif; font-size:.72rem; font-weight:500; color:var(--mut); cursor:pointer; transition:all .13s; }
+.perfil-edit-btn:hover { color:var(--txt); border-color:var(--bor2); }
+.meta-bar-wrap { margin:.8rem 0; }
+.meta-bar-lbl { display:flex; justify-content:space-between; font-size:.7rem; color:var(--mut); margin-bottom:5px; }
+.meta-bar-out { height:6px; background:var(--sur3); border-radius:99px; overflow:hidden; }
+.meta-bar-in { height:100%; border-radius:99px; transition:width .5s ease; }
+.subtabs { display:flex; gap:4px; margin-bottom:1rem; flex-wrap:wrap; }
+.stab { padding:5px 14px; border-radius:99px; border:1.5px solid var(--bor); background:var(--sur2); font-size:.72rem; font-weight:500; cursor:pointer; transition:all .12s; color:var(--mut); font-family:'DM Sans',sans-serif; }
+.stab:hover { color:var(--txt); border-color:var(--bor2); }
+.stab.on.p1 { border-color:var(--p1bor); color:var(--p1); background:var(--p1bg); }
+.stab.on.p2 { border-color:var(--p2bor); color:var(--p2); background:var(--p2bg); }
+
+/* MISC */
+.flex { display:flex; } .g2 { gap:7px; } .g3 { gap:11px; }
+.mb1 { margin-bottom:.5rem; } .mb2 { margin-bottom:1rem; } .mt1 { margin-top:.5rem; }
+.tmut { color:var(--mut); font-size:.78rem; }
+.empty { text-align:center; padding:2rem; color:var(--mut); }
+.empty-ico { font-size:2.5rem; margin-bottom:.6rem; }
+.empty-t { font-weight:600; font-size:.9rem; color:var(--txt); margin-bottom:.3rem; }
+.empty-s { font-size:.78rem; }
+hr.dv { border:none; border-top:1px solid var(--bor); margin:1rem 0; }
+.chip-obj { display:inline-flex; align-items:center; gap:4px; padding:3px 10px; border-radius:99px; font-size:.68rem; font-weight:600; letter-spacing:.04em; text-transform:uppercase; }
+.nivel-badge { display:inline-flex; padding:2px 8px; border-radius:5px; font-size:.65rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; }
+
+@media(max-width:560px) { .hdr { padding:0 .9rem; } .view { padding:1rem; } .bodymap-wrap { flex-direction:column; } .bodymap-svg-wrap { width:160px; margin:0 auto; } }
+
+/* CALENDAR */
+.cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+.cal-head { font-size:.6rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--mut); text-align:center; padding:4px 0; }
+.cal-day { aspect-ratio:1; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:500; cursor:pointer; transition:all .15s; border:1px solid transparent; position:relative; }
+.cal-day.empty { cursor:default; }
+.cal-day.today { border-color:var(--bor2); color:var(--txt); background:var(--sur3); }
+.cal-day.done-p1 { background:var(--p1bg); border-color:var(--p1bor); color:var(--p1); font-weight:700; }
+.cal-day.done-p2 { background:var(--p2bg); border-color:var(--p2bor); color:var(--p2); font-weight:700; }
+.cal-day.done-duo { background:linear-gradient(135deg,var(--p1bg),var(--p2bg)); border-color:rgba(200,245,99,0.25); color:#fff; font-weight:700; }
+.cal-day.missed { background:var(--errbg); border-color:rgba(248,113,113,0.15); color:var(--err); }
+.cal-day:hover:not(.empty) { transform:scale(1.08); }
+.streak-banner { display:flex; align-items:center; gap:12px; padding:.9rem 1.2rem; border-radius:12px; margin-bottom:1rem; }
+.streak-num { font-family:'Bebas Neue',sans-serif; font-size:3rem; line-height:1; letter-spacing:.04em; }
+.streak-lbl { font-size:.72rem; color:var(--mut); letter-spacing:.06em; text-transform:uppercase; }
+/* EXERCISE LOG */
+.ej-log-row { display:flex; align-items:center; gap:8px; padding:5px 0; border-bottom:1px solid var(--bor); flex-wrap:wrap; }
+.ej-log-row:last-child { border-bottom:none; }
+.ej-log-name { flex:1; font-size:.8rem; font-weight:500; min-width:120px; }
+.ej-check { width:22px; height:22px; border-radius:6px; border:2px solid var(--bor2); background:transparent; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all .15s; }
+.ej-check.done { border-color:var(--ok); background:var(--okbg); color:var(--ok); font-size:.8rem; }
+.ej-log-meta { font-family:'DM Mono',monospace; font-size:.68rem; color:var(--mut); white-space:nowrap; }
+.session-done-banner { background:var(--okbg); border:1px solid rgba(74,222,128,0.3); border-radius:10px; padding:.7rem 1rem; display:flex; align-items:center; gap:10px; font-size:.82rem; color:var(--ok); font-weight:600; }
+/* META CHIPS CONNECTION */
+.meta-conexion { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:.8rem; }
+.meta-chip { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:99px; font-size:.7rem; font-weight:600; border:1px solid; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen" style="display: flex;">
+  <div class="login-box">
+    <div class="login-logo">GymTrack</div>
+    <div class="login-sub">Control Total del Entrenamiento</div>
+    <div class="login-sep">¿Quién entrena hoy?</div>
+    <button class="pcard p1" onclick="entrar(1)">
+      <div class="pcard-avatar" id="lava1" style="background:var(--p1bg);border:2px solid var(--p1bor)">💪</div>
+      <div>
+        <div class="pcard-name" id="lname1">Abelardo</div>
+        <div class="pcard-desc" id="ldesc1">Bajar de peso · principiante</div>
+      </div>
+      <div class="pcard-arrow">→</div>
+    </button>
+    <button class="pcard p2" onclick="entrar(2)">
+      <div class="pcard-avatar" id="lava2" style="background:var(--p2bg);border:2px solid var(--p2bor)">🏋️</div>
+      <div>
+        <div class="pcard-name" id="lname2">Mariana</div>
+        <div class="pcard-desc" id="ldesc2">Bajar de peso · principiante</div>
+      </div>
+      <div class="pcard-arrow">→</div>
+    </button>
+    <button class="pcard duo" onclick="entrar(&#39;duo&#39;)" style="border:1.5px solid rgba(200,245,99,0.25);background:linear-gradient(135deg,rgba(200,245,99,0.06),rgba(99,200,245,0.06))">
+      <div class="pcard-avatar" style="background:linear-gradient(135deg,var(--p1bg),var(--p2bg));border:2px solid rgba(255,255,255,.15);font-size:1.1rem">💪🏋️</div>
+      <div>
+        <div class="pcard-name" style="background:linear-gradient(90deg,var(--p1),var(--p2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">Sala Conjunta</div>
+        <div class="pcard-desc" id="ldesc-duo">Abelardo &amp; Mariana · Rutina IA conjunta</div>
+      </div>
+      <div class="pcard-arrow">→</div>
+    </button>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="appWrap" class="">
+  <div class="hdr">
+    <div class="hlogo">
+      GymTrack
+      <span class="hbadge p1" id="hbadge">Abelardo</span>
+    </div>
+    <div class="flex g2" style="align-items:center">
+      <div class="hsave" id="saveIndicator">✓ Guardado</div>
+      <div class="upill">
+        <span class="udot" id="uDot" style="background: var(--p1);"></span>
+        <span id="uLbl">💪 Abelardo</span>
+      </div>
+      <button class="btn bs bsm" onclick="logout()">Salir</button>
+    </div>
+  </div>
+
+  <div class="navtabs" id="navTabs">
+    <button class="ntab p1 on" id="tab-perfil" onclick="swTab(&#39;perfil&#39;)">👤 Perfil</button>
+    <button class="ntab p1" id="tab-rutina" onclick="swTab(&#39;rutina&#39;)">🔥 Rutina IA</button>
+    <button class="ntab p1" id="tab-cuerpo" onclick="swTab(&#39;cuerpo&#39;)">📐 Medidas</button>
+    <button class="ntab p1" id="tab-duo" onclick="swTab(&#39;duo&#39;)" style="display:none">🤝 Sala Conjunta</button>
+    <button class="ntab p1" id="tab-nutricion" onclick="swTab(&#39;nutricion&#39;)">🥗 Nutrición IA</button>
+    <button class="ntab p1" id="tab-progreso" onclick="swTab(&#39;progreso&#39;)">📅 Progreso</button>
+    <button class="ntab p1" id="tab-config" onclick="swTab(&#39;config&#39;)">⚙️ Config</button>
+  </div>
+
+  <!-- ══ PERFIL ══ -->
+  <div class="view on" id="v-perfil">
+    <div class="card" id="perfil-card">
+    <div class="perfil-hdr">
+      <div class="perfil-avatar p1" style="font-size:1.8rem">💪</div>
+      <div>
+        <div class="perfil-nombre" style="color:var(--p1)">Abelardo</div>
+        <div class="perfil-meta">Bajar de peso · Principiante · 6 días/semana</div>
+        <div class="perfil-meta">18 años · 40 kg · 153 cm</div>
+      </div>
+      <button class="perfil-edit-btn" onclick="swTab(&#39;config&#39;)">✏️ Editar</button>
+    </div></div>
+    <div class="card">
+      <div class="ctitle">📊 <span>Resumen</span></div>
+      <div class="sgrid" id="resumen-grid">
+    <div class="scard"><div class="sval" style="color:var(--p1)">40</div><div class="slbl">Peso kg</div></div>
+    <div class="scard"><div class="sval" style="color:var(--p2);font-size:1.4rem">17.1</div><div class="slbl">IMC</div></div>
+    <div class="scard"><div class="sval" style="color:var(--p1)">12</div><div class="slbl">Zonas medidas</div></div>
+    <div class="scard"><div class="sval" style="color:var(--p1)">6</div><div class="slbl">Días / semana</div></div></div>
+    </div>
+  </div>
+
+  <!-- ══ MEDIDAS ══ -->
+  <div class="view" id="v-cuerpo">
+    <div class="card">
+      <div class="ctitle">📐 <span>Mapa Corporal</span></div>
+      <div class="wbox">👆 Toca una zona del cuerpo o selecciónala en la lista para registrar o editar su medida en cm.</div>
+      <div class="bodymap-wrap">
+        <div class="bodymap-svg-wrap">
+          <svg id="bodySVG" viewBox="0 0 120 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="60" cy="28" rx="18" ry="22" fill="#1C1C21" stroke="#2A2A32" stroke-width="1.5"></ellipse>
+            <rect x="54" y="48" width="12" height="14" rx="3" fill="#1C1C21" stroke="#2A2A32" stroke-width="1.5"></rect>
+            <path d="M30 62 Q22 75 24 105 Q26 120 30 130 L90 130 Q94 120 96 105 Q98 75 90 62 Z" fill="#1C1C21" stroke="#2A2A32" stroke-width="1.5"></path>
+            <ellipse cx="22" cy="70" rx="10" ry="12" fill="#1C1C21" stroke="#2A2A32" stroke-width="1.5"></ellipse>
+            <path d="M14 80 Q8 100 10 120 Q12 130 16 132 Q20 133 22 130 Q24 120 20 105 Z" fill="#1C1C21" stroke="#2A2A32" stroke-width="1.5"></path>
+            <path d="M13 130 Q8 148 10 165 Q12 172 16 173 Q20 173 22 168 Q24 155 20 132 Z" fill="#1C1C21" stroke="#2A2A32" stroke-width="1.5"></path>
+            <ellipse cx="15" cy="175" rx="6" ry="8" fill="#1C1C21" stroke="#2A2A32" stroke-width="1.5"></ellipse>
+            <ellipse cx="98" cy="70" rx="10" ry="12" fill="#1C1C21" stroke="#2A2A32" stroke-width="1.5"></ellipse>
+            <path d="M106 80 Q112 100 110 120 Q108 130 104 132 Q100 133 98 130 Q96 120 100 105 Z" fill="#1C1C21" stroke="#2A2A32" stroke-width="1.5"></path>
+            <path d="M107 130 Q112 148 110 165 Q108 172 104 173 Q100 173 98 168 Q96 155 100 132 Z" fill="#1C1C21" stroke="#2A2A32" stroke-width="1.5"></path>
+            <ellipse cx="105" cy="175" rx="6" ry="8" fill="#1C1C21" stroke="#2A2A32" stroke-width="1.5"></ellipse>
+            <path d="M30 130 Q28 145 30 158 L90 158 Q92 145 90 130 Z" fill="#1C1C21" stroke="#2A2A32" stroke-width="1.5"></path>
+            <path d="M30 156 Q24 178 26 205 Q28 215 34 216 Q40 216 42 210 Q44 195 40 165 Z" fill="#1C1C21" stroke="#2A2A32" stroke-width="1.5"></path>
+            <path d="M28 210 Q24 232 26 258 Q28 268 34 268 Q40 268 42 260 Q44 242 40 212 Z" fill="#1C1C21" stroke="#2A2A32" stroke-width="1.5"></path>
+            <ellipse cx="34" cy="270" rx="10" ry="6" fill="#1C1C21" stroke="#2A2A32" stroke-width="1.5"></ellipse>
+            <path d="M90 156 Q96 178 94 205 Q92 215 86 216 Q80 216 78 210 Q76 195 80 165 Z" fill="#1C1C21" stroke="#2A2A32" stroke-width="1.5"></path>
+            <path d="M92 210 Q96 232 94 258 Q92 268 86 268 Q80 268 78 260 Q76 242 80 212 Z" fill="#1C1C21" stroke="#2A2A32" stroke-width="1.5"></path>
+            <ellipse cx="86" cy="270" rx="10" ry="6" fill="#1C1C21" stroke="#2A2A32" stroke-width="1.5"></ellipse>
+            <g class="bpoint" data-zone="cuello" onclick="selectZone(&#39;cuello&#39;)" id="bp-cuello"><circle cx="60" cy="54" r="6" fill="#C8F563" fill-opacity=".15" stroke="#C8F563" stroke-width="1.5"></circle><circle cx="60" cy="54" r="2.5" fill="#C8F563"></circle></g>
+            <g class="bpoint" data-zone="hombros" onclick="selectZone(&#39;hombros&#39;)" id="bp-hombros"><circle cx="60" cy="66" r="6" fill="#C8F563" fill-opacity=".15" stroke="#C8F563" stroke-width="1.5"></circle><circle cx="60" cy="66" r="2.5" fill="#C8F563"></circle></g>
+            <g class="bpoint" data-zone="pecho" onclick="selectZone(&#39;pecho&#39;)" id="bp-pecho"><circle cx="60" cy="85" r="6" fill="#C8F563" fill-opacity=".15" stroke="#C8F563" stroke-width="1.5"></circle><circle cx="60" cy="85" r="2.5" fill="#C8F563"></circle></g>
+            <g class="bpoint" data-zone="cintura" onclick="selectZone(&#39;cintura&#39;)" id="bp-cintura"><circle cx="60" cy="108" r="6" fill="#C8F563" fill-opacity=".15" stroke="#C8F563" stroke-width="1.5"></circle><circle cx="60" cy="108" r="2.5" fill="#C8F563"></circle></g>
+            <g class="bpoint" data-zone="abdomen" onclick="selectZone(&#39;abdomen&#39;)" id="bp-abdomen"><circle cx="60" cy="122" r="6" fill="#C8F563" fill-opacity=".15" stroke="#C8F563" stroke-width="1.5"></circle><circle cx="60" cy="122" r="2.5" fill="#C8F563"></circle></g>
+            <g class="bpoint" data-zone="cadera" onclick="selectZone(&#39;cadera&#39;)" id="bp-cadera"><circle cx="60" cy="144" r="6" fill="#C8F563" fill-opacity=".15" stroke="#C8F563" stroke-width="1.5"></circle><circle cx="60" cy="144" r="2.5" fill="#C8F563"></circle></g>
+            <g class="bpoint" data-zone="bicep_izq" onclick="selectZone(&#39;bicep_izq&#39;)" id="bp-bicep_izq"><circle cx="17" cy="105" r="6" fill="#C8F563" fill-opacity=".15" stroke="#C8F563" stroke-width="1.5"></circle><circle cx="17" cy="105" r="2.5" fill="#C8F563"></circle></g>
+            <g class="bpoint" data-zone="bicep_der" onclick="selectZone(&#39;bicep_der&#39;)" id="bp-bicep_der"><circle cx="103" cy="105" r="6" fill="#C8F563" fill-opacity=".15" stroke="#C8F563" stroke-width="1.5"></circle><circle cx="103" cy="105" r="2.5" fill="#C8F563"></circle></g>
+            <g class="bpoint" data-zone="muslo_izq" onclick="selectZone(&#39;muslo_izq&#39;)" id="bp-muslo_izq"><circle cx="35" cy="185" r="6" fill="#C8F563" fill-opacity=".15" stroke="#C8F563" stroke-width="1.5"></circle><circle cx="35" cy="185" r="2.5" fill="#C8F563"></circle></g>
+            <g class="bpoint" data-zone="muslo_der" onclick="selectZone(&#39;muslo_der&#39;)" id="bp-muslo_der"><circle cx="85" cy="185" r="6" fill="#C8F563" fill-opacity=".15" stroke="#C8F563" stroke-width="1.5"></circle><circle cx="85" cy="185" r="2.5" fill="#C8F563"></circle></g>
+            <g class="bpoint" data-zone="pantorrilla_izq" onclick="selectZone(&#39;pantorrilla_izq&#39;)" id="bp-pantorrilla_izq"><circle cx="34" cy="238" r="6" fill="#C8F563" fill-opacity=".15" stroke="#C8F563" stroke-width="1.5"></circle><circle cx="34" cy="238" r="2.5" fill="#C8F563"></circle></g>
+            <g class="bpoint" data-zone="pantorrilla_der" onclick="selectZone(&#39;pantorrilla_der&#39;)" id="bp-pantorrilla_der"><circle cx="86" cy="238" r="6" fill="#C8F563" fill-opacity=".15" stroke="#C8F563" stroke-width="1.5"></circle><circle cx="86" cy="238" r="2.5" fill="#C8F563"></circle></g>
+          </svg>
+        </div>
+        <div class="bodymap-measures" id="zones-list"></div>
+      </div>
+    </div>
+    <div class="measure-editor" id="measure-editor">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.8rem">
+        <div style="font-family:&#39;Bebas Neue&#39;,sans-serif;font-size:1rem;letter-spacing:.06em" id="med-editor-title">—</div>
+        <button class="btn bs bsm" onclick="closeMeasureEditor()">✕ Cerrar</button>
+      </div>
+      <div class="med-row">
+        <div class="fg"><label class="flbl">Medida actual (cm)</label><input type="number" id="med-input" placeholder="ej. 85" step="0.1" min="0" max="300"></div>
+        <button class="btn" id="med-save-btn" onclick="saveMeasure()">Guardar</button>
+      </div>
+      <div class="med-history" id="med-history"></div>
+    </div>
+  </div>
+
+  <!-- ══ RUTINA IA ══ -->
+  <div class="view" id="v-rutina">
+    <div class="card">
+      <div class="ctitle">🤖 <span>Rutina Generada por IA</span></div>
+      <div class="wbox" id="gemini-warning" style="display:none">⚠️ Configura tu API Key de Gemini en <strong>Config → Gemini API</strong> para activar la IA.</div>
+      <div style="margin-bottom:1rem">
+        <label class="flbl">¿Para qué quieres esta rutina? (cuéntale a la IA)</label>
+        <textarea id="rutina-prompt-extra" rows="3" placeholder="Ej: Quiero enfocarme en piernas y glúteos, no tengo pesas en casa solo bandas elásticas, me duele la rodilla derecha así que sin sentadillas pesadas..."></textarea>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem">
+        <button class="btn bp1" id="gen-rutina-btn" onclick="generarRutina()">✨ Generar Rutina con IA</button>
+        <button class="btn bs" onclick="limpiarRutina()">🗑 Limpiar</button>
+      </div>
+      <div class="ai-loading" id="ai-loading"><div class="ai-spinner" id="ai-spinner"></div><div style="font-size:.82rem;color:var(--mut)">Gemini está analizando tu perfil y medidas...</div></div>
+      <div id="rutina-content"></div>
+    </div>
+  </div>
+
+  <!-- ══ SALA CONJUNTA ══ -->
+  <div class="view" id="v-duo">
+    <!-- Sub-navegación interna -->
+    <div class="navtabs" style="border-radius:10px;margin-bottom:1rem;padding:0 .5rem">
+      <button class="ntab p1" id="tab-duo-rutina" onclick="swDuoTab(&#39;rutina&#39;)">🔥 Rutina</button>
+      <button class="ntab p1" id="tab-duo-progreso" onclick="swDuoTab(&#39;progreso&#39;)">📅 Progreso</button>
+      <button class="ntab p1" id="tab-duo-nutri" onclick="swDuoTab(&#39;nutri&#39;)">🥗 Nutrición</button>
+    </div>
+
+    <!-- Sub: Rutina Conjunta -->
+    <div id="duo-sub-rutina">
+      <div class="card">
+        <div class="ctitle" style="background:linear-gradient(90deg,var(--p1),var(--p2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:1.2rem">🤝 <span style="-webkit-text-fill-color:transparent">Rutina Conjunta</span></div>
+        <div class="ibox">La IA genera una rutina compartida. Los ejercicios de <strong>máquina</strong> se adaptan según el objetivo de cada uno. Los ejercicios <strong>libres</strong> son idénticos para ambos.</div>
+        <div style="margin-bottom:1rem">
+          <label class="flbl">Notas extra para la IA (opcional)</label>
+          <textarea id="duo-prompt-extra" rows="2" placeholder="Ej: Solo disponemos de 1 hora, preferimos no usar poleas hoy, queremos trabajar piernas y pecho..."></textarea>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem">
+          <button class="btn bpduo" id="gen-duo-btn" onclick="generarRutinaDuo()">✨ Generar Rutina Conjunta</button>
+          <button class="btn bs" onclick="limpiarRutinaDuo()">🗑 Limpiar</button>
+        </div>
+        <div class="ai-loading" id="ai-loading-duo"><div class="ai-spinner duo" id="ai-spinner-duo"></div><div style="font-size:.82rem;color:var(--mut)">Gemini está analizando los perfiles de ambos...</div></div>
+        <div id="duo-content"></div>
+      </div>
+    </div>
+
+    <!-- Sub: Progreso Conjunto -->
+    <div id="duo-sub-progreso" style="display:none">
+      <div class="card" id="duo-streak-card"></div>
+      <div class="card">
+        <div class="ctitle">📅 <span>Calendario Conjunto</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem">
+          <button class="btn bs bsm" onclick="calMes(-1);renderCalendarioDuo()">‹</button>
+          <div id="duo-cal-month-label" style="font-family:&#39;Bebas Neue&#39;,sans-serif;font-size:1rem;letter-spacing:.06em"></div>
+          <button class="btn bs bsm" onclick="calMes(1);renderCalendarioDuo()">›</button>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:.5rem">
+          <div style="font-size:.65rem;font-weight:700;color:var(--p1);display:flex;align-items:center;gap:5px">
+            <span style="width:10px;height:10px;border-radius:3px;background:var(--p1bg);border:1px solid var(--p1bor);display:inline-block"></span>
+            <span id="duo-leg1">P1</span>
+          </div>
+          <div style="font-size:.65rem;font-weight:700;color:var(--p2);display:flex;align-items:center;gap:5px">
+            <span style="width:10px;height:10px;border-radius:3px;background:var(--p2bg);border:1px solid var(--p2bor);display:inline-block"></span>
+            <span id="duo-leg2">P2</span>
+          </div>
+        </div>
+        <div class="cal-grid" id="duo-cal-grid"></div>
+      </div>
+      <div class="card">
+        <div class="ctitle">📋 <span>Historial Conjunto</span></div>
+        <div id="duo-historial-content"></div>
+      </div>
+    </div>
+
+    <!-- Sub: Nutrición Conjunta -->
+    <div id="duo-sub-nutri" style="display:none">
+      <div class="card">
+        <div class="ctitle">🥗 <span>Nutrición Conjunta</span></div>
+        <div id="duo-nutri-metas" style="margin-bottom:.8rem"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem">
+          <div><label class="flbl">Objetivo calórico</label>
+            <select id="duo-nutri-cal">
+              <option value="deficit">Déficit (bajar peso)</option>
+              <option value="mantenimiento">Mantenimiento</option>
+              <option value="superavit">Superávit (ganar masa)</option>
+            </select>
+          </div>
+          <div><label class="flbl">Restricciones</label><input type="text" id="duo-nutri-restricciones" placeholder="sin gluten, vegetariano..."></div>
+          <div><label class="flbl">Comidas por día</label>
+            <select id="duo-nutri-comidas">
+              <option value="3">3 comidas</option>
+              <option value="4">4 comidas</option>
+              <option value="5">5 + snacks</option>
+            </select>
+          </div>
+          <div><label class="flbl">Notas extra</label><input type="text" id="duo-nutri-extra" placeholder="cocina colombiana..."></div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem">
+          <button class="btn bpduo" onclick="generarNutricionDuo()">🥗 Generar Plan Conjunto</button>
+          <button class="btn bs" onclick="limpiarNutricionDuo()">🗑 Limpiar</button>
+        </div>
+        <div class="ai-loading" id="ai-loading-duo-nutri"><div class="ai-spinner duo"></div><div style="font-size:.82rem;color:var(--mut)">Gemini está creando el plan conjunto...</div></div>
+        <div id="duo-nutri-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ NUTRICIÓN IA ══ -->
+  <div class="view" id="v-nutricion">
+    <!-- Panel de calorías del día (solo individual) -->
+    <div class="card" id="nutri-cal-dia-card" style="display:none">
+      <div class="ctitle">🔥 <span>Calorías de Hoy</span></div>
+      <div id="nutri-cal-dia-content"></div>
+      <!-- Registro de comida por texto -->
+      <hr class="dv">
+      <div style="font-size:.75rem;font-weight:600;color:var(--mut);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.6rem">Registrar lo que comiste</div>
+      <div style="display:flex;gap:8px;margin-bottom:.6rem">
+        <input type="text" id="nutri-food-input" placeholder="Ej: pasta con pollo, 1 plato grande..." style="flex:1">
+        <button class="btn" id="nutri-food-btn" onclick="analizarComida()">🤖 Analizar</button>
+      </div>
+      <!-- Registro por imagen -->
+      <div style="display:flex;gap:8px;align-items:center;margin-bottom:.6rem">
+        <label class="btn bs bsm" style="cursor:pointer">📷 Foto del plato
+          <input type="file" id="nutri-img-input" accept="image/*" capture="environment" style="display:none" onchange="analizarImagen(this)">
+        </label>
+        <span style="font-size:.72rem;color:var(--mut)">o sube una imagen para analizar</span>
+      </div>
+      <div class="ai-loading" id="ai-loading-food" style="padding:1rem"><div class="ai-spinner" id="ai-spinner-food"></div><div style="font-size:.82rem;color:var(--mut)">Analizando...</div></div>
+      <div id="nutri-food-result"></div>
+      <!-- Log del día -->
+      <div id="nutri-food-log"></div>
+    </div>
+
+    <div class="card">
+      <div class="ctitle">🥗 <span>Plan de Alimentación IA</span></div>
+      <div class="wbox" id="nutri-warning" style="display:none">⚠️ Configura tu API Key de Gemini en <strong>Config → Gemini API</strong> para activar la IA.</div>
+      <div id="nutri-modo-info"></div>
+
+      <!-- Modo: individual o conjunto -->
+      <div id="nutri-modo-duo" style="display:none;margin-bottom:1rem">
+        <label class="flbl">¿Para quién generar el plan?</label>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:.4rem">
+          <button class="btn bs bsm" id="nutri-btn-ambos" onclick="setNutriModo(&#39;ambos&#39;)" style="border-color:rgba(255,255,255,.2)">👥 Ambos</button>
+          <button class="btn bs bsm" id="nutri-btn-p1" onclick="setNutriModo(&#39;p1&#39;)">💪 Solo P1</button>
+          <button class="btn bs bsm" id="nutri-btn-p2" onclick="setNutriModo(&#39;p2&#39;)">🏋️ Solo P2</button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem" id="nutri-opciones">
+        <div>
+          <label class="flbl">Objetivo calórico</label>
+          <select id="nutri-cal">
+            <option value="deficit">Déficit (bajar peso)</option>
+            <option value="mantenimiento">Mantenimiento</option>
+            <option value="superavit">Superávit (ganar masa)</option>
+          </select>
+        </div>
+        <div>
+          <label class="flbl">Restricciones / preferencias</label>
+          <input type="text" id="nutri-restricciones" placeholder="Ej: sin gluten, vegetariano...">
+        </div>
+        <div>
+          <label class="flbl">Comidas por día</label>
+          <select id="nutri-comidas">
+            <option value="3">3 comidas</option>
+            <option value="4">4 comidas</option>
+            <option value="5">5 comidas + snacks</option>
+          </select>
+        </div>
+        <div>
+          <label class="flbl">Notas extra (opcional)</label>
+          <input type="text" id="nutri-extra" placeholder="Ej: cocina colombiana, sin lactosa...">
+        </div>
+      </div>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem">
+        <button class="btn" id="gen-nutri-btn" onclick="generarNutricion()">🥗 Generar Plan de Alimentación</button>
+        <button class="btn bs" onclick="limpiarNutricion()">🗑 Limpiar</button>
+      </div>
+      <div class="ai-loading" id="ai-loading-nutri"><div class="ai-spinner" id="ai-spinner-nutri"></div><div style="font-size:.82rem;color:var(--mut)">Gemini está creando tu plan de alimentación...</div></div>
+      <div id="nutri-content"></div>
+    </div>
+  </div>
+
+  <!-- ══ PROGRESO ══ -->
+  <div class="view" id="v-progreso">
+    <!-- Racha -->
+    <div class="card" id="streak-card"></div>
+    <!-- Registrar sesión de hoy -->
+    <div class="card" id="log-session-card">
+      <div class="ctitle">✅ <span>Registrar Sesión de Hoy</span></div>
+      <div id="log-session-content"></div>
+    </div>
+    <!-- Calendario -->
+    <div class="card">
+      <div class="ctitle">📅 <span>Calendario de Entrenamientos</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem">
+        <button class="btn bs bsm" onclick="calMes(-1)">‹</button>
+        <div id="cal-month-label" style="font-family:&#39;Bebas Neue&#39;,sans-serif;font-size:1rem;letter-spacing:.06em"></div>
+        <button class="btn bs bsm" onclick="calMes(1)">›</button>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+    </div>
+    <!-- Historial de sesiones -->
+    <div class="card">
+      <div class="ctitle">📋 <span>Historial Reciente</span></div>
+      <div id="historial-content"></div>
+    </div>
+  </div>
+
+  <!-- ══ CONFIG ══ -->
+  <div class="view" id="v-config">
+    <!-- Solo visible en modo individual -->
+    <div id="config-perfil-section">
+      <div class="card">
+        <div class="ctitle">👤 <span>Editar Perfil</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" class="mb2">
+          <div><label class="flbl">Nombre</label><input type="text" id="cfg-nombre" placeholder="Tu nombre"></div>
+          <div><label class="flbl">Emoji / Avatar</label><input type="text" id="cfg-avatar" placeholder="💪" maxlength="2"></div>
+          <div><label class="flbl">Objetivo</label>
+            <select id="cfg-objetivo">
+              <option value="bajar_peso">Bajar de peso</option>
+              <option value="ganar_musculo">Ganar músculo</option>
+              <option value="tonificar">Tonificar</option>
+              <option value="resistencia">Mejorar resistencia</option>
+              <option value="fuerza">Ganar fuerza</option>
+              <option value="salud">Salud general</option>
+            </select>
+          </div>
+          <div><label class="flbl">Nivel</label>
+            <select id="cfg-nivel">
+              <option value="principiante">Principiante</option>
+              <option value="intermedio">Intermedio</option>
+              <option value="avanzado">Avanzado</option>
+            </select>
+          </div>
+          <div><label class="flbl">Días por semana</label>
+            <select id="cfg-dias">
+              <option value="2">2 días</option><option value="3">3 días</option>
+              <option value="4">4 días</option><option value="5">5 días</option><option value="6">6 días</option>
+            </select>
+          </div>
+          <div><label class="flbl">Peso actual (kg)</label><input type="number" id="cfg-peso" placeholder="70" step="0.1"></div>
+          <div><label class="flbl">Estatura (cm)</label><input type="number" id="cfg-estatura" placeholder="170"></div>
+          <div><label class="flbl">Edad</label><input type="number" id="cfg-edad" placeholder="25"></div>
+        </div>
+        <button class="btn" id="cfg-save-btn" onclick="savePerfil()">💾 Guardar Perfil</button>
+      </div>
+    </div>
+
+    <!-- Gemini — compartido para todos los usuarios -->
+    <div class="card">
+      <div class="ctitle">🤖 <span>Gemini API (Gratis · Compartida)</span></div>
+      <div id="gemini-status" class="mb2"></div>
+      <div class="ibox">Obtén tu key gratis en <strong>aistudio.google.com</strong> → Get API Key. No requiere tarjeta. Al guardarla se sincroniza automáticamente a todos los dispositivos vía GitHub.</div>
+      <label class="flbl">API Key de Gemini</label>
+      <div style="display:flex;gap:8px;margin-bottom:.5rem">
+        <input type="password" id="gemini-key-input" placeholder="AIza...">
+        <button class="btn bs" onclick="guardarGeminiKey()">Guardar</button>
+      </div>
+      <button class="btn bs bsm" onclick="borrarGeminiKey()">🗑 Eliminar key</button>
+    </div>
+
+    <!-- GitHub — solo token -->
+    <div class="card">
+      <div class="ctitle">🐙 <span>GitHub Sync</span></div>
+      <div class="ibox">Sincroniza todos los datos entre dispositivos. El token y la API Key se guardan en GitHub y se cargan automáticamente en dispositivos nuevos — solo necesitas pegar el token <strong>una sola vez</strong> en cada dispositivo nuevo.</div>
+      <div id="gh-status" class="mb2"></div>
+      <label class="flbl">Token de acceso (ghp_ o github_pat_)</label>
+      <div style="display:flex;gap:8px;margin-bottom:.5rem">
+        <input type="password" id="gh-token-input" placeholder="ghp_ o github_pat_...">
+        <button class="btn bs" onclick="guardarGHConfig()">Guardar</button>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="btn bs bsm" onclick="forzarSync()">🔄 Sincronizar ahora</button>
+        <button class="btn bs bsm" onclick="borrarGHConfig()">🗑 Eliminar config</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <div class="modal-t" id="modalT">Confirmar</div>
+    <div class="modal-b" id="modalB"></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end">
+      <button class="btn bs" onclick="closeModal()">Cancelar</button>
+      <button class="btn" id="modalOk">Aceptar</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════════════════════
+//  ESTADO GLOBAL
+// ══════════════════════════════════════════════════════════════
+const LS_P1  = 'gymtrack_p1';
+const LS_P2  = 'gymtrack_p2';
+const LS_GH  = 'gymtrack_gh';      // global — todos los usuarios
+const LS_GEM = 'gymtrack_gemini';  // global — todos los usuarios
+const LS_DUO = 'gymtrack_duo';     // rutina conjunta
+
+let ROL = null; // 1, 2 o 'duo'
+let COLOR = '';
+
+const ZONAS = [
+  { id:'cuello',          nombre:'Cuello',            ico:'🔵' },
+  { id:'hombros',         nombre:'Hombros',            ico:'💪' },
+  { id:'pecho',           nombre:'Pecho',              ico:'🫀' },
+  { id:'cintura',         nombre:'Cintura',            ico:'📏' },
+  { id:'abdomen',         nombre:'Abdomen',            ico:'🔥' },
+  { id:'cadera',          nombre:'Cadera',             ico:'🦷' },
+  { id:'bicep_izq',       nombre:'Bícep Izquierdo',    ico:'💪' },
+  { id:'bicep_der',       nombre:'Bícep Derecho',      ico:'💪' },
+  { id:'muslo_izq',       nombre:'Muslo Izquierdo',    ico:'🦵' },
+  { id:'muslo_der',       nombre:'Muslo Derecho',      ico:'🦵' },
+  { id:'pantorrilla_izq', nombre:'Pantorrilla Izq',    ico:'🦿' },
+  { id:'pantorrilla_der', nombre:'Pantorrilla Der',    ico:'🦿' },
+];
+
+const OBJ_LABELS = {
+  bajar_peso:'Bajar de peso', ganar_musculo:'Ganar músculo',
+  tonificar:'Tonificar', resistencia:'Mejorar resistencia',
+  fuerza:'Ganar fuerza', salud:'Salud general'
+};
+
+function getD() {
+  const k = ROL === 1 ? LS_P1 : LS_P2;
+  try { return JSON.parse(localStorage.getItem(k)) || defD(); } catch(_) { return defD(); }
+}
+function setD(d) {
+  const k = ROL === 1 ? LS_P1 : LS_P2;
+  try { localStorage.setItem(k, JSON.stringify(d)); } catch(_) {}
+}
+function getDFor(n) {
+  const k = n === 1 ? LS_P1 : LS_P2;
+  try { return JSON.parse(localStorage.getItem(k)) || defD(); } catch(_) { return defD(); }
+}
+function defD() {
+  return { nombre:'', avatar:'', objetivo:'bajar_peso', nivel:'principiante', dias:'3', peso:'', estatura:'', edad:'', medidas:{}, rutina:null, _ts:0 };
+}
+
+// ══════════════════════════════════════════════════════════════
+//  LOGIN / LOGOUT
+// ══════════════════════════════════════════════════════════════
+function updateLoginCards() {
+  [1,2].forEach(n => {
+    const d = getDFor(n);
+    document.getElementById('lname'+n).textContent = d.nombre || 'Persona '+n;
+    const obj = OBJ_LABELS[d.objetivo] || 'Sin objetivo';
+    document.getElementById('ldesc'+n).textContent = obj + ' · ' + (d.nivel || 'Principiante');
+    document.getElementById('lava'+n).textContent = d.avatar || (n===1?'💪':'🏋️');
+  });
+  const d1 = getDFor(1); const d2 = getDFor(2);
+  const n1 = d1.nombre || 'Persona 1'; const n2 = d2.nombre || 'Persona 2';
+  document.getElementById('ldesc-duo').textContent = n1 + ' & ' + n2 + ' · Rutina IA conjunta';
+}
+
+function entrar(n) {
+  ROL = n;
+  COLOR = n === 1 ? 'p1' : n === 2 ? 'p2' : 'duo';
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('appWrap').classList.add('on');
+
+  // Header
+  if (n === 'duo') {
+    const d1 = getDFor(1); const d2 = getDFor(2);
+    document.getElementById('hbadge').textContent = 'DUO';
+    document.getElementById('hbadge').className = 'hbadge duo';
+    document.getElementById('uDot').style.background = 'linear-gradient(90deg,var(--p1),var(--p2))';
+    const av1 = d1.avatar||'💪'; const av2 = d2.avatar||'🏋️';
+    const nm1 = d1.nombre||'P1'; const nm2 = d2.nombre||'P2';
+    document.getElementById('uLbl').textContent = av1+' '+nm1+' & '+av2+' '+nm2;
+  } else {
+    const d = getD();
+    document.getElementById('hbadge').textContent = d.nombre || 'P'+n;
+    document.getElementById('hbadge').className = 'hbadge '+COLOR;
+    document.getElementById('uDot').style.background = n===1 ? 'var(--p1)' : 'var(--p2)';
+    document.getElementById('uLbl').textContent = (d.avatar||(n===1?'💪':'🏋️'))+' '+(d.nombre||'Persona '+n);
+  }
+
+  // Tabs
+  document.querySelectorAll('.ntab').forEach(t => { t.classList.remove('p1','p2','duo'); t.classList.add(COLOR); });
+
+  // Pestaña Sala Conjunta: visible siempre (en duo el perfil/medidas se ocultan)
+  document.getElementById('tab-duo').style.display = n === 'duo' ? 'inline-flex' : 'none';
+  if (n === 'duo') {
+    document.getElementById('tab-perfil').style.display = 'none';
+    document.getElementById('tab-cuerpo').style.display = 'none';
+    document.getElementById('tab-rutina').style.display = 'none';
+    document.getElementById('tab-nutricion').style.display = 'none';
+    document.getElementById('tab-progreso').style.display = 'none';
+    document.getElementById('config-perfil-section').style.display = 'none';
+  } else {
+    document.getElementById('tab-perfil').style.display = '';
+    document.getElementById('tab-cuerpo').style.display = '';
+    document.getElementById('tab-rutina').style.display = '';
+    document.getElementById('tab-nutricion').style.display = '';
+    document.getElementById('tab-progreso').style.display = '';
+    document.getElementById('config-perfil-section').style.display = '';
+  }
+  updateSVGColor();
+  const startTab = n === 'duo' ? 'duo' : 'perfil';
+  swTab(startTab);
+  setTimeout(iniciarSync, 600); // Carga inicial al entrar con el rol seleccionado
+}
+
+function logout() {
+  ROL = null; COLOR = '';
+  document.getElementById('appWrap').classList.remove('on');
+  document.getElementById('loginScreen').style.display = 'flex';
+  updateLoginCards();
+}
+
+function updateSVGColor() {
+  const c = ROL === 1 ? '#C8F563' : ROL === 'duo' ? '#C8F563' : '#63C8F5';
+  document.querySelectorAll('.bpoint circle').forEach(el => {
+    if (el.getAttribute('r')==='2.5') { el.setAttribute('fill',c); }
+    else { el.setAttribute('stroke',c); el.setAttribute('fill',c); el.setAttribute('fill-opacity','.15'); }
+  });
+}
+
+// ══════════════════════════════════════════════════════════════
+//  NAV
+// ══════════════════════════════════════════════════════════════
+const TABS = ['perfil','cuerpo','rutina','duo','nutricion','progreso','config'];
+let _duoSubTab = 'rutina';
+let _activeTab = 'perfil';
+
+function swTab(id) {
+  TABS.forEach(t => {
+    document.getElementById('v-'+t).classList.remove('on');
+    const btn = document.getElementById('tab-'+t);
+    if (btn) btn.classList.remove('on');
+  });
+  document.getElementById('v-'+id).classList.add('on');
+  const btn = document.getElementById('tab-'+id);
+  if (btn) { btn.classList.add('on', COLOR); }
+  _activeTab = id;
+
+  if (id==='perfil') renderPerfil();
+  if (id==='cuerpo') renderCuerpo();
+  if (id==='rutina') renderRutina();
+  if (id==='duo')    renderDuo();
+  if (id==='nutricion') renderNutricion();
+  if (id==='progreso') renderProgreso();
+  if (id==='config') renderConfig();
+}
+
+// ══════════════════════════════════════════════════════════════
+//  PERFIL
+// ══════════════════════════════════════════════════════════════
+function renderPerfil() {
+  const d = getD();
+  const c = ROL===1 ? 'var(--p1)' : 'var(--p2)';
+  const nombre = d.nombre||'Sin nombre';
+  const avatar = d.avatar||(ROL===1?'💪':'🏋️');
+  const obj = OBJ_LABELS[d.objetivo]||d.objetivo;
+  const nivel = d.nivel||'principiante';
+  const dias = d.dias||'3';
+  let imc='—', imcColor='var(--mut)';
+  if (d.peso && d.estatura) {
+    const v = parseFloat(d.peso)/Math.pow(parseFloat(d.estatura)/100,2);
+    imc = v.toFixed(1);
+    imcColor = v<18.5?'var(--p2)':v<25?'var(--ok)':v<30?'var(--warn)':'var(--err)';
+  }
+  const totalM = Object.keys(d.medidas||{}).filter(k=>(d.medidas[k]||[]).length>0).length;
+  document.getElementById('perfil-card').innerHTML = `
+    <div class="perfil-hdr">
+      <div class="perfil-avatar ${COLOR}" style="font-size:1.8rem">${avatar}</div>
+      <div>
+        <div class="perfil-nombre" style="color:${c}">${nombre}</div>
+        <div class="perfil-meta">${obj} · ${nivel.charAt(0).toUpperCase()+nivel.slice(1)} · ${dias} días/semana</div>
+        ${d.edad?`<div class="perfil-meta">${d.edad} años${d.peso?' · '+d.peso+' kg':''}${d.estatura?' · '+d.estatura+' cm':''}</div>`:''}
+      </div>
+      <button class="perfil-edit-btn" onclick="swTab('config')">✏️ Editar</button>
+    </div>`;
+  document.getElementById('resumen-grid').innerHTML = `
+    <div class="scard"><div class="sval" style="color:${c}">${d.peso||'—'}</div><div class="slbl">Peso kg</div></div>
+    <div class="scard"><div class="sval" style="color:${imcColor};font-size:1.4rem">${imc}</div><div class="slbl">IMC</div></div>
+    <div class="scard"><div class="sval" style="color:${c}">${totalM}</div><div class="slbl">Zonas medidas</div></div>
+    <div class="scard"><div class="sval" style="color:${c}">${dias}</div><div class="slbl">Días / semana</div></div>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  CUERPO / MEDIDAS
+// ══════════════════════════════════════════════════════════════
+let _activeZone = null;
+
+function renderCuerpo() {
+  const d = getD();
+  const medidas = d.medidas||{};
+  const c = ROL===1 ? 'var(--p1)' : 'var(--p2)';
+  const colorClass = COLOR;
+  const list = document.getElementById('zones-list');
+  list.innerHTML = ZONAS.map(z => {
+    const hist = medidas[z.id]||[];
+    const last = hist[hist.length-1]; const prev = hist[hist.length-2];
+    let valHtml = `<span style="color:var(--mut2);font-size:.72rem">Sin dato</span>`;
+    let diffHtml = '';
+    if (last) {
+      valHtml = `<span class="mzone-val" style="color:${c}">${last.val} cm</span>`;
+      if (prev) {
+        const diff = (last.val-prev.val).toFixed(1);
+        const sign = diff>0?'+':'';
+        const cls = diff>0?'diff-up':'diff-down';
+        diffHtml = `<span class="mzone-diff ${cls}">${sign}${diff}</span>`;
+      }
+    }
+    const active = _activeZone===z.id ? 'active '+colorClass : '';
+    return `<div class="mzone ${active}" id="mzone-${z.id}" onclick="selectZone('${z.id}')"><span class="mzone-ico">${z.ico}</span><span class="mzone-name">${z.nombre}</span>${valHtml}${diffHtml}</div>`;
+  }).join('');
+  ZONAS.forEach(z => {
+    const hist = (medidas[z.id]||[]);
+    const pt = document.getElementById('bp-'+z.id);
+    if (pt) { hist.length>0 ? pt.classList.add('has-data') : pt.classList.remove('has-data'); }
+  });
+  if (_activeZone) openMeasureEditor(_activeZone);
+}
+
+function selectZone(zoneId) {
+  _activeZone = zoneId; renderCuerpo(); openMeasureEditor(zoneId);
+  setTimeout(()=>{ document.getElementById('measure-editor').scrollIntoView({behavior:'smooth',block:'nearest'}); },100);
+}
+
+function openMeasureEditor(zoneId) {
+  const z = ZONAS.find(x=>x.id===zoneId); if (!z) return;
+  const d = getD();
+  const hist = (d.medidas||{})[zoneId]||[];
+  const c = ROL===1 ? 'var(--p1)' : 'var(--p2)';
+  document.getElementById('med-editor-title').textContent = z.ico+' '+z.nombre;
+  document.getElementById('med-editor-title').style.color = c;
+  document.getElementById('med-input').value = hist.length ? hist[hist.length-1].val : '';
+  const btn = document.getElementById('med-save-btn');
+  btn.className = 'btn bp'+ROL; btn.textContent = 'Guardar';
+  const histEl = document.getElementById('med-history');
+  if (hist.length>0) {
+    histEl.innerHTML = `<div style="font-size:.7rem;color:var(--mut);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.4rem">Historial</div>`+
+      [...hist].reverse().slice(0,8).map(h=>{
+        const fecha = new Date(h.fecha).toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'});
+        return `<div class="med-hist-item"><span>${fecha}</span><span style="color:${c};font-family:'DM Mono',monospace">${h.val} cm</span></div>`;
+      }).join('');
+  } else { histEl.innerHTML = `<div style="font-size:.75rem;color:var(--mut2);margin-top:.4rem">Sin registros anteriores</div>`; }
+  document.getElementById('measure-editor').classList.add('show');
+}
+
+function closeMeasureEditor() {
+  _activeZone = null;
+  document.getElementById('measure-editor').classList.remove('show');
+  document.querySelectorAll('.mzone').forEach(el=>el.classList.remove('active','p1','p2'));
+}
+
+function saveMeasure() {
+  if (!_activeZone) return;
+  const val = parseFloat(document.getElementById('med-input').value);
+  if (isNaN(val)||val<=0) { toast('Ingresa una medida válida','r'); return; }
+  const d = getD();
+  if (!d.medidas) d.medidas={};
+  if (!d.medidas[_activeZone]) d.medidas[_activeZone]=[];
+  d.medidas[_activeZone].push({val:parseFloat(val.toFixed(1)),fecha:new Date().toISOString()});
+  d._ts=Date.now(); setD(d); flashSave(); toast('✅ Medida guardada','g'); subirAGitHubDebounced(); renderCuerpo();
+}
+
+// ══════════════════════════════════════════════════════════════
+//  RUTINA IA INDIVIDUAL — GEMINI
+// ══════════════════════════════════════════════════════════════
+function getGeminiKey() { return localStorage.getItem(LS_GEM)||''; }
+
+function renderRutina() {
+  const key = getGeminiKey();
+  document.getElementById('gemini-warning').style.display = key?'none':'block';
+  const btn = document.getElementById('gen-rutina-btn');
+  if (btn) { btn.className='btn bp'+ROL; btn.disabled=false; btn.textContent='✨ Generar Rutina con IA'; }
+  const d = getD();
+  if (d.rutina) { renderRutinaHTML(d.rutina); }
+  else { document.getElementById('rutina-content').innerHTML=`<div class="empty"><div class="empty-ico">🤖</div><div class="empty-t">Sin rutina generada</div><div class="empty-s">Escribe lo que necesitas arriba y presiona "Generar Rutina con IA".</div></div>`; }
+}
+
+async function generarRutina() {
+  const key = getGeminiKey();
+  if (!key) { toast('Configura tu API Key de Gemini primero','r'); swTab('config'); return; }
+  const d = getD();
+  const medidasStr = ZONAS.map(z=>{ const h=(d.medidas||{})[z.id]||[]; if(h.length>0){const l=h[h.length-1];return `${z.nombre}: ${l.val} cm`;}return null;}).filter(Boolean).join(', ');
+  const extraPrompt = (document.getElementById('rutina-prompt-extra')?.value||'').trim();
+  const diasNum = parseInt(d.dias)||3;
+  const prompt = `Eres un entrenador personal experto. Genera una rutina de gimnasio para:\n- Objetivo: ${OBJ_LABELS[d.objetivo]||d.objetivo}\n- Nivel: ${d.nivel||'principiante'}\n- Días/semana: ${diasNum}\n- Peso: ${d.peso||'?'} kg | Estatura: ${d.estatura||'?'} cm | Edad: ${d.edad||'?'} años\n${medidasStr?'- Medidas: '+medidasStr:''}\n${extraPrompt?'- Instrucciones extra: '+extraPrompt:''}\n\nResponde ÚNICAMENTE con este JSON (sin markdown, sin texto extra):\n{"resumen":"descripción breve","calorias_sesion_aprox":350,"dias":[{"dia":"Lunes","enfoque":"grupo muscular","calorias_dia":300,"ejercicios":[{"nombre":"ejercicio","series":3,"repeticiones":"10-12","descanso":"60s","calorias_quemadas":45,"nota":"tip"}]}]}\n\nIncluye exactamente ${diasNum} días. Máximo 5 ejercicios por día. Calcula calorías quemadas por ejercicio según el peso (${d.peso||70}kg), series y duración estimada. Sé conciso.`;
+
+  const btn = document.getElementById('gen-rutina-btn');
+  if (btn) { btn.disabled=true; btn.textContent='⏳ Generando...'; }
+  document.getElementById('ai-loading').classList.add('show');
+  document.getElementById('ai-spinner').className = 'ai-spinner '+COLOR;
+  document.getElementById('rutina-content').innerHTML = '';
+
+  await llamarGemini(prompt, async (rutina) => {
+    const dSave = getD(); dSave.rutina=rutina; dSave._ts=Date.now(); setD(dSave);
+    flashSave(); subirAGitHubDebounced(); renderRutinaHTML(rutina);
+  }, 'ai-loading', 'gen-rutina-btn', '✨ Generar Rutina con IA', 'rutina-content', 'bp'+ROL);
+}
+
+function renderRutinaHTML(rutina) {
+  const c = ROL===1?'var(--p1)':'var(--p2)';
+  const cBg = ROL===1?'var(--p1bg)':'var(--p2bg)';
+  const cBor = ROL===1?'var(--p1bor)':'var(--p2bor)';
+  const todayKey = getTodayKey();
+  const sesionHoy = getSesionLog()[todayKey]||{};
+  let html = '';
+  if (rutina.resumen) html+=`<div class="okbox" style="background:${cBg};border-color:${cBor};color:${c}">📋 ${rutina.resumen}</div>`;
+  // Resumen calórico de la sesión
+  if (rutina.calorias_sesion_aprox) {
+    html+=`<div style="display:flex;align-items:center;gap:8px;padding:.6rem 1rem;background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);border-radius:8px;margin-bottom:.8rem;font-size:.8rem;color:var(--warn)">🔥 <strong>${rutina.calorias_sesion_aprox} kcal</strong><span style="color:var(--mut)">quemadas aprox. por sesión completa</span></div>`;
+  }
+  html += renderMetasBanner();
+  rutina.dias.forEach((d,di)=>{
+    const diaId = 'dia_'+di;
+    const ejDoneCount = (d.ejercicios||[]).filter((_,ei)=>sesionHoy[diaId+'_ej_'+ei]).length;
+    const ejTotal = (d.ejercicios||[]).length;
+    const diaHecho = ejDoneCount>0;
+    // Calorías quemadas del día (solo ejercicios completados)
+    const calDia = d.calorias_dia || (d.ejercicios||[]).reduce((s,e)=>s+(e.calorias_quemadas||0),0);
+    const calHechas = (d.ejercicios||[]).reduce((s,e,ei)=>s+(sesionHoy[diaId+'_ej_'+ei]?(e.calorias_quemadas||0):0),0);
+    const ejes=(d.ejercicios||[]).map((e,i)=>{
+      const logKey = diaId+'_ej_'+i;
+      const isDone = !!sesionHoy[logKey];
+      const cal = e.calorias_quemadas ? `<span style="font-size:.65rem;color:var(--warn);font-family:'DM Mono',monospace;white-space:nowrap">🔥${e.calorias_quemadas}kcal</span>` : '';
+      return `<div class="ej-log-row">
+        <div class="ej-check ${isDone?'done':''}" onclick="toggleEjercicio('${todayKey}','${logKey}','${d.dia}',${di})" title="${isDone?'Hecho':'Marcar como hecho'}">${isDone?'✓':''}</div>
+        <span class="ej-log-name">${e.nombre}</span>
+        ${cal}
+        <span class="ej-log-meta">${e.series}×${e.repeticiones} · ${e.descanso}</span>
+      </div>
+      ${e.nota?`<div style="font-size:.7rem;color:var(--mut);padding:2px 0 4px 30px">💡 ${e.nota}</div>`:''}`
+    }).join('');
+    const calStr = calDia>0 ? ` · <span style="color:var(--warn)">🔥${calHechas}/${calDia} kcal</span>` : '';
+    const progBar = ejTotal>0 ? `<div style="margin:.5rem 0 .3rem"><div style="display:flex;justify-content:space-between;font-size:.65rem;color:var(--mut);margin-bottom:3px"><span>Progreso ${ejDoneCount}/${ejTotal}${calHechas>0?' · 🔥'+calHechas+' kcal quemadas':''}</span><span style="color:${c}">${Math.round(ejDoneCount/ejTotal*100)}%</span></div><div style="height:4px;background:var(--sur3);border-radius:99px;overflow:hidden"><div style="width:${(ejDoneCount/ejTotal*100).toFixed(0)}%;height:100%;background:${c};border-radius:99px;transition:width .4s"></div></div></div>` : '';
+    html+=`<div class="rutina-day" id="rutina-${diaId}">
+      <div class="rutina-day-title">
+        <span class="dday" style="background:${cBg};color:${c};border:1px solid ${cBor}">${d.dia}</span>
+        <span>${d.enfoque}</span>${calDia?`<span style="font-size:.7rem;color:var(--warn);margin-left:4px">🔥${calDia}kcal</span>`:''}
+        ${diaHecho?`<span style="margin-left:auto;font-size:.7rem;color:var(--ok)">✓ ${ejDoneCount}/${ejTotal}</span>`:''}
+      </div>
+      ${progBar}
+      ${ejes}
+    </div>`;
+  });
+  document.getElementById('rutina-content').innerHTML = html;
+}
+
+function limpiarRutina() { const d=getD(); d.rutina=null; setD(d); renderRutina(); toast('Rutina eliminada',''); }
+
+// ══════════════════════════════════════════════════════════════
+//  SALA CONJUNTA — GEMINI DUO
+// ══════════════════════════════════════════════════════════════
+function swDuoTab(sub) {
+  _duoSubTab = sub;
+  ['rutina','progreso','nutri','config'].forEach(t => {
+    const btn = document.getElementById('tab-duo-'+t);
+    if (btn) { btn.classList.remove('on','duo'); if (t===sub) btn.classList.add('on','duo'); }
+    const v = document.getElementById('duo-sub-'+t);
+    if (v) v.style.display = t===sub?'block':'none';
+  });
+  if (sub==='progreso') renderDuoProgreso();
+  if (sub==='nutri') renderDuoNutri();
+  if (sub==='rutina') {
+    const duo = getDuoRutina();
+    if (duo) renderDuoHTML(duo);
+    else document.getElementById('duo-content').innerHTML = `<div class="empty"><div class="empty-ico">🤝</div><div class="empty-t">Sin rutina conjunta</div><div class="empty-s">Presiona "Generar Rutina Conjunta".</div></div>`;
+  }
+}
+
+function renderDuo() {
+  swDuoTab(_duoSubTab || 'rutina');
+}
+
+function getDuoRutina() {
+  try { return JSON.parse(localStorage.getItem(LS_DUO)); } catch(_) { return null; }
+}
+function setDuoRutina(r) {
+  try { localStorage.setItem(LS_DUO, JSON.stringify(r)); } catch(_) {}
+}
+
+async function generarRutinaDuo() {
+  const key = getGeminiKey();
+  if (!key) { toast('Configura tu API Key de Gemini primero','r'); swTab('config'); return; }
+
+  const d1 = getDFor(1); const d2 = getDFor(2);
+  const extraPrompt = (document.getElementById('duo-prompt-extra')?.value||'').trim();
+
+  const perfilStr = (d, n) => {
+    const medidasStr = ZONAS.map(z=>{const h=(d.medidas||{})[z.id]||[];if(h.length>0){const l=h[h.length-1];return `${z.nombre}:${l.val}cm`;}return null;}).filter(Boolean).join(', ');
+    return `Persona ${n} (${d.nombre||'P'+n}): objetivo=${OBJ_LABELS[d.objetivo]||d.objetivo}, nivel=${d.nivel||'principiante'}, ${d.dias||3} días/sem, peso=${d.peso||'?'}kg, estatura=${d.estatura||'?'}cm, edad=${d.edad||'?'}${medidasStr?', medidas: '+medidasStr:''}`;
+  };
+
+  const diasNum = Math.max(parseInt(d1.dias)||3, parseInt(d2.dias)||3);
+
+  const prompt = `Eres un entrenador personal experto en entrenamientos en pareja. Genera una rutina de gimnasio conjunta para DOS personas que entrenan juntas.
+
+${perfilStr(d1,1)}
+${perfilStr(d2,2)}
+${extraPrompt?'Instrucciones extra: '+extraPrompt:''}
+
+REGLAS IMPORTANTES:
+1. Los ejercicios de MÁQUINA deben aparecer en AMBAS columnas, pero con distintas series, repeticiones, peso sugerido y tipo de carga adaptados al objetivo de cada persona.
+2. Los ejercicios LIBRES (sin máquina: abdominales, planchas, saltos, estiramientos, etc.) son IDÉNTICOS para ambos (mismas series y reps).
+3. Genera exactamente ${diasNum} días.
+4. Máximo 6 ejercicios por día (mezcla máquinas y libres).
+
+Responde ÚNICAMENTE con este JSON sin markdown ni texto extra:
+{
+  "resumen": "descripción breve del plan conjunto",
+  "dias": [
+    {
+      "dia": "Lunes",
+      "enfoque": "grupo muscular del día",
+      "ejercicios": [
+        {
+          "nombre": "Nombre del ejercicio",
+          "tipo": "maquina",
+          "p1": {"series": 3, "repeticiones": "12-15", "peso": "15-20kg", "descanso": "60s", "nota": "tip para P1"},
+          "p2": {"series": 4, "repeticiones": "6-8", "peso": "40-50kg", "descanso": "90s", "nota": "tip para P2"}
+        },
+        {
+          "nombre": "Plancha abdominal",
+          "tipo": "libre",
+          "compartido": {"series": 3, "repeticiones": "30-45seg", "descanso": "45s", "nota": "tip general"}
+        }
+      ]
+    }
+  ]
+}`;
+
+  const btn = document.getElementById('gen-duo-btn');
+  if (btn) { btn.disabled=true; btn.textContent='⏳ Generando...'; }
+  document.getElementById('ai-loading-duo').classList.add('show');
+  document.getElementById('ai-spinner-duo').className = 'ai-spinner duo';
+  document.getElementById('duo-content').innerHTML = '';
+
+  try {
+    const resultado = await llamarGeminiRaw(prompt);
+    setDuoRutina(resultado);
+    subirAGitHubDebounced();
+    renderDuoHTML(resultado);
+    toast('✅ Rutina conjunta generada','g');
+  } catch(e) {
+    toast('Error: '+e.message,'r');
+    document.getElementById('duo-content').innerHTML = `<div class="empty"><div class="empty-ico">❌</div><div class="empty-t">Error al generar</div><div class="empty-s">${e.message}</div></div>`;
+  } finally {
+    document.getElementById('ai-loading-duo').classList.remove('show');
+    if (btn) { btn.disabled=false; btn.textContent='✨ Generar Rutina Conjunta'; }
+  }
+}
+
+function renderDuoHTML(rutina) {
+  const d1 = getDFor(1); const d2 = getDFor(2);
+  const n1 = d1.nombre||'Persona 1'; const n2 = d2.nombre||'Persona 2';
+  const av1 = d1.avatar||'💪'; const av2 = d2.avatar||'🏋️';
+
+  let html = '';
+  if (rutina.resumen) {
+    html += `<div style="padding:.7rem 1rem;border-radius:8px;margin-bottom:1rem;background:linear-gradient(135deg,var(--p1bg),var(--p2bg));border:1px solid rgba(255,255,255,.08);font-size:.82rem;line-height:1.6">📋 ${rutina.resumen}</div>`;
+  }
+
+  rutina.dias.forEach(dia => {
+    // Separar máquinas de libres
+    const maquinas = (dia.ejercicios||[]).filter(e=>e.tipo==='maquina');
+    const libres   = (dia.ejercicios||[]).filter(e=>e.tipo==='libre');
+
+    let diaHtml = `<div class="card" style="margin-bottom:.8rem">
+      <div class="rutina-day-title">
+        <span class="dday" style="background:linear-gradient(90deg,var(--p1bg),var(--p2bg));color:#fff;border:1px solid rgba(255,255,255,.15)">${dia.dia}</span>
+        <span style="color:var(--mut);font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:500">${dia.enfoque}</span>
+      </div>`;
+
+    // MÁQUINAS — dos columnas
+    if (maquinas.length>0) {
+      diaHtml += `<div style="font-size:.65rem;font-weight:600;color:var(--mut);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem">⚙️ Ejercicios de Máquina</div>`;
+      maquinas.forEach(e => {
+        const p1 = e.p1||{}; const p2 = e.p2||{};
+        diaHtml += `<div class="maquina-card">
+          <div class="maquina-hdr"><span class="maquina-ico">🏋️</span><span>${e.nombre}</span></div>
+          <div class="duo-split" style="gap:8px;padding:.5rem .8rem .7rem">
+            <div style="border-radius:8px;border:1px solid var(--p1bor);background:var(--p1bg);padding:.55rem .75rem">
+              <div style="font-size:.65rem;font-weight:700;color:var(--p1);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem">${av1} ${n1}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:4px">
+                <span class="maquina-tag" style="color:var(--p1);border-color:var(--p1bor);background:rgba(200,245,99,0.05)">${p1.series||3}×${p1.repeticiones||'—'}</span>
+                <span class="maquina-tag" style="color:var(--p1);border-color:var(--p1bor);background:rgba(200,245,99,0.05)">${p1.peso||'—'}</span>
+                <span class="maquina-tag">${p1.descanso||'60s'}</span>
+              </div>
+              ${p1.nota?`<div style="font-size:.68rem;color:var(--mut);margin-top:.35rem">💡 ${p1.nota}</div>`:''}
+            </div>
+            <div style="border-radius:8px;border:1px solid var(--p2bor);background:var(--p2bg);padding:.55rem .75rem">
+              <div style="font-size:.65rem;font-weight:700;color:var(--p2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem">${av2} ${n2}</div>
+              <div style="display:flex;flex-wrap:wrap;gap:4px">
+                <span class="maquina-tag" style="color:var(--p2);border-color:var(--p2bor);background:rgba(99,200,245,0.05)">${p2.series||3}×${p2.repeticiones||'—'}</span>
+                <span class="maquina-tag" style="color:var(--p2);border-color:var(--p2bor);background:rgba(99,200,245,0.05)">${p2.peso||'—'}</span>
+                <span class="maquina-tag">${p2.descanso||'60s'}</span>
+              </div>
+              ${p2.nota?`<div style="font-size:.68rem;color:var(--mut);margin-top:.35rem">💡 ${p2.nota}</div>`:''}
+            </div>
+          </div>
+        </div>`;
+      });
+    }
+
+    // LIBRES — iguales para ambos
+    if (libres.length>0) {
+      diaHtml += `<div style="font-size:.65rem;font-weight:600;color:var(--mut);letter-spacing:.1em;text-transform:uppercase;margin:.7rem 0 .4rem">🤸 Ejercicios Libres (Iguales para los dos)</div>`;
+      libres.forEach((e,i) => {
+        const c = e.compartido||{};
+        diaHtml += `<div class="libre-card">
+          <span class="ej-num" style="background:linear-gradient(135deg,var(--p1bg),var(--p2bg));color:#fff;border:none">${i+1}</span>
+          <span class="libre-name">${e.nombre}</span>
+          <span class="libre-detail">${c.series||3}×${c.repeticiones||'—'} · ${c.descanso||'60s'}</span>
+        </div>
+        ${c.nota?`<div style="font-size:.7rem;color:var(--mut);padding:1px 0 5px 36px">💡 ${c.nota}</div>`:''}`;
+      });
+    }
+
+    diaHtml += `</div>`;
+    html += diaHtml;
+  });
+
+  document.getElementById('duo-content').innerHTML = html;
+}
+
+function limpiarRutinaDuo() {
+  localStorage.removeItem(LS_DUO);
+  renderDuo();
+  toast('Rutina conjunta eliminada','');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  GEMINI HELPER
+// ══════════════════════════════════════════════════════════════
+const MODELOS = [
+  { modelo:'gemini-2.5-flash', version:'v1beta' },
+  { modelo:'gemini-2.0-flash', version:'v1beta' },
+  { modelo:'gemini-2.0-flash-lite', version:'v1beta' },
+];
+
+async function llamarGeminiRaw(prompt) {
+  const key = getGeminiKey();
+  if (!key) throw new Error('Sin API Key de Gemini');
+  let resp=null, modeloUsado='', lastErr='';
+  for (const {modelo} of MODELOS) {
+    try {
+      const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${key}`,{
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.7,maxOutputTokens:16384}})
+      });
+      if (r.ok) { resp=r; modeloUsado=modelo; break; }
+      const eb = await r.json().catch(()=>({}));
+      lastErr = 'Error '+r.status+' ('+modelo+'): '+(eb.error?.message||r.statusText);
+    } catch(fe) { lastErr='Red ('+modelo+'): '+fe.message; }
+  }
+  if (!resp) throw new Error(lastErr||'No se pudo conectar con Gemini.');
+  const json = await resp.json();
+  let raw = json.candidates?.[0]?.content?.parts?.[0]?.text||'';
+  raw = raw.replace(/```json\s*/gi,'').replace(/```\s*/gi,'').trim();
+  const match = raw.match(/\{[\s\S]*\}/);
+  if (match) raw = match[0];
+  function repararJSON(s) {
+    try { return JSON.parse(s); } catch(_) {}
+    let opens=[]; let inStr=false; let esc=false;
+    for (let i=0;i<s.length;i++) {
+      const c=s[i];
+      if (esc){esc=false;continue;}
+      if (c==='\\'&&inStr){esc=true;continue;}
+      if (c==='"'){inStr=!inStr;continue;}
+      if (inStr) continue;
+      if (c==='{') opens.push('}');
+      else if (c==='[') opens.push(']');
+      else if (c==='}'||c===']') opens.pop();
+    }
+    let fixed=s.replace(/,\s*$/,'');
+    fixed+=opens.reverse().join('');
+    try { return JSON.parse(fixed); } catch(e2) { throw new Error('JSON inválido: '+e2.message); }
+  }
+  const resultado = repararJSON(raw);
+  toast('✅ Listo ('+modeloUsado+')','g');
+  return resultado;
+}
+
+async function llamarGemini(prompt, onSuccess, loadingId, btnId, btnLabel, contentId, btnClass) {
+  const btn = document.getElementById(btnId);
+  try {
+    const resultado = await llamarGeminiRaw(prompt);
+    await onSuccess(resultado);
+  } catch(e) {
+    toast('Error: '+e.message,'r');
+    document.getElementById(contentId).innerHTML = `<div class="empty"><div class="empty-ico">❌</div><div class="empty-t">Error al generar</div><div class="empty-s">${e.message}</div></div>`;
+  } finally {
+    document.getElementById(loadingId).classList.remove('show');
+    if (btn) { btn.disabled=false; btn.textContent=btnLabel; btn.className='btn '+btnClass; }
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+//  CONFIG
+// ══════════════════════════════════════════════════════════════
+function renderConfig() {
+  if (ROL !== 'duo') {
+    const d = getD();
+    document.getElementById('cfg-nombre').value = d.nombre||'';
+    document.getElementById('cfg-avatar').value = d.avatar||'';
+    document.getElementById('cfg-objetivo').value = d.objetivo||'bajar_peso';
+    document.getElementById('cfg-nivel').value = d.nivel||'principiante';
+    document.getElementById('cfg-dias').value = d.dias||'3';
+    document.getElementById('cfg-peso').value = d.peso||'';
+    document.getElementById('cfg-estatura').value = d.estatura||'';
+    document.getElementById('cfg-edad').value = d.edad||'';
+    const btn = document.getElementById('cfg-save-btn');
+    btn.className = 'btn bp'+ROL;
+  }
+  actualizarGeminiStatus();
+  actualizarGHStatus();
+}
+
+function savePerfil() {
+  const d = getD();
+  d.nombre = document.getElementById('cfg-nombre').value.trim();
+  d.avatar = document.getElementById('cfg-avatar').value.trim();
+  d.objetivo = document.getElementById('cfg-objetivo').value;
+  d.nivel = document.getElementById('cfg-nivel').value;
+  d.dias = document.getElementById('cfg-dias').value;
+  d.peso = document.getElementById('cfg-peso').value;
+  d.estatura = document.getElementById('cfg-estatura').value;
+  d.edad = document.getElementById('cfg-edad').value;
+  d._ts = Date.now(); setD(d); flashSave();
+  document.getElementById('hbadge').textContent = d.nombre||'P'+ROL;
+  document.getElementById('uLbl').textContent = (d.avatar||(ROL===1?'💪':'🏋️'))+' '+(d.nombre||'Persona '+ROL);
+  subirAGitHubDebounced(); toast('✅ Perfil guardado','g');
+}
+
+// Gemini — clave compartida globalmente
+function guardarGeminiKey() {
+  const val = document.getElementById('gemini-key-input').value.trim();
+  if (!val.startsWith('AIza')) { toast('Key inválida — debe empezar con AIza','r'); return; }
+  localStorage.setItem(LS_GEM, val);
+  document.getElementById('gemini-key-input').value = '';
+  actualizarGeminiStatus();
+  toast('✅ API Key guardada','g');
+  // Subir al config público para que otros dispositivos la reciban automáticamente
+  subirConfigPublico();
+  subirAGitHubDebounced();
+}
+function borrarGeminiKey() {
+  localStorage.removeItem(LS_GEM); actualizarGeminiStatus(); toast('Key eliminada','');
+}
+function actualizarGeminiStatus() {
+  const el = document.getElementById('gemini-status'); if(!el) return;
+  const key = getGeminiKey();
+  el.innerHTML = key
+    ? `<div class="okbox">✅ <strong>API Key configurada</strong> — Gemini IA activada para todos los usuarios.</div>`
+    : `<div class="wbox">⚠️ <strong>Sin API Key</strong> — Ingresa tu key de Gemini para activar la IA.</div>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  GITHUB SYNC — Sistema completo con token, merge inteligente
+//  y periodo de sincronización cada 5 segundos
+//
+//  Configuración del repositorio:
+const GH = {
+  user:   'supertechno07-cloud',  // Usuario de GitHub
+  repo:   'prueba',               // Nombre del repositorio
+  file:   'datos.json',           // Archivo JSON con todos los datos
+  branch: 'main'                  // Rama
+};
+//
+//  Cómo funciona:
+//  1. El token se guarda en localStorage con clave 'gymtrack_gh_token'
+//  2. Al guardar el token, se sube inmediatamente a GitHub
+//  3. Cada 5 segundos se descargan los cambios de GitHub
+//  4. Cada cambio local dispara una subida con debounce de 800ms
+//  5. El merge es inteligente: para perfiles gana el _ts más alto,
+//     para medidas se unen los historiales, para sesiones gana
+//     el historial más completo.
+// ══════════════════════════════════════════════════════════════
+
+let _ghSha = null;         // SHA actual del archivo en GitHub (necesario para el PUT)
+let _subirTimeout = null;  // Timer del debounce de subida
+
+// ── Token: lectura y escritura ────────────────────────────────
+function ghTok() {
+  return localStorage.getItem('gymtrack_gh_token') || '';
+}
+function ghHdr() {
+  const h = { 'Content-Type': 'application/json', 'Accept': 'application/vnd.github.v3+json' };
+  if (ghTok()) h['Authorization'] = 'token ' + ghTok();
+  return h;
+}
+
+// ── Guardar token (se ingresa una sola vez por dispositivo) ───
+function guardarGHConfig() {
+  const inp = document.getElementById('gh-token-input');
+  const val = (inp ? inp.value.trim() : '');
+  if (!val.startsWith('ghp_') && !val.startsWith('github_pat_')) {
+    toast('Token inválido — debe empezar con ghp_ o github_pat_', 'r'); return;
+  }
+  localStorage.setItem('gymtrack_gh_token', val);
+  if (inp) inp.value = '';
+  _ghSha = null;
+  actualizarGHStatus();
+  toast('✅ Token guardado — iniciando sincronización...', 'g');
+  subirAGitHub(); // Subir inmediatamente al guardar
+}
+
+function borrarGHConfig() {
+  localStorage.removeItem('gymtrack_gh_token');
+  _ghSha = null;
+  actualizarGHStatus();
+  toast('Token eliminado', '');
+}
+
+// ── Estado visual del sync ────────────────────────────────────
+function actualizarGHStatus() {
+  const el = document.getElementById('gh-status'); if (!el) return;
+  const tok = ghTok();
+  if (tok) {
+    el.innerHTML = `<div class="okbox">✅ <strong>Token guardado</strong> — sincronización automática activa<br>
+      <span style="font-size:.7rem;opacity:.7">${GH.user}/${GH.repo}/${GH.file} · cada 5s · token: ${tok.substring(0,8)}…</span></div>`;
+  } else {
+    el.innerHTML = `<div class="wbox">⚠️ <strong>Sin token</strong> — pega tu token de GitHub para activar el sync automático entre dispositivos.</div>`;
+  }
+}
+function setGhStatus(msg, tipo) {
+  const gs = document.getElementById('gh-status'); if (!gs) return;
+  if (tipo === 'ok') gs.innerHTML = `<div class="okbox">${msg}<br><span style="font-size:.7rem;opacity:.7">${GH.user}/${GH.repo}/${GH.file}</span></div>`;
+  else if (tipo === 'err') gs.innerHTML = `<div class="wbox">${msg}</div>`;
+}
+
+// ── Leer desde GitHub ─────────────────────────────────────────
+async function cargarDesdeGitHub() {
+  if (!ghTok()) return;
+  try {
+    const url = `https://api.github.com/repos/${GH.user}/${GH.repo}/contents/${GH.file}?ref=${GH.branch}&t=${Date.now()}`;
+    const hdrs = { 'Accept': 'application/vnd.github.v3+json', 'Authorization': 'token ' + ghTok() };
+    const r = await fetch(url, { headers: hdrs });
+
+    if (r.status === 404) {
+      // Archivo no existe todavía — crearlo con los datos actuales
+      await subirAGitHub();
+      return;
+    }
+    if (!r.ok) {
+      console.warn('GitHub read error:', r.status);
+      setGhStatus('⚠️ Error leyendo GitHub: ' + r.status + (r.status===401?' — token inválido':''), 'err');
+      return;
+    }
+
+    const meta = await r.json();
+    _ghSha = meta.sha;
+    const raw = atob(meta.content.replace(/\n/g, ''));
+    const txt = decodeURIComponent(raw.split('').map(c => '%' + c.charCodeAt(0).toString(16).padStart(2, '0')).join(''));
+    const remote = JSON.parse(txt);
+
+    // ── MERGE INTELIGENTE ──────────────────────────────────────
+    // Restaurar Gemini key si viene en el payload y no la tenemos
+    if (remote._gemini && !getGeminiKey()) {
+      localStorage.setItem(LS_GEM, remote._gemini);
+      actualizarGeminiStatus();
+      toast('✅ API Key de Gemini cargada desde GitHub', 'g');
+    }
+
+    // Perfiles: gana el _ts más alto (el más reciente), con merge de medidas
+    const localP1 = getDFor(1); const localP2 = getDFor(2);
+    const mergedP1 = mergePerfilData(localP1, remote.p1);
+    const mergedP2 = mergePerfilData(localP2, remote.p2);
+    if (JSON.stringify(mergedP1) !== JSON.stringify(localP1))
+      try { localStorage.setItem(LS_P1, JSON.stringify(mergedP1)); } catch(_) {}
+    if (JSON.stringify(mergedP2) !== JSON.stringify(localP2))
+      try { localStorage.setItem(LS_P2, JSON.stringify(mergedP2)); } catch(_) {}
+
+    // Rutina duo y nutrición: GitHub gana si es más reciente
+    if (remote.duo)   try { localStorage.setItem(LS_DUO,   JSON.stringify(remote.duo));   } catch(_) {}
+    if (remote.nutri) try { localStorage.setItem(LS_NUTRI, JSON.stringify(remote.nutri)); } catch(_) {}
+
+    // Sesiones: merge — se queda con el historial más completo de cada persona/día
+    if (remote.sesiones) {
+      const localSes = getSesionesData();
+      const merged = { ...remote.sesiones };
+      Object.keys(localSes).forEach(persona => {
+        if (!merged[persona]) merged[persona] = localSes[persona];
+        else {
+          // Por cada día, quedarse con el que tenga más datos
+          Object.keys(localSes[persona]).forEach(dia => {
+            const localDia = localSes[persona][dia];
+            const remoteDia = merged[persona][dia];
+            if (!remoteDia) merged[persona][dia] = localDia;
+            else if (Object.keys(localDia).length > Object.keys(remoteDia).length)
+              merged[persona][dia] = localDia;
+          });
+        }
+      });
+      try { localStorage.setItem(LS_SESIONES, JSON.stringify(merged)); } catch(_) {}
+    }
+
+    // Log de comidas: merge — por clave de día se queda el más largo
+    if (remote.food) {
+      const localFood = getFoodLog();
+      const merged = { ...remote.food };
+      Object.keys(localFood).forEach(k => {
+        if (!merged[k] || localFood[k].length > (merged[k]||[]).length) merged[k] = localFood[k];
+      });
+      try { localStorage.setItem(LS_FOOD_LOG, JSON.stringify(merged)); } catch(_) {}
+    }
+    // ──────────────────────────────────────────────────────────
+
+    // Re-renderizar solo si el usuario no está escribiendo en un campo
+    const hayFoco = document.activeElement &&
+      ['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName);
+    if (!hayFoco && ROL && _activeTab) swTab(_activeTab);
+
+    updateLoginCards();
+    actualizarGeminiStatus();
+    actualizarGHStatus();
+    if (_activeTab === 'config')
+      setGhStatus('✅ Sincronizado — ' + new Date().toLocaleTimeString('es-CO'), 'ok');
+
+  } catch(e) {
+    console.warn('GitHub load error:', e.message);
+    if (_activeTab === 'config')
+      setGhStatus('❌ Error de conexión: ' + e.message, 'err');
+  }
+}
+
+// ── Subir a GitHub ────────────────────────────────────────────
+function subirAGitHubDebounced() {
+  clearTimeout(_subirTimeout);
+  _subirTimeout = setTimeout(subirAGitHub, 800); // 800ms de debounce
+}
+
+async function subirAGitHub() {
+  if (!ghTok()) return;
+  try {
+    // Siempre obtener el SHA actual antes de subir para evitar conflictos 409/422
+    if (!_ghSha) {
+      const r0 = await fetch(
+        `https://api.github.com/repos/${GH.user}/${GH.repo}/contents/${GH.file}?ref=${GH.branch}&t=${Date.now()}`,
+        { headers: ghHdr() }
+      );
+      if (r0.ok) { const m = await r0.json(); _ghSha = m.sha; }
+      // Si 404 → archivo no existe, se creará sin sha (primer commit)
+    }
+
+    // Construir el payload completo con todos los datos de la app
+    const payload = {
+      p1:       getDFor(1),
+      p2:       getDFor(2),
+      duo:      getDuoRutina() || null,
+      nutri:    getNutriData() || null,
+      sesiones: getSesionesData() || null,
+      food:     getFoodLog() || null,
+      _ts:      Date.now(),
+      _gemini:  getGeminiKey() || undefined // también sincronizar la API key
+    };
+
+    // Codificar a Base64 (requerido por la API de GitHub)
+    const contenido = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
+    const body = {
+      message: 'GymTrack sync ' + new Date().toLocaleString('es-CO'),
+      content:  contenido,
+      branch:   GH.branch
+    };
+    if (_ghSha) body.sha = _ghSha; // SHA requerido para actualizar; ausente = crear
+
+    const r = await fetch(
+      `https://api.github.com/repos/${GH.user}/${GH.repo}/contents/${GH.file}`,
+      { method: 'PUT', headers: ghHdr(), body: JSON.stringify(body) }
+    );
+
+    if (r.ok) {
+      const res = await r.json();
+      _ghSha = res.content.sha; // Actualizar SHA para la próxima subida
+      flashSave();
+      if (_activeTab === 'config')
+        setGhStatus('✅ Sincronizado — ' + new Date().toLocaleTimeString('es-CO'), 'ok');
+    } else {
+      const err = await r.json().catch(() => ({}));
+      console.warn('GitHub upload error:', r.status, err);
+      if (_activeTab === 'config')
+        setGhStatus('❌ Error subiendo: ' + r.status, 'err');
+      // Manejar conflicto: alguien subió antes → re-fetch SHA y reintentar
+      if (r.status === 409 || r.status === 422) {
+        _ghSha = null;
+        setTimeout(subirAGitHub, 1500);
+      }
+    }
+  } catch(e) {
+    console.warn('GitHub upload error:', e.message);
+    if (_activeTab === 'config')
+      setGhStatus('❌ Sin conexión: ' + e.message, 'err');
+  }
+}
+
+// ── Forzar sincronización manual ──────────────────────────────
+async function forzarSync() {
+  toast('Sincronizando...', '');
+  _ghSha = null;
+  await cargarDesdeGitHub();
+  await subirAGitHub();
+  toast('✅ Sync completado', 'g');
+}
+
+// ── Sincronizar al abrir y cada 5 segundos ────────────────────
+window.addEventListener('load', () => {
+  setTimeout(cargarDesdeGitHub, 800);
+  setInterval(() => {
+    if (ROL) cargarDesdeGitHub();
+  }, 5000);
+});
+
+// ── iniciarSync: llamado al hacer login ───────────────────────
+async function iniciarSync() {
+  actualizarGHStatus();
+  await cargarDesdeGitHub();
+}
+
+// ── Merge de perfiles: _ts gana para escalares, union para medidas ─
+function mergePerfilData(local, remote) {
+  if (!remote) return local;
+  if (!local)  return remote;
+  const merged = { ...local };
+
+  // Campos escalares: gana el _ts más reciente
+  if ((remote._ts || 0) > (local._ts || 0)) {
+    const escalares = ['nombre', 'avatar', 'objetivo', 'nivel', 'dias', 'peso', 'estatura', 'edad', 'rutina'];
+    escalares.forEach(k => { if (remote[k] !== undefined) merged[k] = remote[k]; });
+    merged._ts = remote._ts;
+  }
+
+  // Medidas: unir historiales por zona, deduplicar por fecha, ordenar cronológicamente
+  const medidasLocal  = local.medidas  || {};
+  const medidasRemote = remote.medidas || {};
+  const todasZonas = new Set([...Object.keys(medidasLocal), ...Object.keys(medidasRemote)]);
+  merged.medidas = {};
+  todasZonas.forEach(zona => {
+    const histLocal  = medidasLocal[zona]  || [];
+    const histRemote = medidasRemote[zona] || [];
+    const byFecha = {};
+    [...histLocal, ...histRemote].forEach(entry => {
+      const key = entry.fecha || entry.val;
+      if (!byFecha[key]) byFecha[key] = entry;
+    });
+    merged.medidas[zona] = Object.values(byFecha).sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+  });
+
+  return merged;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  UTILS
+// ══════════════════════════════════════════════════════════════
+function flashSave() {
+  const el=document.getElementById('saveIndicator'); el.classList.add('show'); setTimeout(()=>el.classList.remove('show'),2500);
+}
+function toast(msg,type='') {
+  const t=document.getElementById('toast'); t.textContent=msg; t.className='toast'+(type?' t'+type:'');
+  requestAnimationFrame(()=>{ t.classList.add('on'); setTimeout(()=>t.classList.remove('on'),3500); });
+}
+function showModal(title,body,fn,btnClass='br') {
+  document.getElementById('modalT').textContent=title; document.getElementById('modalB').textContent=body;
+  const ok=document.getElementById('modalOk'); ok.className='btn '+btnClass; ok.onclick=()=>{closeModal();fn();};
+  document.getElementById('modalBg').classList.add('on');
+}
+function closeModal() { document.getElementById('modalBg').classList.remove('on'); }
+document.getElementById('modalBg').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeModal(); });
+
+// ══════════════════════════════════════════════════════════════
+//  NUTRICIÓN IA
+// ══════════════════════════════════════════════════════════════
+const LS_NUTRI = 'gymtrack_nutri';
+let _nutriModo = 'individual'; // 'individual', 'p1', 'p2', 'ambos'
+
+function getNutriData() {
+  try { return JSON.parse(localStorage.getItem(LS_NUTRI))||{}; } catch(_) { return {}; }
+}
+function setNutriData(d) {
+  try { localStorage.setItem(LS_NUTRI, JSON.stringify(d)); } catch(_) {}
+}
+
+function setNutriModo(modo) {
+  _nutriModo = modo;
+  ['ambos','p1','p2'].forEach(m => {
+    const btn = document.getElementById('nutri-btn-'+m);
+    if (btn) btn.className = m===modo ? 'btn bpduo bsm' : 'btn bs bsm';
+  });
+}
+
+function renderNutricion() {
+  const key = getGeminiKey();
+  document.getElementById('nutri-warning').style.display = key?'none':'block';
+
+  const genBtn = document.getElementById('gen-nutri-btn');
+  if (genBtn) { genBtn.className = ROL==='duo' ? 'btn bpduo' : 'btn bp'+ROL; }
+
+  const infoEl = document.getElementById('nutri-modo-info');
+  const duoPanel = document.getElementById('nutri-modo-duo');
+
+  if (ROL === 'duo') {
+    duoPanel.style.display = 'block';
+    infoEl.innerHTML = 'La IA genera planes de alimentación adaptados al objetivo de cada persona, complementando su rutina de entrenamiento.';
+    _nutriModo = 'ambos';
+    setNutriModo('ambos');
+    const card = document.getElementById('nutri-cal-dia-card');
+    if (card) card.style.display='none';
+  } else {
+    duoPanel.style.display = 'none';
+    _nutriModo = 'individual';
+    const d = getD();
+    infoEl.innerHTML = renderMetasNutricion() + '<span style="font-size:.78rem;color:var(--mut);line-height:1.6">La IA crea un plan de alimentación personalizado según tu objetivo ('+(OBJ_LABELS[d.objetivo]||d.objetivo)+'), peso y medidas.</span>';
+    // Sync objetivo calórico con perfil
+    const calSelect = document.getElementById('nutri-cal');
+    if (calSelect && d.objetivo) {
+      if (['bajar_peso','tonificar'].includes(d.objetivo)) calSelect.value='deficit';
+      else if (d.objetivo==='ganar_musculo'||d.objetivo==='fuerza') calSelect.value='superavit';
+      else calSelect.value='mantenimiento';
+    }
+    // Mostrar panel de calorías del día
+    renderNutricionCalDia();
+  }
+
+  const saved = getNutriData();
+  const key2 = ROL==='duo' ? 'duo' : 'p'+ROL;
+  if (saved[key2]) renderNutriHTML(saved[key2], ROL==='duo');
+  else document.getElementById('nutri-content').innerHTML = `<div class="empty"><div class="empty-ico">🥗</div><div class="empty-t">Sin plan de alimentación</div><div class="empty-s">Configura tus opciones arriba y presiona "Generar Plan de Alimentación".</div></div>`;
+}
+
+async function generarNutricion() {
+  const key = getGeminiKey();
+  if (!key) { toast('Configura tu API Key de Gemini primero','r'); swTab('config'); return; }
+
+  const cal = document.getElementById('nutri-cal').value;
+  const restricciones = document.getElementById('nutri-restricciones').value.trim();
+  const comidas = document.getElementById('nutri-comidas').value;
+  const extra = document.getElementById('nutri-extra').value.trim();
+
+  const calLabel = {deficit:'déficit calórico (bajar peso)', mantenimiento:'mantenimiento calórico', superavit:'superávit calórico (ganar músculo)'}[cal];
+
+  const btn = document.getElementById('gen-nutri-btn');
+  if (btn) { btn.disabled=true; btn.textContent='⏳ Generando...'; }
+  document.getElementById('ai-loading-nutri').classList.add('show');
+  document.getElementById('ai-spinner-nutri').className = ROL==='duo' ? 'ai-spinner duo' : 'ai-spinner '+COLOR;
+  document.getElementById('nutri-content').innerHTML = '';
+
+  try {
+    let resultado, cacheKey;
+
+    if (ROL !== 'duo' || _nutriModo === 'p1' || _nutriModo === 'p2') {
+      // Plan individual
+      const rolTarget = ROL !== 'duo' ? ROL : (_nutriModo==='p1'?1:2);
+      const d = getDFor(rolTarget);
+      const medidasStr = ZONAS.map(z=>{const h=(d.medidas||{})[z.id]||[];if(h.length>0){const l=h[h.length-1];return `${z.nombre}:${l.val}cm`;}return null;}).filter(Boolean).join(', ');
+      const prompt = `Eres un nutricionista deportivo experto. Genera un plan de alimentación semanal para:\n- Nombre: ${d.nombre||'Atleta'}\n- Objetivo: ${OBJ_LABELS[d.objetivo]||d.objetivo} (${calLabel})\n- Nivel: ${d.nivel||'principiante'}\n- Peso: ${d.peso||'?'} kg | Estatura: ${d.estatura||'?'} cm | Edad: ${d.edad||'?'} años\n${medidasStr?'- Medidas: '+medidasStr:''}\n- Comidas por día: ${comidas}\n${restricciones?'- Restricciones: '+restricciones:''}\n${extra?'- Notas extra: '+extra:''}\n\nResponde ÚNICAMENTE con este JSON (sin markdown):\n{"resumen":"descripción breve con calorías aproximadas y macros objetivo","dias":[{"dia":"Lunes","comidas":[{"nombre":"Desayuno","alimentos":["alimento 1 con cantidad","alimento 2 con cantidad"],"calorias_aprox":400,"proteina_g":25}]}],"consejos":["tip 1","tip 2","tip 3"]}\n\nIncluye 7 días. Varía los menús. Usa alimentos comunes en Colombia. Sé específico con cantidades.`;
+      resultado = await llamarGeminiRaw(prompt);
+      cacheKey = ROL!=='duo' ? 'p'+ROL : _nutriModo;
+      const saved = getNutriData(); saved[cacheKey]=resultado; setNutriData(saved);
+      renderNutriHTML(resultado, false);
+    } else {
+      // Plan conjunto (ambos)
+      const d1=getDFor(1), d2=getDFor(2);
+      const prompt = `Eres un nutricionista deportivo experto. Genera un plan de alimentación para DOS personas que entrenan juntas.\n\nPersona 1 (${d1.nombre||'P1'}): objetivo=${OBJ_LABELS[d1.objetivo]||d1.objetivo}, peso=${d1.peso||'?'}kg, estatura=${d1.estatura||'?'}cm, edad=${d1.edad||'?'}\nPersona 2 (${d2.nombre||'P2'}): objetivo=${OBJ_LABELS[d2.objetivo]||d2.objetivo}, peso=${d2.peso||'?'}kg, estatura=${d2.estatura||'?'}cm, edad=${d2.edad||'?'}\nObjetivo calórico general: ${calLabel}\nComidas por día: ${comidas}\n${restricciones?'Restricciones: '+restricciones:''}\n${extra?'Notas: '+extra:''}\n\nResponde ÚNICAMENTE con este JSON (sin markdown):\n{"resumen":"descripción breve del plan conjunto","p1":{"nombre":"${d1.nombre||'Persona 1'}","calorias":"aprox kcal/día","macros":"proteína X, carbos Y, grasa Z","dias":[{"dia":"Lunes","comidas":[{"nombre":"Desayuno","alimentos":["alimento con cantidad"],"calorias_aprox":400}]}]},"p2":{"nombre":"${d2.nombre||'Persona 2'}","calorias":"aprox kcal/día","macros":"proteína X, carbos Y, grasa Z","dias":[{"dia":"Lunes","comidas":[{"nombre":"Desayuno","alimentos":["alimento con cantidad"],"calorias_aprox":400}]}]},"consejos_comunes":["tip 1","tip 2"]}\n\nIncluye 7 días para cada uno. Usa alimentos comunes en Colombia.`;
+      resultado = await llamarGeminiRaw(prompt);
+      const saved = getNutriData(); saved['duo']=resultado; setNutriData(saved);
+      renderNutriHTML(resultado, true);
+    }
+    subirAGitHubDebounced();
+  } catch(e) {
+    toast('Error: '+e.message,'r');
+    document.getElementById('nutri-content').innerHTML = `<div class="empty"><div class="empty-ico">❌</div><div class="empty-t">Error al generar</div><div class="empty-s">${e.message}</div></div>`;
+  } finally {
+    document.getElementById('ai-loading-nutri').classList.remove('show');
+    if (btn) { btn.disabled=false; btn.textContent='🥗 Generar Plan de Alimentación'; btn.className=ROL==='duo'?'btn bpduo':'btn bp'+ROL; }
+  }
+}
+
+function renderNutriHTML(plan, isDuo) {
+  let html = '';
+  if (isDuo && plan.p1 && plan.p2) {
+    // Plan conjunto — dos columnas
+    if (plan.resumen) html+=`<div style="padding:.7rem 1rem;border-radius:8px;margin-bottom:1rem;background:linear-gradient(135deg,var(--p1bg),var(--p2bg));border:1px solid rgba(255,255,255,.08);font-size:.82rem;line-height:1.6">📋 ${plan.resumen}</div>`;
+    // Macros resumen
+    html+=`<div class="duo-split" style="margin-bottom:1rem">
+      <div style="background:var(--p1bg);border:1px solid var(--p1bor);border-radius:10px;padding:.7rem 1rem">
+        <div style="font-size:.65rem;font-weight:700;color:var(--p1);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem">💪 ${plan.p1.nombre||'Persona 1'}</div>
+        <div style="font-size:.82rem;font-weight:600;color:var(--p1)">${plan.p1.calorias||'—'}</div>
+        <div style="font-size:.72rem;color:var(--mut);margin-top:2px">${plan.p1.macros||''}</div>
+      </div>
+      <div style="background:var(--p2bg);border:1px solid var(--p2bor);border-radius:10px;padding:.7rem 1rem">
+        <div style="font-size:.65rem;font-weight:700;color:var(--p2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem">🏋️ ${plan.p2.nombre||'Persona 2'}</div>
+        <div style="font-size:.82rem;font-weight:600;color:var(--p2)">${plan.p2.calorias||'—'}</div>
+        <div style="font-size:.72rem;color:var(--mut);margin-top:2px">${plan.p2.macros||''}</div>
+      </div>
+    </div>`;
+    // Días con columnas
+    const dias1 = plan.p1.dias||[]; const dias2 = plan.p2.dias||[];
+    const maxDias = Math.max(dias1.length, dias2.length);
+    for (let i=0;i<maxDias;i++) {
+      const d1=dias1[i]||{}; const d2=dias2[i]||{};
+      const diaNom = d1.dia||d2.dia||'Día '+(i+1);
+      html+=`<div class="card" style="margin-bottom:.7rem"><div style="font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:.08em;color:var(--mut);margin-bottom:.7rem">${diaNom}</div>
+      <div class="duo-split">
+        <div>${renderComidas(d1.comidas||[],'p1',plan.p1.nombre)}</div>
+        <div>${renderComidas(d2.comidas||[],'p2',plan.p2.nombre)}</div>
+      </div></div>`;
+    }
+    if (plan.consejos_comunes?.length) {
+      html+=`<div class="card"><div class="ctitle">💡 <span>Consejos comunes</span></div>${plan.consejos_comunes.map(c=>`<div class="libre-card"><span>💡</span><span>${c}</span></div>`).join('')}</div>`;
+    }
+  } else {
+    // Plan individual
+    const c = ROL===1?'var(--p1)':'var(--p2)'; const cBg=ROL===1?'var(--p1bg)':'var(--p2bg)'; const cBor=ROL===1?'var(--p1bor)':'var(--p2bor)';
+    if (plan.resumen) html+=`<div class="okbox" style="background:${cBg};border-color:${cBor};color:${c}">📋 ${plan.resumen}</div>`;
+    (plan.dias||[]).forEach(dia => {
+      html+=`<div class="rutina-day"><div class="rutina-day-title"><span class="dday" style="background:${cBg};color:${c};border:1px solid ${cBor}">${dia.dia}</span></div>`;
+      (dia.comidas||[]).forEach(com=>{
+        html+=`<div style="margin-bottom:.6rem"><div style="font-size:.75rem;font-weight:600;color:${c};margin-bottom:.3rem">${com.nombre} <span style="color:var(--mut);font-weight:400;font-size:.7rem">·  ~${com.calorias_aprox||'?'} kcal${com.proteina_g?' · '+com.proteina_g+'g prot':''}</span></div>`;
+        (com.alimentos||[]).forEach(al=>{html+=`<div class="ejercicio" style="border-bottom:none;padding:3px 0"><span style="color:var(--mut);margin-right:4px">•</span>${al}</div>`;});
+        html+=`</div>`;
+      });
+      html+=`</div>`;
+    });
+    if (plan.consejos?.length) {
+      html+=`<div class="card"><div class="ctitle">💡 <span>Consejos</span></div>${plan.consejos.map(c=>`<div class="libre-card"><span>💡</span><span>${c}</span></div>`).join('')}</div>`;
+    }
+  }
+  document.getElementById('nutri-content').innerHTML = html;
+}
+
+function renderComidas(comidas, lado, nombre) {
+  const c = lado==='p1'?'var(--p1)':'var(--p2)'; const cBg=lado==='p1'?'var(--p1bg)':'var(--p2bg)'; const cBor=lado==='p1'?'var(--p1bor)':'var(--p2bor)';
+  let h=`<div style="font-size:.65rem;font-weight:700;color:${c};letter-spacing:.07em;text-transform:uppercase;margin-bottom:.4rem">${nombre||lado.toUpperCase()}</div>`;
+  comidas.forEach(com=>{
+    h+=`<div style="margin-bottom:.5rem"><div style="font-size:.72rem;font-weight:600;color:${c};margin-bottom:.2rem">${com.nombre} <span style="color:var(--mut);font-weight:400">~${com.calorias_aprox||'?'}kcal</span></div>`;
+    (com.alimentos||[]).forEach(al=>{h+=`<div style="font-size:.72rem;color:var(--mut);padding:1px 0"><span style="margin-right:4px">•</span>${al}</div>`;});
+    h+=`</div>`;
+  });
+  return h||'<div style="font-size:.72rem;color:var(--mut2)">Sin datos</div>';
+}
+
+function limpiarNutricion() {
+  const saved = getNutriData();
+  const key = ROL==='duo' ? 'duo' : 'p'+ROL;
+  delete saved[key]; setNutriData(saved); renderNutricion(); toast('Plan de alimentación eliminado','');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  CONEXIÓN METAS — Banner que muestra objetivo compartido
+// ══════════════════════════════════════════════════════════════
+function renderMetasBanner() {
+  const d = getD();
+  const obj = OBJ_LABELS[d.objetivo]||d.objetivo;
+  const c = ROL===1?'var(--p1)':'var(--p2)';
+  const cBg = ROL===1?'var(--p1bg)':'var(--p2bg)';
+  const cBor = ROL===1?'var(--p1bor)':'var(--p2bor)';
+  const totalM = Object.keys(d.medidas||{}).filter(k=>(d.medidas[k]||[]).length>0).length;
+  const streak = calcularRacha();
+  const saved = getNutriData();
+  const tieneNutri = !!(saved['p'+ROL]);
+  return `<div class="meta-conexion" style="margin-bottom:1rem">
+    <span class="meta-chip" style="color:${c};border-color:${cBor};background:${cBg}">🎯 ${obj}</span>
+    <span class="meta-chip" style="color:var(--mut);border-color:var(--bor);background:var(--sur2)">📐 ${totalM} zonas medidas</span>
+    <span class="meta-chip" style="color:${streak>0?'var(--ok)':'var(--mut)'};border-color:${streak>0?'rgba(74,222,128,0.3)':'var(--bor)'};background:${streak>0?'var(--okbg)':'var(--sur2)'}">🔥 ${streak} día${streak!==1?'s':''} de racha</span>
+    ${tieneNutri?`<span class="meta-chip" style="color:var(--ok);border-color:rgba(74,222,128,0.3);background:var(--okbg)">🥗 Plan activo</span>`:'<span class="meta-chip" style="color:var(--mut);border-color:var(--bor);background:var(--sur2)" onclick="swTab(\'nutricion\')" style="cursor:pointer">🥗 Sin plan nutricional</span>'}
+  </div>`;
+}
+
+// Nutrición también muestra metas conectadas con rutina
+function renderMetasNutricion() {
+  if (ROL==='duo') return '';
+  const d = getD();
+  const obj = OBJ_LABELS[d.objetivo]||d.objetivo;
+  const c = ROL===1?'var(--p1)':'var(--p2)';
+  const cBg = ROL===1?'var(--p1bg)':'var(--p2bg)';
+  const cBor = ROL===1?'var(--p1bor)':'var(--p2bor)';
+  const streak = calcularRacha();
+  const tieneRutina = !!(getD().rutina);
+  return `<div class="meta-conexion" style="margin-bottom:.8rem">
+    <span class="meta-chip" style="color:${c};border-color:${cBor};background:${cBg}">🎯 ${obj}</span>
+    ${tieneRutina?`<span class="meta-chip" style="color:var(--ok);border-color:rgba(74,222,128,0.3);background:var(--okbg)">🏋️ Rutina activa</span>`:`<span class="meta-chip" style="color:var(--mut);border-color:var(--bor);background:var(--sur2)">🏋️ Sin rutina</span>`}
+    <span class="meta-chip" style="color:${streak>0?'var(--ok)':'var(--mut)'};border-color:${streak>0?'rgba(74,222,128,0.3)':'var(--bor)'};background:${streak>0?'var(--okbg)':'var(--sur2)'}">🔥 ${streak} día${streak!==1?'s':''} de racha</span>
+  </div>`;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  SESIONES / LOG DE EJERCICIOS
+// ══════════════════════════════════════════════════════════════
+const LS_SESIONES = 'gymtrack_sesiones';
+
+function getSesionesData() {
+  try { return JSON.parse(localStorage.getItem(LS_SESIONES))||{}; } catch(_) { return {}; }
+}
+function setSesionesData(d) {
+  try { localStorage.setItem(LS_SESIONES, JSON.stringify(d)); } catch(_) {}
+}
+function getSesionLog() {
+  const data = getSesionesData();
+  const key = 'p'+(ROL==='duo'?'1':ROL);
+  return data[key]||{};
+}
+function setSesionLog(log) {
+  const data = getSesionesData();
+  const key = 'p'+(ROL==='duo'?'1':ROL);
+  data[key] = log;
+  setSesionesData(data);
+}
+
+function getTodayKey() {
+  const now = new Date();
+  return now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+}
+
+function toggleEjercicio(dayKey, logKey, diaNombre, diaIndex) {
+  const log = getSesionLog();
+  if (!log[dayKey]) log[dayKey] = {};
+  const wasDone = !!log[dayKey][logKey];
+  log[dayKey][logKey] = !wasDone;
+
+  // Contar cuántos ejercicios completados en ese día de la rutina
+  const d = getD();
+  const rutina = d.rutina;
+  if (rutina && rutina.dias && rutina.dias[diaIndex]) {
+    const totalEj = rutina.dias[diaIndex].ejercicios.length;
+    const doneCount = Object.keys(log[dayKey]).filter(k=>k.startsWith('dia_'+diaIndex+'_ej_')&&log[dayKey][k]).length;
+    // Si se completan todos los ejercicios del día → marcar sesión como hecha
+    if (doneCount >= totalEj && totalEj > 0) {
+      log[dayKey]._sesion_completa = true;
+      log[dayKey]._dia_nombre = diaNombre;
+      log[dayKey]._completado_ts = Date.now();
+      toast('🔥 ¡Día '+diaNombre+' completado! Racha actualizada.','g');
+    } else {
+      // Si desmarcan, quitar sesion completa
+      if (log[dayKey]._sesion_completa && !log[dayKey][logKey]) {
+        delete log[dayKey]._sesion_completa;
+      }
+    }
+  }
+  setSesionLog(log);
+  subirSesionesGitHub();
+  // Re-render rutina en lugar de recargar toda la pestaña
+  const rutinaCont = document.getElementById('rutina-content');
+  if (rutinaCont) { const rd=getD(); if(rd.rutina) renderRutinaHTML(rd.rutina); }
+  // Si progreso está activo, refrescarlo
+  if (_activeTab==='progreso') renderProgreso();
+}
+
+function marcarSesionManual() {
+  const log = getSesionLog();
+  const todayKey = getTodayKey();
+  if (!log[todayKey]) log[todayKey] = {};
+  log[todayKey]._sesion_completa = true;
+  log[todayKey]._manual = true;
+  log[todayKey]._completado_ts = Date.now();
+  setSesionLog(log);
+  subirSesionesGitHub();
+  renderProgreso();
+  toast('✅ ¡Sesión registrada manualmente!','g');
+}
+
+function deshacerSesion(dayKey) {
+  const log = getSesionLog();
+  if (log[dayKey]) {
+    delete log[dayKey]._sesion_completa;
+    delete log[dayKey]._manual;
+  }
+  setSesionLog(log);
+  subirSesionesGitHub();
+  renderProgreso();
+  toast('Sesión eliminada','');
+}
+
+// Subir sesiones a GitHub (embebido en payload principal)
+async function subirSesionesGitHub() {
+  subirAGitHubDebounced();
+}
+
+// ══════════════════════════════════════════════════════════════
+//  RACHA Y CALENDARIO
+// ══════════════════════════════════════════════════════════════
+let _calOffset = 0; // meses hacia atrás/adelante
+
+function calcularRacha() {
+  const log = getSesionLog();
+  let racha = 0;
+  const hoy = new Date();
+  for (let i=0; i<365; i++) {
+    const d = new Date(hoy);
+    d.setDate(hoy.getDate()-i);
+    const k = d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    if (log[k] && log[k]._sesion_completa) { racha++; }
+    else { if (i>0) break; } // permitir que hoy no esté aún marcado
+  }
+  return racha;
+}
+
+function calcularRachaMax() {
+  const log = getSesionLog();
+  const dias = Object.keys(log).filter(k=>log[k]&&log[k]._sesion_completa).sort();
+  if (!dias.length) return 0;
+  let max=1, curr=1;
+  for (let i=1;i<dias.length;i++) {
+    const prev=new Date(dias[i-1]); const cur=new Date(dias[i]);
+    const diff=(cur-prev)/(1000*60*60*24);
+    if (diff===1) { curr++; max=Math.max(max,curr); }
+    else curr=1;
+  }
+  return max;
+}
+
+function calMes(dir) {
+  _calOffset += dir;
+  renderCalendario();
+}
+
+function renderProgreso() {
+  if (ROL==='duo') {
+    document.getElementById('streak-card').innerHTML = `<div class="empty"><div class="empty-ico">🤝</div><div class="empty-t">Progreso individual</div><div class="empty-s">Entra como Persona 1 o Persona 2 para ver tu progreso.</div></div>`;
+    document.getElementById('log-session-card').style.display='none';
+    document.getElementById('historial-content').innerHTML='';
+    renderCalendario();
+    return;
+  }
+  document.getElementById('log-session-card').style.display='';
+  const d = getD();
+  const racha = calcularRacha();
+  const rachaMax = calcularRachaMax();
+  const log = getSesionLog();
+  const todayKey = getTodayKey();
+  const sesionHoy = log[todayKey];
+  const hoyCompleto = sesionHoy && sesionHoy._sesion_completa;
+  const c = ROL===1?'var(--p1)':'var(--p2)';
+  const cBg = ROL===1?'var(--p1bg)':'var(--p2bg)';
+  const cBor = ROL===1?'var(--p1bor)':'var(--p2bor)';
+
+  // Total sesiones
+  const totalSesiones = Object.keys(log).filter(k=>log[k]&&log[k]._sesion_completa).length;
+
+  // Streak banner
+  document.getElementById('streak-card').innerHTML = `
+    <div class="streak-banner" style="background:${hoyCompleto?'var(--okbg)':cBg};border:1px solid ${hoyCompleto?'rgba(74,222,128,0.3)':cBor}">
+      <div>
+        <div class="streak-num" style="color:${hoyCompleto?'var(--ok)':c}">${racha}🔥</div>
+        <div class="streak-lbl">Días de racha</div>
+      </div>
+      <div style="width:1px;height:50px;background:var(--bor)"></div>
+      <div style="text-align:center">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:${c};line-height:1">${totalSesiones}</div>
+        <div class="streak-lbl">Sesiones totales</div>
+      </div>
+      <div style="width:1px;height:50px;background:var(--bor)"></div>
+      <div style="text-align:center">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:${c};line-height:1">${rachaMax}</div>
+        <div class="streak-lbl">Racha máxima</div>
+      </div>
+    </div>`;
+
+  // Panel de registro de sesión hoy
+  const rutina = d.rutina;
+  let logHtml = '';
+  if (hoyCompleto) {
+    logHtml = `<div class="session-done-banner">✅ ¡Sesión de hoy completada! <button class="btn bs bsm" style="margin-left:auto" onclick="deshacerSesion('${todayKey}')">Deshacer</button></div>`;
+  } else if (rutina && rutina.dias && rutina.dias.length) {
+    // Mostrar progreso de cada día de la rutina para hoy
+    logHtml = `<div style="font-size:.78rem;color:var(--mut);margin-bottom:.8rem">Marca los ejercicios desde la pestaña <strong style="color:${c}">🔥 Rutina IA</strong>, o registra la sesión manualmente:</div>`;
+    rutina.dias.forEach((dia,di)=>{
+      const ejTotal = (dia.ejercicios||[]).length;
+      const sesionDia = log[todayKey]||{};
+      const ejDone = (dia.ejercicios||[]).filter((_,ei)=>sesionDia['dia_'+di+'_ej_'+ei]).length;
+      const pct = ejTotal>0?Math.round(ejDone/ejTotal*100):0;
+      logHtml += `<div style="margin-bottom:.6rem">
+        <div style="display:flex;justify-content:space-between;font-size:.75rem;margin-bottom:3px">
+          <span style="font-weight:600">${dia.dia} <span style="color:var(--mut);font-weight:400">— ${dia.enfoque}</span></span>
+          <span style="color:${pct===100?'var(--ok)':c}">${ejDone}/${ejTotal}</span>
+        </div>
+        <div style="height:5px;background:var(--sur3);border-radius:99px;overflow:hidden">
+          <div style="width:${pct}%;height:100%;background:${pct===100?'var(--ok)':c};border-radius:99px;transition:width .4s"></div>
+        </div>
+      </div>`;
+    });
+    logHtml += `<button class="btn bs bsm" style="margin-top:.5rem" onclick="marcarSesionManual()">📌 Registrar sesión manualmente</button>`;
+  } else {
+    logHtml = `<div style="font-size:.78rem;color:var(--mut);margin-bottom:.8rem">No tienes rutina generada. <span style="color:${c};cursor:pointer" onclick="swTab('rutina')">→ Generar Rutina IA</span></div>
+      <button class="btn bp${ROL} bsm" onclick="marcarSesionManual()">📌 Registrar sesión de hoy</button>`;
+  }
+  document.getElementById('log-session-content').innerHTML = logHtml;
+
+  renderCalendario();
+  renderHistorial();
+}
+
+function renderCalendario() {
+  const hoy = new Date();
+  const fecha = new Date(hoy.getFullYear(), hoy.getMonth() + _calOffset, 1);
+  const year = fecha.getFullYear();
+  const month = fecha.getMonth();
+  const DIAS_ES = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const MESES_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  document.getElementById('cal-month-label').textContent = MESES_ES[month]+' '+year;
+
+  const log = ROL==='duo' ? {} : getSesionLog();
+  const primerDia = new Date(year,month,1).getDay();
+  const diasMes = new Date(year,month+1,0).getDate();
+  const todayKey = getTodayKey();
+  const colorClass = ROL===1?'done-p1':ROL===2?'done-p2':'done-duo';
+
+  let html = DIAS_ES.map(d=>`<div class="cal-head">${d}</div>`).join('');
+  for (let i=0;i<primerDia;i++) html+=`<div class="cal-day empty"></div>`;
+  for (let d=1;d<=diasMes;d++) {
+    const k = year+'-'+String(month+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    const esFuturo = new Date(year,month,d) > hoy;
+    const esHoy = k===todayKey;
+    const sesion = log[k];
+    const hecho = sesion && sesion._sesion_completa;
+    let cls = 'cal-day';
+    if (hecho) cls+=' '+colorClass;
+    else if (esHoy) cls+=' today';
+    else if (!esFuturo && d<hoy.getDate()+(_calOffset*31) && !hecho && new Date(year,month,d)<hoy) {
+      // Días pasados sin marcar — no los marcamos como "perdido" para no ser negativos
+    }
+    const title = hecho?'✓ Entrenamiento hecho':'';
+    html+=`<div class="${cls}" title="${title}" onclick="calDayClick('${k}')">${d}${hecho?'<span style="position:absolute;bottom:2px;right:3px;font-size:.55rem">✓</span>':''}</div>`;
+  }
+  document.getElementById('cal-grid').innerHTML = html;
+}
+
+function calDayClick(k) {
+  if (ROL==='duo') return;
+  const log = getSesionLog();
+  const sesion = log[k];
+  if (sesion && sesion._sesion_completa) {
+    showModal('Deshacer sesión','¿Quitar el registro de entrenamiento de este día?',()=>{ deshacerSesion(k); }, 'br');
+  }
+}
+
+function renderHistorial() {
+  const log = getSesionLog();
+  const dias = Object.keys(log).filter(k=>log[k]&&log[k]._sesion_completa).sort().reverse().slice(0,15);
+  const c = ROL===1?'var(--p1)':'var(--p2)';
+  if (!dias.length) {
+    document.getElementById('historial-content').innerHTML=`<div class="empty" style="padding:1rem"><div class="empty-ico">📭</div><div class="empty-t">Sin sesiones registradas</div><div class="empty-s">Marca ejercicios como hechos en la Rutina IA para construir tu historial.</div></div>`;
+    return;
+  }
+  const MESES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  document.getElementById('historial-content').innerHTML = dias.map(k=>{
+    const s=log[k]; const fecha=new Date(k+'T12:00:00');
+    const fStr=fecha.getDate()+' '+MESES[fecha.getMonth()]+' '+fecha.getFullYear();
+    const manual = s._manual?'<span style="font-size:.65rem;color:var(--mut);margin-left:6px">manual</span>':'';
+    const diaNom = s._dia_nombre?`<span style="font-size:.72rem;color:var(--mut)"> — ${s._dia_nombre}</span>`:'';
+    return `<div class="libre-card" style="margin-bottom:.35rem">
+      <span style="font-size:1rem">✅</span>
+      <span style="flex:1;font-size:.78rem;font-weight:500">${fStr}${diaNom}${manual}</span>
+      <button class="btn bs bsm" style="font-size:.62rem;padding:3px 8px" onclick="deshacerSesion('${k}')">✕</button>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  CALORÍAS OBJETIVO (TMB + NEAT)
+// ══════════════════════════════════════════════════════════════
+function calcularCaloriasObjetivo(d) {
+  if (!d.peso || !d.estatura || !d.edad) return null;
+  const p=parseFloat(d.peso), h=parseFloat(d.estatura), e=parseFloat(d.edad);
+  // Mifflin-St Jeor (asumimos masculino por defecto, sin campo género)
+  const tmb = 10*p + 6.25*h - 5*e + 5;
+  const factorActividad = {2:1.2, 3:1.375, 4:1.55, 5:1.725, 6:1.9}[d.dias]||1.375;
+  const tdee = Math.round(tmb * factorActividad);
+  const ajuste = {bajar_peso:-400, tonificar:-200, ganar_musculo:+300, fuerza:+250, resistencia:0, salud:0}[d.objetivo]||0;
+  return { tdee, meta: tdee+ajuste, ajuste };
+}
+
+// ══════════════════════════════════════════════════════════════
+//  LOG DE COMIDAS DEL DÍA
+// ══════════════════════════════════════════════════════════════
+const LS_FOOD_LOG = 'gymtrack_foodlog';
+
+function getFoodLog() {
+  try { return JSON.parse(localStorage.getItem(LS_FOOD_LOG))||{}; } catch(_) { return {}; }
+}
+function setFoodLog(d) { try { localStorage.setItem(LS_FOOD_LOG,JSON.stringify(d)); } catch(_) {} }
+
+function getFoodLogHoy() {
+  const log = getFoodLog();
+  const key = getTodayKey()+'_p'+(ROL==='duo'?'1':ROL);
+  return log[key]||[];
+}
+function setFoodLogHoy(items) {
+  const log = getFoodLog();
+  const key = getTodayKey()+'_p'+(ROL==='duo'?'1':ROL);
+  log[key] = items; setFoodLog(log);
+}
+
+function renderNutricionCalDia() {
+  const card = document.getElementById('nutri-cal-dia-card');
+  if (!card || ROL==='duo') return;
+  card.style.display = 'block';
+  const d = getD();
+  const cal = calcularCaloriasObjetivo(d);
+  const c = ROL===1?'var(--p1)':'var(--p2)';
+  const cBg = ROL===1?'var(--p1bg)':'var(--p2bg)';
+  const cBor = ROL===1?'var(--p1bor)':'var(--p2bor)';
+
+  // Calorías quemadas por ejercicio hoy
+  const sesionHoy = getSesionLog()[getTodayKey()]||{};
+  const rutina = d.rutina;
+  let calQuemadas = 0;
+  if (rutina && rutina.dias) {
+    rutina.dias.forEach((dia,di)=>{
+      (dia.ejercicios||[]).forEach((ej,ei)=>{
+        if (sesionHoy['dia_'+di+'_ej_'+ei] && ej.calorias_quemadas) calQuemadas += ej.calorias_quemadas;
+      });
+    });
+  }
+
+  // Comidas del día
+  const foodItems = getFoodLogHoy();
+  const calComidas = foodItems.reduce((s,f)=>s+(f.calorias||0),0);
+
+  let html = '';
+  if (cal) {
+    const restante = cal.meta - calComidas + calQuemadas;
+    const pct = Math.min(100, Math.round(calComidas/cal.meta*100));
+    const colorPct = pct>100?'var(--err)':pct>80?'var(--warn)':'var(--ok)';
+    html += `<div class="sgrid" style="margin-bottom:.8rem">
+      <div class="scard"><div class="sval" style="color:${c}">${cal.meta}</div><div class="slbl">Meta kcal</div></div>
+      <div class="scard"><div class="sval" style="color:${pct>100?'var(--err)':'var(--ok)'}">${calComidas}</div><div class="slbl">Consumidas</div></div>
+      <div class="scard"><div class="sval" style="color:var(--warn)">${calQuemadas}</div><div class="slbl">🔥 Quemadas</div></div>
+      <div class="scard"><div class="sval" style="color:${restante<0?'var(--err)':c}">${restante}</div><div class="slbl">Restantes</div></div>
+    </div>
+    <div style="margin-bottom:.8rem">
+      <div style="display:flex;justify-content:space-between;font-size:.65rem;color:var(--mut);margin-bottom:4px"><span>Consumido hoy</span><span style="color:${colorPct}">${pct}%</span></div>
+      <div style="height:8px;background:var(--sur3);border-radius:99px;overflow:hidden">
+        <div style="width:${pct}%;height:100%;background:${colorPct};border-radius:99px;transition:width .5s"></div>
+      </div>
+    </div>`;
+    if (cal.ajuste) html+=`<div style="font-size:.72rem;color:var(--mut);margin-bottom:.5rem">Base TDEE: ${cal.tdee} kcal · Ajuste objetivo: ${cal.ajuste>0?'+':''}${cal.ajuste} kcal</div>`;
+  } else {
+    html += `<div class="wbox" style="margin-bottom:.8rem">⚠️ Completa tu peso, estatura y edad en <strong>Config</strong> para ver tus calorías objetivo.</div>`;
+  }
+
+  document.getElementById('nutri-cal-dia-content').innerHTML = html;
+  renderFoodLog();
+}
+
+function renderFoodLog() {
+  const el = document.getElementById('nutri-food-log'); if (!el) return;
+  const items = getFoodLogHoy();
+  if (!items.length) { el.innerHTML=''; return; }
+  const c = ROL===1?'var(--p1)':'var(--p2)';
+  el.innerHTML = `<hr class="dv"><div style="font-size:.7rem;font-weight:600;color:var(--mut);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.5rem">Registrado hoy</div>` +
+    items.map((f,i)=>`<div class="libre-card" style="margin-bottom:.35rem">
+      <span style="font-size:.9rem">${f.emoji||'🍽️'}</span>
+      <span style="flex:1;font-size:.78rem">${f.descripcion}</span>
+      <span style="font-family:'DM Mono',monospace;font-size:.72rem;color:${c}">${f.calorias} kcal</span>
+      <button class="btn bs bsm" style="padding:2px 7px;font-size:.62rem" onclick="eliminarComida(${i})">✕</button>
+    </div>`).join('');
+}
+
+function eliminarComida(idx) {
+  const items = getFoodLogHoy(); items.splice(idx,1); setFoodLogHoy(items);
+  renderNutricionCalDia(); subirAGitHubDebounced();
+}
+
+async function analizarComida() {
+  const key = getGeminiKey();
+  if (!key) { toast('Configura tu API Key de Gemini primero','r'); return; }
+  const input = document.getElementById('nutri-food-input');
+  const texto = input.value.trim();
+  if (!texto) { toast('Describe lo que comiste','r'); return; }
+  const d = getD();
+  const btn = document.getElementById('nutri-food-btn');
+  btn.disabled=true; btn.textContent='⏳ Analizando...';
+  document.getElementById('ai-loading-food').classList.add('show');
+  document.getElementById('nutri-food-result').innerHTML='';
+  try {
+    const prompt = `Eres nutricionista. El usuario dice que comió: "${texto}"
+Peso del usuario: ${d.peso||'?'}kg. 
+Responde SOLO con JSON sin markdown:
+{"descripcion":"nombre del plato","calorias":350,"proteina_g":25,"carbos_g":40,"grasa_g":10,"emoji":"🍝","desglose":"breve explicación de cómo calculaste las calorías"}`;
+    const resultado = await llamarGeminiRaw(prompt);
+    mostrarResultadoComida(resultado);
+  } catch(e) { toast('Error: '+e.message,'r'); }
+  finally {
+    btn.disabled=false; btn.textContent='🤖 Analizar';
+    document.getElementById('ai-loading-food').classList.remove('show');
+  }
+}
+
+async function analizarImagen(inputEl) {
+  const key = getGeminiKey();
+  if (!key) { toast('Configura tu API Key de Gemini primero','r'); return; }
+  const file = inputEl.files[0]; if (!file) return;
+  document.getElementById('ai-loading-food').classList.add('show');
+  document.getElementById('nutri-food-result').innerHTML='';
+  try {
+    const base64 = await new Promise((res,rej)=>{
+      const r=new FileReader(); r.onload=()=>res(r.result.split(',')[1]); r.onerror=rej; r.readAsDataURL(file);
+    });
+    const d = getD();
+    const prompt = `Eres nutricionista experto en análisis visual de alimentos. Analiza esta imagen de comida.
+Peso del usuario: ${d.peso||'?'}kg.
+Identifica los alimentos en el plato y estima las calorías.
+Responde SOLO con JSON sin markdown:
+{"descripcion":"nombre del plato que ves","calorias":350,"proteina_g":25,"carbos_g":40,"grasa_g":10,"emoji":"🍽️","alimentos_detectados":["alimento1","alimento2"],"desglose":"breve explicación de cómo calculaste las calorías"}`;
+    const apiKey = key;
+    const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,{
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({contents:[{parts:[
+        {inline_data:{mime_type:file.type,data:base64}},
+        {text:prompt}
+      ]}],generationConfig:{temperature:0.4,maxOutputTokens:1000}})
+    });
+    const json = await resp.json();
+    let raw = json.candidates?.[0]?.content?.parts?.[0]?.text||'{}';
+    raw = raw.replace(/```json\s*/gi,'').replace(/```\s*/gi,'').trim();
+    const m = raw.match(/\{[\s\S]*\}/); if (m) raw=m[0];
+    const resultado = JSON.parse(raw);
+    mostrarResultadoComida(resultado);
+  } catch(e) { toast('Error analizando imagen: '+e.message,'r'); }
+  finally { document.getElementById('ai-loading-food').classList.remove('show'); inputEl.value=''; }
+}
+
+function mostrarResultadoComida(r) {
+  const c = ROL===1?'var(--p1)':'var(--p2)';
+  const cBg = ROL===1?'var(--p1bg)':'var(--p2bg)';
+  const cBor = ROL===1?'var(--p1bor)':'var(--p2bor)';
+  let html = `<div style="background:${cBg};border:1px solid ${cBor};border-radius:10px;padding:.8rem 1rem;margin-bottom:.6rem">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:.5rem">
+      <span style="font-size:1.5rem">${r.emoji||'🍽️'}</span>
+      <div style="flex:1"><div style="font-weight:600;font-size:.85rem">${r.descripcion||'Comida'}</div>
+      ${r.alimentos_detectados?.length?`<div style="font-size:.7rem;color:var(--mut)">${r.alimentos_detectados.join(', ')}</div>`:''}
+      </div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;color:${c}">${r.calorias||0}<span style="font-size:.7rem;font-family:'DM Sans',sans-serif;color:var(--mut)"> kcal</span></div>
+    </div>
+    <div style="display:flex;gap:12px;font-size:.72rem;color:var(--mut)">
+      ${r.proteina_g?`<span>🥩 ${r.proteina_g}g prot</span>`:''}
+      ${r.carbos_g?`<span>🌾 ${r.carbos_g}g carbos</span>`:''}
+      ${r.grasa_g?`<span>🥑 ${r.grasa_g}g grasa</span>`:''}
+    </div>
+    ${r.desglose?`<div style="font-size:.7rem;color:var(--mut);margin-top:.4rem;border-top:1px solid ${cBor};padding-top:.4rem">💡 ${r.desglose}</div>`:''}
+  </div>
+  <div style="display:flex;gap:8px">
+    <button class="btn bp${ROL}" onclick='agregarComidaLog(${JSON.stringify(r)})'>✅ Agregar al registro</button>
+    <button class="btn bs bsm" onclick="document.getElementById('nutri-food-result').innerHTML='';document.getElementById('nutri-food-input').value=''">✕ Cancelar</button>
+  </div>`;
+  document.getElementById('nutri-food-result').innerHTML = html;
+}
+
+function agregarComidaLog(r) {
+  const items = getFoodLogHoy();
+  items.push({ descripcion:r.descripcion, calorias:r.calorias||0, proteina_g:r.proteina_g||0, carbos_g:r.carbos_g||0, grasa_g:r.grasa_g||0, emoji:r.emoji||'🍽️', ts:Date.now() });
+  setFoodLogHoy(items);
+  document.getElementById('nutri-food-result').innerHTML='';
+  document.getElementById('nutri-food-input').value='';
+  renderNutricionCalDia(); subirAGitHubDebounced();
+  toast('✅ Comida registrada','g');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  SALA CONJUNTA — PROGRESO DUO
+// ══════════════════════════════════════════════════════════════
+function renderDuoProgreso() {
+  const d1=getDFor(1), d2=getDFor(2);
+  const n1=d1.nombre||'Persona 1', n2=d2.nombre||'Persona 2';
+  // Rachas individuales
+  const tmpRol=ROL;
+  ROL=1; const r1=calcularRacha(); const t1=Object.keys(getSesionLog()).filter(k=>getSesionLog()[k]._sesion_completa).length;
+  ROL=2; const r2=calcularRacha(); const t2=Object.keys(getSesionLog()).filter(k=>getSesionLog()[k]._sesion_completa).length;
+  ROL=tmpRol;
+
+  const streakCard = document.getElementById('duo-streak-card');
+  streakCard.innerHTML = `
+    <div class="ctitle" style="background:linear-gradient(90deg,var(--p1),var(--p2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">🔥 <span style="-webkit-text-fill-color:transparent">Rachas</span></div>
+    <div class="duo-split">
+      <div style="background:var(--p1bg);border:1px solid var(--p1bor);border-radius:10px;padding:.8rem 1rem;text-align:center">
+        <div style="font-size:.65rem;font-weight:700;color:var(--p1);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem">${d1.avatar||'💪'} ${n1}</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--p1);line-height:1">${r1}🔥</div>
+        <div style="font-size:.65rem;color:var(--mut)">días de racha · ${t1} sesiones</div>
+      </div>
+      <div style="background:var(--p2bg);border:1px solid var(--p2bor);border-radius:10px;padding:.8rem 1rem;text-align:center">
+        <div style="font-size:.65rem;font-weight:700;color:var(--p2);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.4rem">${d2.avatar||'🏋️'} ${n2}</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:2.5rem;color:var(--p2);line-height:1">${r2}🔥</div>
+        <div style="font-size:.65rem;color:var(--mut)">días de racha · ${t2} sesiones</div>
+      </div>
+    </div>`;
+
+  // Leyendas del calendario
+  const l1=document.getElementById('duo-leg1'), l2=document.getElementById('duo-leg2');
+  if(l1) l1.textContent=n1; if(l2) l2.textContent=n2;
+  renderCalendarioDuo();
+
+  // Historial conjunto
+  const tmpR=ROL;
+  ROL=1; const log1=getSesionLog();
+  ROL=2; const log2=getSesionLog();
+  ROL=tmpR;
+  const allDias = [...new Set([...Object.keys(log1),...Object.keys(log2)])].filter(k=>log1[k]?._sesion_completa||log2[k]?._sesion_completa).sort().reverse().slice(0,10);
+  const MESES=['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  const histEl = document.getElementById('duo-historial-content');
+  if (!allDias.length) { histEl.innerHTML=`<div class="empty" style="padding:1rem"><div class="empty-ico">📭</div><div class="empty-t">Sin sesiones</div></div>`; return; }
+  histEl.innerHTML = allDias.map(k=>{
+    const f=new Date(k+'T12:00:00'); const fStr=f.getDate()+' '+MESES[f.getMonth()]+' '+f.getFullYear();
+    const ok1=log1[k]?._sesion_completa; const ok2=log2[k]?._sesion_completa;
+    return `<div class="libre-card" style="margin-bottom:.35rem">
+      <span style="font-size:.9rem">${ok1&&ok2?'🤝':ok1?'💪':'🏋️'}</span>
+      <span style="flex:1;font-size:.78rem;font-weight:500">${fStr}</span>
+      ${ok1?`<span style="font-size:.65rem;color:var(--p1);font-weight:600;padding:2px 6px;background:var(--p1bg);border-radius:4px">${d1.avatar||'💪'}</span>`:''}
+      ${ok2?`<span style="font-size:.65rem;color:var(--p2);font-weight:600;padding:2px 6px;background:var(--p2bg);border-radius:4px;margin-left:4px">${d2.avatar||'🏋️'}</span>`:''}
+    </div>`;
+  }).join('');
+}
+
+function renderCalendarioDuo() {
+  const grid = document.getElementById('duo-cal-grid'); if (!grid) return;
+  const hoy=new Date(); const fecha=new Date(hoy.getFullYear(),hoy.getMonth()+_calOffset,1);
+  const year=fecha.getFullYear(), month=fecha.getMonth();
+  const DIAS_ES=['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const MESES_ES=['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const lbl=document.getElementById('duo-cal-month-label'); if(lbl) lbl.textContent=MESES_ES[month]+' '+year;
+  const tmpR=ROL;
+  ROL=1; const log1=getSesionLog();
+  ROL=2; const log2=getSesionLog();
+  ROL=tmpR;
+  const primerDia=new Date(year,month,1).getDay(), diasMes=new Date(year,month+1,0).getDate();
+  const todayKey=getTodayKey();
+  let html=DIAS_ES.map(d=>`<div class="cal-head">${d}</div>`).join('');
+  for(let i=0;i<primerDia;i++) html+=`<div class="cal-day empty"></div>`;
+  for(let d=1;d<=diasMes;d++){
+    const k=year+'-'+String(month+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    const ok1=log1[k]?._sesion_completa; const ok2=log2[k]?._sesion_completa;
+    const esHoy=k===todayKey;
+    let cls='cal-day'; let style='';
+    if(ok1&&ok2) cls+=' done-duo';
+    else if(ok1) { cls+=' done-p1'; }
+    else if(ok2) { cls+=' done-p2'; }
+    else if(esHoy) cls+=' today';
+    html+=`<div class="${cls}" style="${style}">${d}${(ok1||ok2)?'<span style="position:absolute;bottom:2px;right:3px;font-size:.5rem">'+(ok1&&ok2?'✓✓':ok1?'✓':'✓')+'</span>':''}</div>`;
+  }
+  grid.innerHTML=html;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  SALA CONJUNTA — NUTRICIÓN DUO (reutiliza generarNutricion)
+// ══════════════════════════════════════════════════════════════
+async function generarNutricionDuo() {
+  const key = getGeminiKey();
+  if (!key) { toast('Configura tu API Key de Gemini primero','r'); return; }
+  const d1=getDFor(1), d2=getDFor(2);
+  const cal = document.getElementById('duo-nutri-cal')?.value||'mantenimiento';
+  const rest = document.getElementById('duo-nutri-restricciones')?.value.trim()||'';
+  const comidas = document.getElementById('duo-nutri-comidas')?.value||'3';
+  const extra = document.getElementById('duo-nutri-extra')?.value.trim()||'';
+  const calLabel = {deficit:'déficit calórico (bajar peso)',mantenimiento:'mantenimiento calórico',superavit:'superávit calórico (ganar músculo)'}[cal];
+  const loadEl = document.getElementById('ai-loading-duo-nutri');
+  if(loadEl) loadEl.classList.add('show');
+  const contEl = document.getElementById('duo-nutri-content');
+  if(contEl) contEl.innerHTML='';
+
+  // Metas conectadas
+  const duoMetasEl = document.getElementById('duo-nutri-metas');
+  if (duoMetasEl) {
+    const tmpR=ROL; ROL=1; const r1=calcularRacha(); ROL=2; const r2=calcularRacha(); ROL=tmpR;
+    duoMetasEl.innerHTML=`<div class="meta-conexion">
+      <span class="meta-chip" style="color:var(--p1);border-color:var(--p1bor);background:var(--p1bg)">🎯 ${OBJ_LABELS[d1.objetivo]||d1.objetivo}</span>
+      <span class="meta-chip" style="color:var(--p2);border-color:var(--p2bor);background:var(--p2bg)">🎯 ${OBJ_LABELS[d2.objetivo]||d2.objetivo}</span>
+      <span class="meta-chip" style="color:var(--ok);border-color:rgba(74,222,128,0.3);background:var(--okbg)">🔥 ${d1.nombre||'P1'}: ${r1}d · ${d2.nombre||'P2'}: ${r2}d</span>
+    </div>`;
+  }
+  try {
+    const prompt = `Eres nutricionista deportivo. Plan semanal para DOS personas.\nP1 (${d1.nombre||'P1'}): objetivo=${OBJ_LABELS[d1.objetivo]||d1.objetivo}, peso=${d1.peso||'?'}kg, edad=${d1.edad||'?'}\nP2 (${d2.nombre||'P2'}): objetivo=${OBJ_LABELS[d2.objetivo]||d2.objetivo}, peso=${d2.peso||'?'}kg, edad=${d2.edad||'?'}\nCalórico: ${calLabel} · ${comidas} comidas/día${rest?' · Restricciones: '+rest:''}${extra?' · '+extra:''}\nUsa alimentos comunes en Colombia.\nResponde SOLO JSON sin markdown:\n{"resumen":"descripción","p1":{"nombre":"${d1.nombre||'P1'}","calorias":"aprox kcal/día","macros":"proteína X, carbos Y, grasa Z","dias":[{"dia":"Lunes","comidas":[{"nombre":"Desayuno","alimentos":["alimento con cantidad"],"calorias_aprox":400}]}]},"p2":{"nombre":"${d2.nombre||'P2'}","calorias":"aprox kcal/día","macros":"proteína X, carbos Y, grasa Z","dias":[{"dia":"Lunes","comidas":[{"nombre":"Desayuno","alimentos":["alimento con cantidad"],"calorias_aprox":400}]}]},"consejos_comunes":["tip 1","tip 2"]}`;
+    const resultado = await llamarGeminiRaw(prompt);
+    const saved = getNutriData(); saved['duo']=resultado; setNutriData(saved);
+    // Render usando función existente
+    const tmpRol=ROL; ROL='duo';
+    renderNutriHTML(resultado, true);
+    ROL=tmpRol;
+    // Mover output al contenedor correcto
+    const mainContent = document.getElementById('nutri-content');
+    if (mainContent && contEl) { contEl.innerHTML=mainContent.innerHTML; mainContent.innerHTML=''; }
+    subirAGitHubDebounced();
+  } catch(e) { toast('Error: '+e.message,'r'); if(contEl) contEl.innerHTML=`<div class="empty"><div class="empty-ico">❌</div><div class="empty-t">Error</div><div class="empty-s">${e.message}</div></div>`; }
+  finally { if(loadEl) loadEl.classList.remove('show'); }
+}
+
+function limpiarNutricionDuo() {
+  const saved=getNutriData(); delete saved.duo; setNutriData(saved);
+  const el=document.getElementById('duo-nutri-content'); if(el) el.innerHTML='';
+  toast('Plan eliminado','');
+}
+
+function renderDuoNutri() {
+  const saved=getNutriData();
+  if (saved.duo) {
+    const tmpRol=ROL; ROL='duo';
+    renderNutriHTML(saved.duo,true);
+    ROL=tmpRol;
+    const mainContent=document.getElementById('nutri-content');
+    const contEl=document.getElementById('duo-nutri-content');
+    if(mainContent&&contEl) { contEl.innerHTML=mainContent.innerHTML; mainContent.innerHTML=''; }
+  }
+}
+
+// ══ INIT ══
+updateLoginCards();
+</script>
+
+
+
+</body></html>
